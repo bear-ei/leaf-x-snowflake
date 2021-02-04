@@ -1,6 +1,6 @@
 'use strict'
 
-import { compose, curry, replace } from 'ramda'
+import * as _ from 'ramda'
 import {
   HandleErrorFunction,
   NextMillisecondFunction,
@@ -35,7 +35,7 @@ export const snowflake: SnowflakeFunction = ({
   let sequence = BigInt(0)
   let lastTimestamp = -BigInt(1)
 
-  const validate = compose(impure.handleError, validateId)
+  const validate = _.compose(impure.handleError, validateId)
 
   validate({
     id: dataCenterNode,
@@ -51,8 +51,8 @@ export const snowflake: SnowflakeFunction = ({
 
   return () => {
     const timestamp = newTimestamp()
-    const timeDiffCurry = curry(timeDiff)(timestamp)
-    const generateIdCurry = curry(generateId)({
+    const timeDiffCurry = _.curry(timeDiff)(timestamp)
+    const generateIdCurry = _.curry(generateId)({
       twEpoch: epoch,
       timestampLeftShift,
       dataCenterId: dataCenterNode,
@@ -61,8 +61,8 @@ export const snowflake: SnowflakeFunction = ({
       workerLeftShift
     })
 
-    const checkTime = compose(impure.handleError, timeDiffCurry)
-    const nextId = compose(generateIdCurry, timeEqual)
+    const checkTime = _.compose(impure.handleError, timeDiffCurry)
+    const nextId = _.compose(generateIdCurry, timeEqual)
 
     checkTime(lastTimestamp)
 
@@ -85,7 +85,7 @@ export const snowflake: SnowflakeFunction = ({
 }
 
 export const validateId: ValidateIdFunction = ({ id, maxId, message }) =>
-  id > maxId || id < 0 ? replace('${maxId}', `${maxId}`, message) : undefined
+  id > maxId || id < 0 ? _.replace('${maxId}', `${maxId}`, message) : undefined
 
 export const timeDiff: TimeDiffFunction = (timestamp, lastTimestamp) =>
   timestamp < lastTimestamp

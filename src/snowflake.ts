@@ -2,18 +2,18 @@
 
 import * as _ from 'ramda'
 import {
-  HandleErrorFunction,
-  NextMillisecondFunction,
-  SnowflakeFunction,
-  TimeDiffFunction,
-  ValidateIdFunction,
-  TimeEqualFunction,
-  GenerateIdFunction,
-  IsNextMillisecondFunction,
-  NewTimestampFunction
+  HandleError,
+  NextMillisecond,
+  Snowflake,
+  TimeDiff,
+  ValidateId,
+  TimeEqual,
+  GenerateId,
+  IsNextMillisecond,
+  NewTimestamp
 } from './interface/snowflake'
 
-export const snowflake: SnowflakeFunction = ({
+export const snowflake: Snowflake = ({
   twEpoch,
   dataCenterId = 0,
   workerId = 0
@@ -51,8 +51,8 @@ export const snowflake: SnowflakeFunction = ({
 
   return () => {
     const timestamp = newTimestamp()
-    const timeDiffCurry = _.curry(timeDiff)(timestamp)
-    const generateIdCurry = _.curry(generateId)({
+    const handleTimeDiff = _.curry(timeDiff)(timestamp)
+    const nextId = _.curry(generateId)({
       twEpoch: epoch,
       timestampLeftShift,
       dataCenterId: dataCenterNode,
@@ -61,21 +61,16 @@ export const snowflake: SnowflakeFunction = ({
       workerLeftShift
     })
 
-    const checkTime = _.compose(impure.handleError, timeDiffCurry)
-    const nextId = _.compose(generateIdCurry, timeEqual)
-
-    checkTime(lastTimestamp)
+    _.compose(impure.handleError, handleTimeDiff)(lastTimestamp)
 
     const {
       id,
       lastTimestamp: newLastTimestamp,
       sequence: newSequence
-    } = nextId({
-      timestamp,
-      lastTimestamp,
-      sequence,
-      maxSequence
-    })
+    } = _.compose(
+      nextId,
+      timeEqual
+    )({ timestamp, lastTimestamp, sequence, maxSequence })
 
     lastTimestamp = newLastTimestamp
     sequence = newSequence
@@ -84,25 +79,21 @@ export const snowflake: SnowflakeFunction = ({
   }
 }
 
-export const validateId: ValidateIdFunction = ({ id, maxId, message }) =>
+export const validateId: ValidateId = ({ id, maxId, message }) =>
   id > maxId || id < 0 ? _.replace('${maxId}', `${maxId}`, message) : undefined
 
-export const timeDiff: TimeDiffFunction = (timestamp, lastTimestamp) =>
+export const timeDiff: TimeDiff = (timestamp, lastTimestamp) =>
   timestamp < lastTimestamp
     ? `Clock moves backwards to reject the id generated for ` +
       `${lastTimestamp - timestamp}.`
     : undefined
 
-export const timeEqual: TimeEqualFunction = ({
-  timestamp,
-  lastTimestamp,
-  ...args
-}) =>
+export const timeEqual: TimeEqual = ({ timestamp, lastTimestamp, ...args }) =>
   timestamp === lastTimestamp
     ? isNextMillisecond({ timestamp, lastTimestamp, ...args })
     : { timestamp, sequence: BigInt(0) }
 
-export const isNextMillisecond: IsNextMillisecondFunction = ({
+export const isNextMillisecond: IsNextMillisecond = ({
   timestamp,
   lastTimestamp,
   sequence,
@@ -111,20 +102,20 @@ export const isNextMillisecond: IsNextMillisecondFunction = ({
   sequence = (sequence + BigInt(1)) & maxSequence
 
   return sequence === BigInt(0)
-    ? { timestamp: nextMillisecond(timestamp, lastTimestamp), sequence }
+    ? {
+        timestamp: _.curry(nextMillisecond)(timestamp)(lastTimestamp),
+        sequence
+      }
     : { timestamp, sequence }
 }
 
-export const nextMillisecond: NextMillisecondFunction = (
-  timestamp,
-  lastTimestamp
-) =>
+export const nextMillisecond: NextMillisecond = (timestamp, lastTimestamp) =>
   timestamp <= lastTimestamp
-    ? nextMillisecond(newTimestamp(), lastTimestamp)
+    ? _.curry(nextMillisecond)(newTimestamp())(lastTimestamp)
     : timestamp
 
-export const newTimestamp: NewTimestampFunction = () => BigInt(Date.now())
-export const generateId: GenerateIdFunction = (
+export const newTimestamp: NewTimestamp = () => BigInt(Date.now())
+export const generateId: GenerateId = (
   {
     twEpoch,
     timestampLeftShift,
@@ -144,7 +135,7 @@ export const generateId: GenerateIdFunction = (
   sequence
 })
 
-export const handleError: HandleErrorFunction = (message?: string): void => {
+export const handleError: HandleError = (message?: string): void => {
   if (message) {
     throw new Error(message)
   }

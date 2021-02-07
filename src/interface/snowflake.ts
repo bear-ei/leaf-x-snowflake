@@ -27,7 +27,7 @@ export interface SnowflakeOptions {
  *
  * @return string id.
  */
-export interface SnowflakeFunction {
+export interface Snowflake {
   (options: SnowflakeOptions): () => string
 }
 
@@ -56,7 +56,7 @@ export interface ValidateIdOptions {
  *
  * @return string | undefined Error message returned for failed validation.
  */
-export interface ValidateIdFunction {
+export interface ValidateId {
   (options: ValidateIdOptions): string | undefined
 }
 
@@ -107,28 +107,28 @@ export interface HandleTimeResult {
  * @param lastTimestamp         Last execution timestamp.
  * @return string | undefined   Error message for clock moving backwards.
  */
-export interface TimeDiffFunction {
+export interface TimeDiff {
   (timestamp: bigint, lastTimestamp: bigint): string | undefined
 }
 
 /**
  * Determine whether to get the next millisecond timestamp.
  */
-export interface IsNextMillisecondFunction {
+export interface IsNextMillisecond {
   (options: HandleTimeOptions): HandleTimeResult
 }
 
 /**
  * Handling time and current time are equal.
  */
-export interface TimeEqualFunction {
+export interface TimeEqual {
   (options: HandleTimeOptions): HandleTimeResult
 }
 
 /**
  * Next millisecond.
  */
-export interface NextMillisecondFunction {
+export interface NextMillisecond {
   (timestamp: bigint, lastTimestamp: bigint): bigint
 }
 
@@ -192,7 +192,7 @@ export interface GenerateIdResult {
 /**
  * Generate id.
  */
-export interface GenerateIdFunction {
+export interface GenerateId {
   (
     options: GenerateIdOptions,
     HandleTimeResult: HandleTimeResult
@@ -202,7 +202,7 @@ export interface GenerateIdFunction {
 /**
  * New timestamp.
  */
-export interface NewTimestampFunction {
+export interface NewTimestamp {
   (): bigint
 }
 
@@ -211,6 +211,6 @@ export interface NewTimestampFunction {
  *
  * @param [message] Error message.
  */
-export interface HandleErrorFunction {
+export interface HandleError {
   (message?: string): void
 }

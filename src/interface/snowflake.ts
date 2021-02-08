@@ -5,27 +5,25 @@
  */
 export interface SnowflakeOptions {
   /**
-   * Data center id.
-   * Range of values 0~31.
+   * Era time of the start of the snowflake algorithm.
    */
-  dataCenterId?: number | bigint
+  readonly twEpoch: number
+
+  /**
+   * Data centre id.
+   */
+  readonly dataCenterId?: number
 
   /**
    * Work machine id.
-   * Range of values 0~31.
    */
-  workerId?: number | bigint
-
-  /**
-   * Start timestamp.
-   */
-  twEpoch: number | bigint
+  readonly workerId?: number
 }
 
 /**
- * Snowflake.
+ * Snowflake algorithm.
  *
- * @return string id.
+ * @return () => string.
  */
 export interface Snowflake {
   (options: SnowflakeOptions): () => string
@@ -36,100 +34,104 @@ export interface Snowflake {
  */
 export interface ValidateIdOptions {
   /**
-   * The id to be verified.
+   * Data centre or work machine id.
    */
-  id: bigint
+  readonly id: bigint
 
   /**
    * Maximum id range.
    */
-  maxId: bigint
+  readonly maxId: bigint
 
   /**
-   * Error message returned for failed validation.
+   * Error message.
    */
-  message: string
+  readonly message: string
 }
 
 /**
  * Validate id.
- *
- * @return string | undefined Error message returned for failed validation.
  */
 export interface ValidateId {
-  (options: ValidateIdOptions): string | undefined
+  (options: ValidateIdOptions): void
 }
 
 /**
- * Handling time options.
+ * Timestamp.
  */
-export interface HandleTimeOptions {
+export interface Timestamp {
   /**
    * Current timestamp.
    */
-  timestamp: bigint
+  readonly timestamp: bigint
 
   /**
-   * Last execution timestamp.
+   * Last execution time stamp.
    */
-  lastTimestamp: bigint
-
-  /**
-   * Intra-millisecond sequence.
-   */
-  sequence: bigint
-
-  /**
-   * Maximum sequence in milliseconds.
-   */
-  maxSequence: bigint
+  readonly lastTimestamp: bigint
 }
 
 /**
- * Handle time result.
+ * Timestamp difference.
  */
-export interface HandleTimeResult {
+export interface TimestampDiff {
+  (timestamp: Timestamp): Timestamp
+}
+
+/**
+ * Equal time stamp.
+ */
+export interface EqualTimestamp {
+  (sequence: Sequence, timestamp: Timestamp): NewMilliseconds
+}
+
+/**
+ * Sequence.
+ */
+export interface Sequence {
   /**
-   * New timestamp.
+   * Current Sequence.
    */
-  timestamp: bigint
+  readonly sequence: bigint
 
   /**
-   * New intra-millisecond sequence.
+   * Maximum sequence range.
    */
-  sequence: bigint
+  readonly maxSequence: bigint
 }
 
 /**
- * Difference between handling time and current time.
- *
- * @param timestamp             Current timestamp.
- * @param lastTimestamp         Last execution timestamp.
- * @return string | undefined   Error message for clock moving backwards.
+ * New milliseconds.
  */
-export interface TimeDiff {
-  (timestamp: bigint, lastTimestamp: bigint): string | undefined
+export interface NewMilliseconds {
+  /**
+   * New Timestamp.
+   */
+  readonly timestamp: bigint
+
+  /**
+   * Sequence.
+   */
+  readonly sequence: bigint
 }
 
 /**
- * Determine whether to get the next millisecond timestamp.
+ * Whether to get the next milliseconds.
  */
-export interface IsNextMillisecond {
-  (options: HandleTimeOptions): HandleTimeResult
+export type IsNextMilliseconds = EqualTimestamp
+
+/**
+ * Next milliseconds.
+ */
+export interface NextMilliseconds {
+  (timestamp: Timestamp): bigint
 }
 
 /**
- * Handling time and current time are equal.
+ * New milliseconds.
  */
-export interface TimeEqual {
-  (options: HandleTimeOptions): HandleTimeResult
-}
-
-/**
- * Next millisecond.
- */
-export interface NextMillisecond {
-  (timestamp: bigint, lastTimestamp: bigint): bigint
+export interface NewTimestamp {
+  (): bigint
 }
 
 /**
@@ -137,77 +139,69 @@ export interface NextMillisecond {
  */
 export interface GenerateIdOptions {
   /**
-   * Start timestamp.
+   * Era time of the start of the snowflake algorithm.
    */
-  twEpoch: bigint
+  readonly twEpoch: bigint
 
   /**
-   * Timestamp is shifted left by 22 bits.
+   * Timestamp Left Offset Digits.
+   *
    */
-  timestampLeftShift: bigint
+  readonly timestampLeftShift: bigint
 
   /**
-   * Data Center id.
-   * Range of values 0~31.
+   * Data centre id.
    */
-  dataCenterId: bigint
+  readonly dataCenterId: bigint
 
   /**
-   * Data center id left offset by 17 bits.
+   * Number of data center left offset bits.
    */
-  dataCenterLeftShift: bigint
+  readonly dataCenterLeftShift: bigint
 
   /**
    * Work machine id.
-   * Range of values 0~31.
    */
-  workerId: bigint
+  readonly workerId: bigint
 
   /**
-   * Work machine id left offset by 12 bits.
+   * Number of left offset bits of working machine.
    */
-  workerLeftShift: bigint
+  readonly workerLeftShift: bigint
 }
 
 /**
- * Generate id result.
+ * New id.
  */
-export interface GenerateIdResult {
+export interface NewId {
   /**
    * Generated id.
    */
-  id: bigint
+  readonly id: bigint
 
   /**
-   * Last execution timestamp.
+   * Last execution time stamp.
    */
-  lastTimestamp: bigint
+  readonly lastTimestamp: bigint
 
   /**
-   * Intra-millisecond sequence.
+   * Sequence.
    */
-  sequence: bigint
+  readonly sequence: bigint
 }
 
 /**
- * Generate id.
+ * Generate Id.
+ *
+ * @export
+ * @interface GenerateId
  */
 export interface GenerateId {
-  (
-    options: GenerateIdOptions,
-    HandleTimeResult: HandleTimeResult
-  ): GenerateIdResult
+  (options: GenerateIdOptions, newMilliseconds: NewMilliseconds): NewId
 }
 
 /**
- * New timestamp.
- */
-export interface NewTimestamp {
-  (): bigint
-}
-
-/**
- * Handling error.
+ * Handling errors.
  *
  * @param [message] Error message.
  */

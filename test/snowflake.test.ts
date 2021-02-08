@@ -3,11 +3,11 @@
 import * as assert from 'assert'
 import {
   validateId,
-  timeDiff,
+  timestampDiff,
+  equalTimestamp,
+  isNextMilliseconds,
+  nextMilliseconds,
   newTimestamp,
-  nextMillisecond,
-  timeEqual,
-  isNextMillisecond,
   generateId,
   handleError,
   snowflake
@@ -15,30 +15,40 @@ import {
 
 describe('test/snowflake.test.ts', () => {
   it('Should be the result of validateId', async () => {
-    const result = validateId({
-      id: BigInt(3),
-      maxId: BigInt(2),
-      message: 'Data center id can not be greater than ${maxId} or less than 0.'
-    })
-
-    assert(
-      result === 'Data center id can not be greater than 2 or less than 0.'
-    )
+    try {
+      validateId({
+        id: BigInt(3),
+        maxId: BigInt(2),
+        message:
+          'Data center id can not be greater than ${maxId} or less than 0.'
+      })
+    } catch (error) {
+      assert(
+        error.message ===
+          'Data center id can not be greater than 2 or less than 0.'
+      )
+    }
   })
 
   it('Should be the result of timeDiff', async () => {
-    const result = timeDiff(BigInt(1), BigInt(2))
-
-    assert(result === 'Clock moves backwards to reject the id generated for 1.')
+    try {
+      timestampDiff({
+        timestamp: BigInt(1),
+        lastTimestamp: BigInt(2)
+      })
+    } catch (error) {
+      assert(
+        error.message ===
+          'Clock moves backwards to reject the id generated for 1.'
+      )
+    }
   })
 
   it('Should be the result of timeEqual', async () => {
-    const result = timeEqual({
-      timestamp: BigInt(1),
-      lastTimestamp: BigInt(1),
-      sequence: BigInt(0),
-      maxSequence: BigInt(0)
-    })
+    const result = equalTimestamp(
+      { sequence: BigInt(0), maxSequence: BigInt(0) },
+      { timestamp: BigInt(1), lastTimestamp: BigInt(1) }
+    )
 
     assert(typeof result === 'object')
     assert(typeof result.sequence === 'bigint')
@@ -46,12 +56,10 @@ describe('test/snowflake.test.ts', () => {
   })
 
   it('Should be the result of isNextMillisecond', async () => {
-    const result = isNextMillisecond({
-      timestamp: BigInt(1),
-      lastTimestamp: BigInt(1),
-      sequence: BigInt(0),
-      maxSequence: BigInt(0)
-    })
+    const result = isNextMilliseconds(
+      { sequence: BigInt(0), maxSequence: BigInt(0) },
+      { timestamp: BigInt(1), lastTimestamp: BigInt(1) }
+    )
 
     assert(typeof result === 'object')
     assert(typeof result.sequence === 'bigint')
@@ -60,7 +68,7 @@ describe('test/snowflake.test.ts', () => {
 
   it('Should be the result of nextMillisecond', async () => {
     const now = BigInt(Date.now())
-    const result = nextMillisecond(now, now)
+    const result = nextMilliseconds({ timestamp: now, lastTimestamp: now })
 
     assert(typeof result === 'bigint')
   })
@@ -96,6 +104,10 @@ describe('test/snowflake.test.ts', () => {
     } catch (error) {
       assert(error.message === 'error')
     }
+
+    const result = handleError()
+
+    assert(typeof result === 'undefined')
   })
 
   it('Should be the result of snowflake', async () => {

@@ -192,9 +192,6 @@ export interface NewId {
 
 /**
  * Generate Id.
- *
- * @export
- * @interface GenerateId
  */
 export interface GenerateId {
   (options: GenerateIdOptions, newMilliseconds: NewMilliseconds): NewId

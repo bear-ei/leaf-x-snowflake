@@ -111,16 +111,11 @@ describe('test/snowflake.test.ts', () => {
   })
 
   it('Should be the result of snowflake', async () => {
-    const generateId = snowflake({
-      twEpoch: 1577808000000
-    })
-
+    const generateId = snowflake({ twEpoch: 1577808000000 })
     const ids: string[] = []
 
     for (let index = 0; index < 200000; index++) {
-      const id = generateId()
-
-      ids.push(id)
+      ids.push(generateId())
     }
 
     assert([...new Set(ids)].length === 200000)

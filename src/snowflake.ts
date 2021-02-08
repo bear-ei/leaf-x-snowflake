@@ -85,7 +85,7 @@ export const validateId: ValidateId = ({ id, maxId, message }) => {
   const isErrorId = id > maxId || id < 0
 
   if (isErrorId) {
-    handleError(_.replace('${maxId}', `${maxId}`, message))
+    handleError(_.replace('${maxId}', _.toString(maxId), message))
   }
 }
 

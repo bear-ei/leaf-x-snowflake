@@ -47,10 +47,6 @@
     "all": true,
     "cache": false
   },
-  "compilerOptions": {
-    "noImplicitAny": true,
-    "target": "es6"
-  },
   "files": [
     "dist/src",
     "dist/index.js",

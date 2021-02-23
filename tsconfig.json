@@ -19,7 +19,7 @@
     "strict": true,
     "strictPropertyInitialization": false,
     "stripInternal": true,
-    "target": "ES2015",
+    "target": "ES2020",
     "baseUrl": ".",
     "typeRoots": ["node_modules/@types", "./types"]
   },

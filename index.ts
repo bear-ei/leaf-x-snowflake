@@ -1,4 +1,4 @@
 'use strict'
 
-export * from './src/interface/snowflake'
-export { snowflake } from './src/snowflake'
+export * from './src/interface'
+export { snowflake } from './src'

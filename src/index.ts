@@ -10,10 +10,11 @@ import {
   GenerateIdFunction,
   TimestampEqualFunction,
   IsNextMillisecondFunction,
-  NextMillisecondFunction
+  NextMillisecondFunction,
+  SnowflakeFunction
 } from './interface'
 
-export const snowflake = ({
+export const snowflake: SnowflakeFunction = ({
   twEpoch,
   dataCenterId,
   workerId

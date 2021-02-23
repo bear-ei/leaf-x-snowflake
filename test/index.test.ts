@@ -1,5 +1,6 @@
 'use strict'
 
+import * as _ from 'ramda'
 import * as assert from 'assert'
 import {
   validateId,
@@ -34,29 +35,29 @@ describe('test/snowflake.test.ts', () => {
   })
 
   it('Should be the result of timestampEqual', async () => {
-    const result = timestampEqual({
+    const results = timestampEqual({
       timestamp: BigInt(1),
       lastTimestamp: BigInt(1),
       sequence: BigInt(0),
       maxSequence: BigInt(0)
     })
 
-    assert(typeof result === 'object')
-    assert(typeof result.sequence === 'bigint')
-    assert(typeof result.timestamp === 'bigint')
+    assert(typeof results === 'object')
+    assert(typeof results.sequence === 'bigint')
+    assert(typeof results.timestamp === 'bigint')
   })
 
   it('Should be the result of isNextMillisecond', async () => {
-    const result = isNextMillisecond({
+    const results = isNextMillisecond({
       timestamp: BigInt(1),
       lastTimestamp: BigInt(1),
       sequence: BigInt(0),
       maxSequence: BigInt(0)
     })
 
-    assert(typeof result === 'object')
-    assert(typeof result.sequence === 'bigint')
-    assert(typeof result.timestamp === 'bigint')
+    assert(typeof results === 'object')
+    assert(typeof results.sequence === 'bigint')
+    assert(typeof results.timestamp === 'bigint')
   })
 
   it('Should be the result of nextMillisecond', async () => {
@@ -73,7 +74,7 @@ describe('test/snowflake.test.ts', () => {
   })
 
   it('Should be the result of generateId', async () => {
-    const result = generateId(
+    const results = generateId(
       {
         twEpoch: BigInt(1583734327332),
         timestampLeftShift: BigInt(22),
@@ -85,10 +86,10 @@ describe('test/snowflake.test.ts', () => {
       { timestamp: BigInt(1609430400000), sequence: BigInt(0) }
     )
 
-    assert(typeof result === 'object')
-    assert(typeof result.id === 'bigint')
-    assert(typeof result.lastTimestamp === 'bigint')
-    assert(typeof result.sequence === 'bigint')
+    assert(typeof results === 'object')
+    assert(typeof results.id === 'bigint')
+    assert(typeof results.lastTimestamp === 'bigint')
+    assert(typeof results.sequence === 'bigint')
   })
 
   it('Should be the result of error', async () => {
@@ -104,13 +105,11 @@ describe('test/snowflake.test.ts', () => {
       twEpoch: 1577808000000
     })
 
-    const ids: string[] = []
+    const ids = _.compose(
+      _.uniq,
+      _.map(() => generateId())
+    )
 
-    for (let index = 0; index < 300000; index++) {
-      const id = generateId()
-      ids.push(id)
-    }
-
-    assert([...new Set(ids)].length === 300000)
+    assert(_.compose(_.length, ids)([...new Array(200000).keys()]) === 200000)
   })
 })

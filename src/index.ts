@@ -16,8 +16,8 @@ import {
 
 export const snowflake: SnowflakeFunction = ({
   twEpoch,
-  dataCenterId,
-  workerId
+  dataCenterId = 0,
+  workerId = 0
 }: SnowflakeOptions) => {
   const epoch = BigInt(twEpoch)
   const dataCenterNode = BigInt(dataCenterId)
@@ -27,7 +27,7 @@ export const snowflake: SnowflakeFunction = ({
   const workerBit = 5n
   const dataCenterBit = 5n
 
-  const maxDataCenterId = -1n ^ (1n << dataCenterBit)
+  const maxDataCenterId = -1n ^ (-1n << dataCenterBit)
   const maxWorkerId = -1n ^ (-1n << workerBit)
   const maxSequence = -1n ^ (-1n << sequenceBit)
 
@@ -145,8 +145,7 @@ export const generateId: GenerateIdFunction = (
 })
 
 export const newTimestamp: NewTimestampFunction = () => BigInt(Date.now())
-
-const handleError: HandleErrorFunction = (message) => {
+export const handleError: HandleErrorFunction = (message) => {
   if (message) {
     throw new Error(message)
   }

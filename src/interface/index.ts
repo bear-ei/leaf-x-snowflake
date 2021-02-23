@@ -8,13 +8,13 @@ export interface SnowflakeOptions {
    * Data center id.
    * Range of values 0 - 31.
    */
-  dataCenterId: number
+  dataCenterId?: number
 
   /**
    * Work machine id.
    * Range of values 0 - 31.
    */
-  workerId: number
+  workerId?: number
 
   /**
    * Beginning of the Epoch.

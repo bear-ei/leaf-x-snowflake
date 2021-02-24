@@ -129,6 +129,9 @@ export interface IsNextMillisecondFunction {
 
 /**
  * Next millisecond.
+ *
+ * @param timestamp         Timestamp.
+ * @param lastTimestamp     Last execution Timestamp.
  */
 export interface NextMillisecondFunction {
   (timestamp: bigint, lastTimestamp: bigint): bigint

@@ -7,10 +7,10 @@
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SoundShell/snowflake"
+    "url": "https://github.com/SoundShell/leaf-x-snowflake"
   },
   "bugs": {
-    "url": "https://github.com/SoundShell/snowflake/issues"
+    "url": "https://github.com/SoundShell/leaf-x-snowflake/issues"
   },
   "dependencies": {
     "ramda": "^0.27.1"

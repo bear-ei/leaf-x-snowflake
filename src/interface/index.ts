@@ -1,23 +1,23 @@
 'use strict'
 
 /**
- * Snowflake algorithm Options.
+ * Snowflake algorithm options.
  */
 export interface SnowflakeOptions {
   /**
-   * Data center id.
+   * Data center id for performing snowflake algorithm.
    * Range of values 0 - 31.
    */
   dataCenterId?: number
 
   /**
-   * Work machine id.
+   * Working machine id for executing the snowflake algorithm.
    * Range of values 0 - 31.
    */
   workerId?: number
 
   /**
-   * Beginning of the Epoch.
+   * Execution of the snowflake algorithm begins the epoch.
    */
   twEpoch: number
 }
@@ -34,7 +34,7 @@ export interface SnowflakeFunction {
  */
 export interface ValidateIdOptions {
   /**
-   * Waiting for verification id.
+   * Data center id or work machine id.
    */
   id: bigint
 
@@ -44,27 +44,27 @@ export interface ValidateIdOptions {
   maxId: bigint
 
   /**
-   * Validation fails, error message thrown.
+   * Error message thrown by authentication failure.
    */
   errorMessage: string
 }
 
 /**
- * Verification id.
+ * Check if the work machine id or data center id exceeds the maximum id limit.
  */
 export interface ValidateIdFunction {
   (options: ValidateIdOptions): string | undefined
 }
 
 /**
- * Throwing an error message.
+ * Accepts an error message and throws a new error.
  */
 export interface HandleErrorFunction {
   (message?: string): void
 }
 
 /**
- * Get new timestamp.
+ * Get the new timestamp.
  */
 export interface NewTimestampFunction {
   (): bigint
@@ -74,14 +74,14 @@ export interface NewTimestampFunction {
  * Handling clock callbacks.
  *
  * @param timestamp         Timestamp.
- * @param lastTimestamp     Last execution Timestamp.
+ * @param lastTimestamp     Last execution timestamp.
  */
 export interface ClockBackFunction {
   (timestamp: bigint, lastTimestamp: bigint): string | undefined
 }
 
 /**
- * Handling Timestamp Options.
+ * Handling timestamp options.
  */
 export interface HandleTimestampOptions {
   /**
@@ -106,9 +106,9 @@ export interface HandleTimestampOptions {
 }
 
 /**
- * Handling Timestamp Results.
+ * Handling timestamp results.
  */
-export interface HandleTimestampResults {
+export interface HandleTimestampResult {
   /**
    * Timestamp.
    */
@@ -124,24 +124,24 @@ export interface HandleTimestampResults {
  * Whether to go to the next millisecond.
  */
 export interface IsNextMillisecondFunction {
-  (options: HandleTimestampOptions): HandleTimestampResults
+  (options: HandleTimestampOptions): HandleTimestampResult
 }
 
 /**
  * Next millisecond.
  *
  * @param timestamp         Timestamp.
- * @param lastTimestamp     Last execution Timestamp.
+ * @param lastTimestamp     Last execution timestamp.
  */
 export interface NextMillisecondFunction {
   (timestamp: bigint, lastTimestamp: bigint): bigint
 }
 
 /**
- * Handling  timestamps are equal.
+ * Handling timestamps are equal.
  */
 export interface TimestampEqualFunction {
-  (options: HandleTimestampOptions): HandleTimestampResults
+  (options: HandleTimestampOptions): HandleTimestampResult
 }
 
 /**
@@ -149,7 +149,7 @@ export interface TimestampEqualFunction {
  */
 export interface GenerateIdOptions {
   /**
-   * Beginning of the Epoch.
+   * Execution of the snowflake algorithm begins the epoch.
    */
   twEpoch: bigint
 
@@ -159,7 +159,7 @@ export interface GenerateIdOptions {
   timestampLeftShift: bigint
 
   /**
-   * Data center id.
+   * Data center id for performing snowflake algorithm.
    * Range of values 0 - 31.
    */
   dataCenterId: bigint
@@ -170,7 +170,7 @@ export interface GenerateIdOptions {
   dataCenterLeftShift: bigint
 
   /**
-   * Work machine id.
+   * Working machine id for executing the snowflake algorithm.
    * Range of values 0 - 31.
    */
   workerId: bigint
@@ -184,14 +184,14 @@ export interface GenerateIdOptions {
 /**
  * Generate id results.
  */
-export interface GenerateIdResults {
+export interface GenerateIdResult {
   /**
    * New id.
    */
   id: bigint
 
   /**
-   * Last execution time stamp.
+   * Last execution timestamp.
    */
   lastTimestamp: bigint
 
@@ -207,6 +207,6 @@ export interface GenerateIdResults {
 export interface GenerateIdFunction {
   (
     options: GenerateIdOptions,
-    HandleTimeResult: HandleTimestampResults
-  ): GenerateIdResults
+    HandleTimeResult: HandleTimestampResult
+  ): GenerateIdResult
 }

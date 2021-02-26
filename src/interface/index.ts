@@ -60,7 +60,7 @@ export interface ValidateIdFunction {
  * Accepts an error message and throws a new error.
  */
 export interface HandleErrorFunction {
-  (message?: string): void
+  (message?: string): never | void
 }
 
 /**
@@ -71,7 +71,7 @@ export interface NewTimestampFunction {
 }
 
 /**
- * Handling clock callbacks.
+ * Handle clock callbacks.
  *
  * @param timestamp         Timestamp.
  * @param lastTimestamp     Last execution timestamp.
@@ -81,7 +81,7 @@ export interface ClockBackFunction {
 }
 
 /**
- * Handling timestamp options.
+ * Handle timestamp options.
  */
 export interface HandleTimestampOptions {
   /**
@@ -106,7 +106,7 @@ export interface HandleTimestampOptions {
 }
 
 /**
- * Handling timestamp results.
+ * Handle timestamp results.
  */
 export interface HandleTimestampResult {
   /**
@@ -138,7 +138,7 @@ export interface NextMillisecondFunction {
 }
 
 /**
- * Handling timestamps are equal.
+ * Handle timestamps are equal.
  */
 export interface TimestampEqualFunction {
   (options: HandleTimestampOptions): HandleTimestampResult

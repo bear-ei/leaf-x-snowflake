@@ -79,7 +79,7 @@ export const snowflake: SnowflakeFunction = ({
     lastTimestamp = newLastTimestamp
     sequence = newSequence
 
-    return _.toString(id)
+    return id.toString()
   }
 }
 

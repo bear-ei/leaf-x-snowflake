@@ -66,7 +66,7 @@ export interface HandleErrorFunction {
 /**
  * Get the new timestamp.
  */
-export interface NewTimestampFunction {
+export interface GetNewTimestampFunction {
   (): bigint
 }
 
@@ -76,8 +76,8 @@ export interface NewTimestampFunction {
  * @param timestamp         Timestamp.
  * @param lastTimestamp     Last execution timestamp.
  */
-export interface ClockBackFunction {
-  (timestamp: bigint, lastTimestamp: bigint): string | undefined
+export interface HandleClockBackFunction {
+  (timestamp: bigint): (lastTimestamp: bigint) => string | undefined
 }
 
 /**
@@ -128,19 +128,19 @@ export interface IsNextMillisecondFunction {
 }
 
 /**
- * Next millisecond.
+ * Get the next millisecond.
  *
  * @param timestamp         Timestamp.
  * @param lastTimestamp     Last execution timestamp.
  */
-export interface NextMillisecondFunction {
-  (timestamp: bigint, lastTimestamp: bigint): bigint
+export interface GetNextMillisecondFunction {
+  (timestamp: bigint): (lastTimestamp: bigint) => bigint
 }
 
 /**
  * Handle timestamps are equal.
  */
-export interface TimestampEqualFunction {
+export interface HandleTimestampEqualFunction {
   (options: HandleTimestampOptions): HandleTimestampResult
 }
 
@@ -205,8 +205,7 @@ export interface GenerateIdResult {
  * Generate new id.
  */
 export interface GenerateIdFunction {
-  (
-    options: GenerateIdOptions,
+  (options: GenerateIdOptions): (
     HandleTimeResult: HandleTimestampResult
-  ): GenerateIdResult
+  ) => GenerateIdResult
 }

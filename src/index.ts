@@ -1,18 +1,17 @@
-'use strict'
-
-import * as _ from 'ramda'
+import { compose } from 'ramda'
 import {
-  HandleErrorFunction,
-  NewTimestampFunction,
-  SnowflakeOptions,
-  ClockBackFunction,
-  ValidateIdFunction,
   GenerateIdFunction,
-  TimestampEqualFunction,
+  GetNewTimestampFunction,
+  GetNextMillisecondFunction,
+  HandleClockBackFunction,
+  HandleErrorFunction,
+  HandleTimestampEqualFunction,
   IsNextMillisecondFunction,
-  NextMillisecondFunction,
-  SnowflakeFunction
+  SnowflakeFunction,
+  SnowflakeOptions,
+  ValidateIdFunction
 } from './interface'
+;('use strict')
 
 export const snowflake: SnowflakeFunction = ({
   twEpoch,
@@ -38,25 +37,28 @@ export const snowflake: SnowflakeFunction = ({
   let sequence = 0n
   let lastTimestamp = -1n
 
-  const validateOptions = _.compose(handleError, validateId)
+  const validateItems = [
+    {
+      id: dataCenterNode,
+      maxId: maxDataCenterId,
+      errorMessage:
+        'Data center id can not be greater than ${maxId} or less than 0.'
+    },
+    {
+      id: workerNode,
+      maxId: maxWorkerId,
+      errorMessage: 'Worker id can not be greater than ${maxId} or less than 0.'
+    }
+  ]
 
-  validateOptions({
-    id: dataCenterNode,
-    maxId: maxDataCenterId,
-    errorMessage:
-      'Data center id can not be greater than ${maxId} or less than 0.'
-  })
+  const validateOptions = compose(handleError, validateId)
 
-  validateOptions({
-    id: workerNode,
-    maxId: maxWorkerId,
-    errorMessage: 'Worker id can not be greater than ${maxId} or less than 0.'
-  })
+  validateItems.forEach((item) => validateOptions(item))
 
   return () => {
-    const timestamp = newTimestamp()
-    const checkTimestamp = _.curry(clockBack)(timestamp)
-    const newId = _.curry(generateId)({
+    const timestamp = getNewTimestamp()
+    const checkTimestamp = handleClockBack(timestamp)
+    const newId = generateId({
       twEpoch: epoch,
       timestampLeftShift,
       dataCenterId: dataCenterNode,
@@ -65,15 +67,15 @@ export const snowflake: SnowflakeFunction = ({
       workerLeftShift
     })
 
-    _.compose(handleError, checkTimestamp)(lastTimestamp)
+    compose(handleError, checkTimestamp)(lastTimestamp)
 
     const {
       id,
       lastTimestamp: newLastTimestamp,
       sequence: newSequence
-    } = _.compose(
+    } = compose(
       newId,
-      timestampEqual
+      handleTimestampEqual
     )({ timestamp, lastTimestamp, sequence, maxSequence })
 
     lastTimestamp = newLastTimestamp
@@ -85,16 +87,18 @@ export const snowflake: SnowflakeFunction = ({
 
 export const validateId: ValidateIdFunction = ({ id, maxId, errorMessage }) =>
   id > maxId || id < 0
-    ? _.replace('${maxId}', `${maxId}`, errorMessage)
+    ? errorMessage.replace('${maxId}', `${maxId}`)
     : undefined
 
-export const clockBack: ClockBackFunction = (timestamp, lastTimestamp) =>
+export const handleClockBack: HandleClockBackFunction = (timestamp) => (
+  lastTimestamp
+) =>
   timestamp < lastTimestamp
     ? `Clock moves backwards to reject the id generated for ` +
       `${lastTimestamp - timestamp}.`
     : undefined
 
-export const timestampEqual: TimestampEqualFunction = ({
+export const handleTimestampEqual: HandleTimestampEqualFunction = ({
   timestamp,
   lastTimestamp,
   ...args
@@ -112,29 +116,25 @@ export const isNextMillisecond: IsNextMillisecondFunction = ({
   sequence = (sequence + 1n) & maxSequence
 
   return sequence === 0n
-    ? { timestamp: nextMillisecond(timestamp, lastTimestamp), sequence }
+    ? { timestamp: getNextMillisecond(timestamp)(lastTimestamp), sequence }
     : { timestamp, sequence }
 }
 
-export const nextMillisecond: NextMillisecondFunction = (
-  timestamp,
+export const getNextMillisecond: GetNextMillisecondFunction = (timestamp) => (
   lastTimestamp
 ) =>
   timestamp <= lastTimestamp
-    ? nextMillisecond(newTimestamp(), lastTimestamp)
+    ? getNextMillisecond(getNewTimestamp())(lastTimestamp)
     : timestamp
 
-export const generateId: GenerateIdFunction = (
-  {
-    twEpoch,
-    timestampLeftShift,
-    dataCenterId,
-    dataCenterLeftShift,
-    workerId,
-    workerLeftShift
-  },
-  { timestamp, sequence }
-) => ({
+export const generateId: GenerateIdFunction = ({
+  twEpoch,
+  timestampLeftShift,
+  dataCenterId,
+  dataCenterLeftShift,
+  workerId,
+  workerLeftShift
+}) => ({ timestamp, sequence }) => ({
   id:
     ((timestamp - twEpoch) << timestampLeftShift) |
     (dataCenterId << dataCenterLeftShift) |
@@ -144,7 +144,7 @@ export const generateId: GenerateIdFunction = (
   sequence
 })
 
-export const newTimestamp: NewTimestampFunction = () => BigInt(Date.now())
+export const getNewTimestamp: GetNewTimestampFunction = () => BigInt(Date.now())
 export const handleError: HandleErrorFunction = (message) => {
   if (message) {
     throw new Error(message)

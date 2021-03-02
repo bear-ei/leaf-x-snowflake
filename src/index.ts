@@ -1,4 +1,4 @@
-import { compose } from 'ramda'
+import { compose, curry, equals, forEach, replace, toString } from 'ramda'
 import {
   GenerateIdFunction,
   GetNewTimestampFunction,
@@ -13,11 +13,7 @@ import {
 } from './interface'
 ;('use strict')
 
-export const snowflake: SnowflakeFunction = ({
-  twEpoch,
-  dataCenterId = 0,
-  workerId = 0
-}: SnowflakeOptions) => {
+export const snowflake: SnowflakeFunction = ({ twEpoch, dataCenterId = 0, workerId = 0 }: SnowflakeOptions) => {
   const epoch = BigInt(twEpoch)
   const dataCenterNode = BigInt(dataCenterId)
   const workerNode = BigInt(workerId)
@@ -41,8 +37,7 @@ export const snowflake: SnowflakeFunction = ({
     {
       id: dataCenterNode,
       maxId: maxDataCenterId,
-      errorMessage:
-        'Data center id can not be greater than ${maxId} or less than 0.'
+      errorMessage: 'Data center id can not be greater than ${maxId} or less than 0.'
     },
     {
       id: workerNode,
@@ -51,13 +46,16 @@ export const snowflake: SnowflakeFunction = ({
     }
   ]
 
-  const validateOptions = compose(handleError, validateId)
+  const validate = compose(handleError, validateId)
 
-  validateItems.forEach((item) => validateOptions(item))
+  forEach(validate)(validateItems)
 
   return () => {
     const timestamp = getNewTimestamp()
-    const checkTimestamp = handleClockBack(timestamp)
+    const checkTimestamp = curry(handleClockBack)(timestamp)
+
+    compose(handleError, checkTimestamp)(lastTimestamp)
+
     const newId = generateId({
       twEpoch: epoch,
       timestampLeftShift,
@@ -67,13 +65,7 @@ export const snowflake: SnowflakeFunction = ({
       workerLeftShift
     })
 
-    compose(handleError, checkTimestamp)(lastTimestamp)
-
-    const {
-      id,
-      lastTimestamp: newLastTimestamp,
-      sequence: newSequence
-    } = compose(
+    const { id, lastTimestamp: newLastTimestamp, sequence: newSequence } = compose(
       newId,
       handleTimestampEqual
     )({ timestamp, lastTimestamp, sequence, maxSequence })
@@ -81,38 +73,24 @@ export const snowflake: SnowflakeFunction = ({
     lastTimestamp = newLastTimestamp
     sequence = newSequence
 
-    return id.toString()
+    return toString(id)
   }
 }
 
 export const validateId: ValidateIdFunction = ({ id, maxId, errorMessage }) =>
-  id > maxId || id < 0
-    ? errorMessage.replace('${maxId}', `${maxId}`)
-    : undefined
+  id > maxId || id < 0 ? replace('${maxId}')(toString(maxId))(errorMessage) : undefined
 
-export const handleClockBack: HandleClockBackFunction = (timestamp) => (
-  lastTimestamp
-) =>
+export const handleClockBack: HandleClockBackFunction = (timestamp, lastTimestamp) =>
   timestamp < lastTimestamp
-    ? `Clock moves backwards to reject the id generated for ` +
-      `${lastTimestamp - timestamp}.`
+    ? `Clock moves backwards to reject the id generated for ${lastTimestamp - timestamp}.`
     : undefined
 
-export const handleTimestampEqual: HandleTimestampEqualFunction = ({
-  timestamp,
-  lastTimestamp,
-  ...args
-}) =>
-  timestamp === lastTimestamp
+export const handleTimestampEqual: HandleTimestampEqualFunction = ({ timestamp, lastTimestamp, ...args }) =>
+  equals(timestamp, lastTimestamp)
     ? isNextMillisecond({ timestamp, lastTimestamp, ...args })
     : { timestamp, sequence: 0n }
 
-export const isNextMillisecond: IsNextMillisecondFunction = ({
-  timestamp,
-  lastTimestamp,
-  sequence,
-  maxSequence
-}) => {
+export const isNextMillisecond: IsNextMillisecondFunction = ({ timestamp, lastTimestamp, sequence, maxSequence }) => {
   sequence = (sequence + 1n) & maxSequence
 
   return sequence === 0n
@@ -120,12 +98,10 @@ export const isNextMillisecond: IsNextMillisecondFunction = ({
     : { timestamp, sequence }
 }
 
-export const getNextMillisecond: GetNextMillisecondFunction = (timestamp) => (
-  lastTimestamp
-) =>
-  timestamp <= lastTimestamp
-    ? getNextMillisecond(getNewTimestamp())(lastTimestamp)
-    : timestamp
+export const nextMillisecond: GetNextMillisecondFunction = (timestamp, lastTimestamp) =>
+  timestamp <= lastTimestamp ? getNextMillisecond(getNewTimestamp())(lastTimestamp) : timestamp
+
+const getNextMillisecond = curry(nextMillisecond)
 
 export const generateId: GenerateIdFunction = ({
   twEpoch,

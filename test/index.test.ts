@@ -1,8 +1,9 @@
+import { curry, equals, is, compose, length, map, uniq } from 'ramda'
 import * as assert from 'assert'
 import {
   generateId,
   getNewTimestamp,
-  getNextMillisecond,
+  nextMillisecond,
   handleClockBack,
   handleError,
   handleTimestampEqual,
@@ -17,62 +18,59 @@ describe('test/snowflake.test.ts', () => {
     const result = validateId({
       id: BigInt(3),
       maxId: BigInt(2),
-      errorMessage:
-        'Data center id can not be greater than ${maxId} or less than 0.'
+      errorMessage: 'Data center id can not be greater than ${maxId} or less than 0.'
     })
 
-    assert(
-      result === 'Data center id can not be greater than 2 or less than 0.'
-    )
+    assert(equals(result, 'Data center id can not be greater than 2 or less than 0.'))
   })
 
-  it('Should be the result of clockBack', async () => {
-    const result = handleClockBack(BigInt(1))(BigInt(2))
+  it('Should be the result of handleClockBack', async () => {
+    const result = curry(handleClockBack)(BigInt(1))(BigInt(2))
 
-    assert(result === 'Clock moves backwards to reject the id generated for 1.')
+    assert(equals(result, 'Clock moves backwards to reject the id generated for 1.'))
   })
 
-  it('Should be the result of timestampEqual', async () => {
-    const results = handleTimestampEqual({
+  it('Should be the result of handleTimestampEqual', async () => {
+    const result = handleTimestampEqual({
       timestamp: BigInt(1),
       lastTimestamp: BigInt(1),
       sequence: BigInt(0),
       maxSequence: BigInt(0)
     })
 
-    assert(typeof results === 'object')
-    assert(typeof results.sequence === 'bigint')
-    assert(typeof results.timestamp === 'bigint')
+    assert(is(Object)(result))
+    assert(is(BigInt)(result.sequence))
+    assert(is(BigInt)(result.timestamp))
   })
 
   it('Should be the result of isNextMillisecond', async () => {
-    const results = isNextMillisecond({
+    const result = isNextMillisecond({
       timestamp: BigInt(1),
       lastTimestamp: BigInt(1),
       sequence: BigInt(0),
       maxSequence: BigInt(0)
     })
 
-    assert(typeof results === 'object')
-    assert(typeof results.sequence === 'bigint')
-    assert(typeof results.timestamp === 'bigint')
+    assert(is(Object)(result))
+    assert(is(BigInt)(result.sequence))
+    assert(is(BigInt)(result.timestamp))
   })
 
-  it('Should be the result of nextMillisecond', async () => {
+  it('Should be the result of getNextMillisecond', async () => {
     const now = BigInt(Date.now())
-    const result = getNextMillisecond(now)(now)
+    const result = curry(nextMillisecond)(now)(now)
 
-    assert(typeof result === 'bigint')
+    assert(is(BigInt)(result))
   })
 
-  it('Should be the result of newTimestamp', async () => {
+  it('Should be the result of getNewTimestamp', async () => {
     const result = getNewTimestamp()
 
-    assert(typeof result === 'bigint')
+    assert(is(BigInt)(result))
   })
 
   it('Should be the result of generateId', async () => {
-    const results = generateId({
+    const result = generateId({
       twEpoch: BigInt(1583734327332),
       timestampLeftShift: BigInt(22),
       dataCenterId: BigInt(0),
@@ -81,17 +79,19 @@ describe('test/snowflake.test.ts', () => {
       workerLeftShift: BigInt(12)
     })({ timestamp: BigInt(1609430400000), sequence: BigInt(0) })
 
-    assert(typeof results === 'object')
-    assert(typeof results.id === 'bigint')
-    assert(typeof results.lastTimestamp === 'bigint')
-    assert(typeof results.sequence === 'bigint')
+    assert(is(Object)(result))
+    assert(is(BigInt)(result.id))
+    assert(is(BigInt)(result.lastTimestamp))
+    assert(is(BigInt)(result.sequence))
   })
 
-  it('Should be the result of error', async () => {
+  it('Should be the result of handleError', async () => {
     try {
       handleError('error')
     } catch (error) {
       assert(error.message === 'error')
+
+      assert(equals('error')(error.message))
     }
   })
 
@@ -100,9 +100,11 @@ describe('test/snowflake.test.ts', () => {
       twEpoch: 1577808000000
     })
 
-    assert(
-      [...new Set([...new Array(200000).keys()].map(() => generateId()))]
-        .length === 200000
-    )
+    const ids = compose(
+      uniq,
+      map(() => generateId())
+    )([...new Array(200000).keys()])
+
+    assert(equals(length(ids), 200000))
   })
 })

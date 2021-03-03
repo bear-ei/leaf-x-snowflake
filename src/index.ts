@@ -1,4 +1,4 @@
-import { compose, curry, equals, forEach, replace, toString } from 'ramda'
+import { flow } from 'lodash/fp'
 import {
   GenerateIdFunction,
   GetNewTimestampFunction,
@@ -46,16 +46,13 @@ export const snowflake: SnowflakeFunction = ({ twEpoch, dataCenterId = 0, worker
     }
   ]
 
-  const validate = compose(handleError, validateId)
+  const validate = flow(validateId, handleError)
 
-  forEach(validate)(validateItems)
+  validateItems.forEach((validateItem) => validate(validateItem))
 
   return () => {
     const timestamp = getNewTimestamp()
-    const checkTimestamp = curry(handleClockBack)(timestamp)
-
-    compose(handleError, checkTimestamp)(lastTimestamp)
-
+    const checkTimestamp = handleClockBack(timestamp)
     const newId = generateId({
       twEpoch: epoch,
       timestampLeftShift,
@@ -65,43 +62,41 @@ export const snowflake: SnowflakeFunction = ({ twEpoch, dataCenterId = 0, worker
       workerLeftShift
     })
 
-    const { id, lastTimestamp: newLastTimestamp, sequence: newSequence } = compose(
-      newId,
-      handleTimestampEqual
+    flow(checkTimestamp, handleError)(lastTimestamp)
+
+    const { id, lastTimestamp: newLastTimestamp, sequence: newSequence } = flow(
+      handleTimestampEqual,
+      newId
     )({ timestamp, lastTimestamp, sequence, maxSequence })
 
     lastTimestamp = newLastTimestamp
     sequence = newSequence
 
-    return toString(id)
+    return id.toString()
   }
 }
 
 export const validateId: ValidateIdFunction = ({ id, maxId, errorMessage }) =>
-  id > maxId || id < 0 ? replace('${maxId}')(toString(maxId))(errorMessage) : undefined
+  id > maxId || id < 0 ? errorMessage.replace('${maxId}', maxId.toString()) : undefined
 
-export const handleClockBack: HandleClockBackFunction = (timestamp, lastTimestamp) =>
+export const handleClockBack: HandleClockBackFunction = (timestamp) => (lastTimestamp) =>
   timestamp < lastTimestamp
     ? `Clock moves backwards to reject the id generated for ${lastTimestamp - timestamp}.`
     : undefined
 
 export const handleTimestampEqual: HandleTimestampEqualFunction = ({ timestamp, lastTimestamp, ...args }) =>
-  equals(timestamp, lastTimestamp)
-    ? isNextMillisecond({ timestamp, lastTimestamp, ...args })
-    : { timestamp, sequence: 0n }
+  timestamp === lastTimestamp ? isNextMillisecond({ timestamp, lastTimestamp, ...args }) : { timestamp, sequence: 0n }
 
 export const isNextMillisecond: IsNextMillisecondFunction = ({ timestamp, lastTimestamp, sequence, maxSequence }) => {
   sequence = (sequence + 1n) & maxSequence
 
   return sequence === 0n
-    ? { timestamp: getNextMillisecond(timestamp)(lastTimestamp), sequence }
+    ? { timestamp: getNextMillisecond(timestamp, lastTimestamp), sequence }
     : { timestamp, sequence }
 }
 
-export const nextMillisecond: GetNextMillisecondFunction = (timestamp, lastTimestamp) =>
-  timestamp <= lastTimestamp ? getNextMillisecond(getNewTimestamp())(lastTimestamp) : timestamp
-
-const getNextMillisecond = curry(nextMillisecond)
+export const getNextMillisecond: GetNextMillisecondFunction = (timestamp, lastTimestamp) =>
+  timestamp <= lastTimestamp ? getNextMillisecond(getNewTimestamp(), lastTimestamp) : timestamp
 
 export const generateId: GenerateIdFunction = ({
   twEpoch,

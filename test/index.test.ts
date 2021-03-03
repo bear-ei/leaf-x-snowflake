@@ -1,9 +1,8 @@
-import { curry, equals, is, compose, length, map, uniq } from 'ramda'
 import * as assert from 'assert'
 import {
   generateId,
   getNewTimestamp,
-  nextMillisecond,
+  getNextMillisecond,
   handleClockBack,
   handleError,
   handleTimestampEqual,
@@ -21,13 +20,13 @@ describe('test/snowflake.test.ts', () => {
       errorMessage: 'Data center id can not be greater than ${maxId} or less than 0.'
     })
 
-    assert(equals(result, 'Data center id can not be greater than 2 or less than 0.'))
+    assert(result === 'Data center id can not be greater than 2 or less than 0.')
   })
 
   it('Should be the result of handleClockBack', async () => {
-    const result = curry(handleClockBack)(BigInt(1))(BigInt(2))
+    const result = handleClockBack(BigInt(1))(BigInt(2))
 
-    assert(equals(result, 'Clock moves backwards to reject the id generated for 1.'))
+    assert(result === 'Clock moves backwards to reject the id generated for 1.')
   })
 
   it('Should be the result of handleTimestampEqual', async () => {
@@ -38,9 +37,9 @@ describe('test/snowflake.test.ts', () => {
       maxSequence: BigInt(0)
     })
 
-    assert(is(Object)(result))
-    assert(is(BigInt)(result.sequence))
-    assert(is(BigInt)(result.timestamp))
+    assert(typeof result === 'object')
+    assert(typeof result.sequence === 'bigint')
+    assert(typeof result.timestamp === 'bigint')
   })
 
   it('Should be the result of isNextMillisecond', async () => {
@@ -51,22 +50,22 @@ describe('test/snowflake.test.ts', () => {
       maxSequence: BigInt(0)
     })
 
-    assert(is(Object)(result))
-    assert(is(BigInt)(result.sequence))
-    assert(is(BigInt)(result.timestamp))
+    assert(typeof result === 'object')
+    assert(typeof result.sequence === 'bigint')
+    assert(typeof result.timestamp === 'bigint')
   })
 
   it('Should be the result of getNextMillisecond', async () => {
     const now = BigInt(Date.now())
-    const result = curry(nextMillisecond)(now)(now)
+    const result = getNextMillisecond(now, now)
 
-    assert(is(BigInt)(result))
+    assert(typeof result === 'bigint')
   })
 
   it('Should be the result of getNewTimestamp', async () => {
     const result = getNewTimestamp()
 
-    assert(is(BigInt)(result))
+    assert(typeof result === 'bigint')
   })
 
   it('Should be the result of generateId', async () => {
@@ -79,10 +78,10 @@ describe('test/snowflake.test.ts', () => {
       workerLeftShift: BigInt(12)
     })({ timestamp: BigInt(1609430400000), sequence: BigInt(0) })
 
-    assert(is(Object)(result))
-    assert(is(BigInt)(result.id))
-    assert(is(BigInt)(result.lastTimestamp))
-    assert(is(BigInt)(result.sequence))
+    assert(typeof result === 'object')
+    assert(typeof result.id === 'bigint')
+    assert(typeof result.lastTimestamp === 'bigint')
+    assert(typeof result.sequence === 'bigint')
   })
 
   it('Should be the result of handleError', async () => {
@@ -90,8 +89,6 @@ describe('test/snowflake.test.ts', () => {
       handleError('error')
     } catch (error) {
       assert(error.message === 'error')
-
-      assert(equals('error')(error.message))
     }
   })
 
@@ -100,11 +97,6 @@ describe('test/snowflake.test.ts', () => {
       twEpoch: 1577808000000
     })
 
-    const ids = compose(
-      uniq,
-      map(() => generateId())
-    )([...new Array(200000).keys()])
-
-    assert(equals(length(ids), 200000))
+    assert([...new Set([...new Array(200000).keys()].map(() => generateId()))].length === 200000)
   })
 })

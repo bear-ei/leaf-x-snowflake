@@ -77,7 +77,7 @@ export interface GetNewTimestampFunction {
  * @param lastTimestamp     最后一次运行时间戳
  */
 export interface HandleClockBackFunction {
-  (timestamp: bigint, lastTimestamp: bigint): string | undefined
+  (timestamp: bigint): (lastTimestamp: bigint) => string | undefined
 }
 
 /**

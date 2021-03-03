@@ -1,6 +1,6 @@
 # Snowflake
 
-Twitter snowflake algorithm, using TypeScript implementation
+Twitter snowflake algorithm, using TypeScript implementation.
 
 ## Installation
 

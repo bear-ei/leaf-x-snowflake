@@ -13,9 +13,7 @@
     "url": "https://github.com/SoundShell/leaf-x-snowflake/issues"
   },
   "dependencies": {
-    "lodash": "^4.17.21",
-    "ramda": "^0.27.1",
-    "underscore": "^1.12.0"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.168",

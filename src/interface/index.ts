@@ -1,208 +1,208 @@
 'use strict'
 
 /**
- * 雪花算法选项
+ * Snowflake algorithm options.
  */
 export interface SnowflakeOptions {
   /**
-   * 数据中心id
-   * 取值范围 0 - 31
+   * Data centre id.
+   * Value range 0 - 31.
    */
   dataCenterId?: number
 
   /**
-   * 工作机器id
-   * 取值范围 0 - 31
+   * Work machine id
+   * Value range 0 - 31.
    */
   workerId?: number
 
   /**
-   * 雪花算法开始的纪元时间
+   * Epoch time for the start of the snowflake algorithm.
    */
   twEpoch: number
 }
 
 /**
- * 雪花算法函数
+ * Snowflake algorithm.
  */
 export interface SnowflakeFunction {
   (options: SnowflakeOptions): () => string
 }
 
 /**
- * 验证id选项
+ * Validate id options.
  */
 export interface ValidateIdOptions {
   /**
-   * 数据中心id或工作机器id
+   * Data centre id or work machine id.
    */
   id: bigint
 
   /**
-   * 最大id范围
+   * Maximum id range.
    */
   maxId: bigint
 
   /**
-   * 验证失败抛出的错误信息
+   * Error message thrown by failed validation.
    */
   errorMessage: string
 }
 
 /**
- * 验证id
+ * Validate id.
  */
 export interface ValidateIdFunction {
   (options: ValidateIdOptions): string | undefined
 }
 
 /**
- * 处理错误
+ * Handling errors.
  */
 export interface HandleErrorFunction {
   (message?: string): never | void
 }
 
 /**
- * 获取新时间戳
+ * Get new timestamp.
  */
 export interface GetNewTimestampFunction {
   (): bigint
 }
 
 /**
- * 处理时钟回拨
+ * Handling clock callbacks.
  *
- * @param timestamp         当前时间戳
- * @param lastTimestamp     最后一次运行时间戳
+ * @param timestamp         Current timestamp.
+ * @param lastTimestamp     Last run time stamp.
  */
 export interface HandleClockBackFunction {
   (timestamp: bigint): (lastTimestamp: bigint) => string | undefined
 }
 
 /**
- * 处理时间戳选项
+ * Handling timestamp options.
  */
 export interface HandleTimestampOptions {
   /**
-   * 当前时间戳
+   * Current Timestamp.
    */
   timestamp: bigint
 
   /**
-   * 最后一次运行时间戳
+   * Last run time stamp.
    */
   lastTimestamp: bigint
 
   /**
-   * 毫秒内序列
+   * Intra-millisecond sequences.
    */
   sequence: bigint
 
   /**
-   * 毫秒内最大序列
+   * Maximum sequence in milliseconds.
    */
   maxSequence: bigint
 }
 
 /**
- * 处理时间戳结果
+ * Handling timestamped results.
  */
 export interface HandleTimestampResult {
   /**
-   * 时间戳
+   * Timestamp.
    */
   timestamp: bigint
 
   /**
-   * 毫秒内序列
+   * Intra-millisecond sequences.
    */
   sequence: bigint
 }
 
 /**
- * 是否进入一个毫秒
+ * Whether to enter a millisecond.
  */
 export interface IsNextMillisecondFunction {
   (options: HandleTimestampOptions): HandleTimestampResult
 }
 
 /**
- * 获取下一个毫秒时间戳
+ * Get the next millisecond timestamp.
  *
- * @param timestamp         当前时间戳
- * @param lastTimestamp     最后一次运行时间戳
+ * @param timestamp         Current timestamp.
+ * @param lastTimestamp     Last run time stamp.
  */
 export interface GetNextMillisecondFunction {
   (timestamp: bigint, lastTimestamp: bigint): bigint
 }
 
 /**
- * 处理时间戳相等
+ * Handling timestamps are equal.
  */
 export interface HandleTimestampEqualFunction {
   (options: HandleTimestampOptions): HandleTimestampResult
 }
 
 /**
- * 生成id选项
+ * Generate id options.
  */
 export interface GenerateIdOptions {
   /**
-   * 雪花算法开始的纪元时间
+   * Epoch time for the start of the snowflake algorithm.
    */
   twEpoch: bigint
 
   /**
-   * 时间戳左偏移
+   * Timestamp left offset.
    */
   timestampLeftShift: bigint
 
   /**
-   * 数据中心id
-   * 取值范围 0 - 31
+   * Data centre id.
+   * Value range 0 - 31.
    */
   dataCenterId: bigint
 
   /**
-   * 数据中心左偏移
+   * Data centre left offset.
    */
   dataCenterLeftShift: bigint
 
   /**
-   * 工作机器id
-   * 取值范围 0 - 31
+   * Work machine id
+   * Value range 0 - 31.
    */
   workerId: bigint
 
   /**
-   * 工作机器左偏移
+   * Work machine left offset.
    */
   workerLeftShift: bigint
 }
 
 /**
- * 生成id结果
+ * Generate id results.
  */
 export interface GenerateIdResult {
   /**
-   * 新id
+   * New id.
    */
   id: bigint
 
   /**
-   * 最后一次运行时间戳
+   * Last run time stamp.
    */
   lastTimestamp: bigint
 
   /**
-   * 毫秒内序列
+   * Intra-millisecond sequences.
    */
   sequence: bigint
 }
 
 /**
- * 生成新id
+ * Generate new id.
  */
 export interface GenerateIdFunction {
   (options: GenerateIdOptions): (HandleTimeResult: HandleTimestampResult) => GenerateIdResult

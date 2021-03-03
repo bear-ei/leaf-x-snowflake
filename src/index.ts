@@ -88,11 +88,11 @@ export const handleTimestampEqual: HandleTimestampEqualFunction = ({ timestamp, 
   timestamp === lastTimestamp ? isNextMillisecond({ timestamp, lastTimestamp, ...args }) : { timestamp, sequence: 0n }
 
 export const isNextMillisecond: IsNextMillisecondFunction = ({ timestamp, lastTimestamp, sequence, maxSequence }) => {
-  sequence = (sequence + 1n) & maxSequence
+  const newSequence = (sequence + 1n) & maxSequence
 
-  return sequence === 0n
-    ? { timestamp: getNextMillisecond(timestamp, lastTimestamp), sequence }
-    : { timestamp, sequence }
+  return newSequence === 0n
+    ? { timestamp: getNextMillisecond(timestamp, lastTimestamp), sequence: newSequence }
+    : { timestamp, sequence: newSequence }
 }
 
 export const getNextMillisecond: GetNextMillisecondFunction = (timestamp, lastTimestamp) =>

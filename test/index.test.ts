@@ -93,9 +93,7 @@ describe('test/snowflake.test.ts', () => {
   })
 
   it('Should be the result of snowflake', async () => {
-    const generateId = snowflake({
-      twEpoch: 1577808000000
-    })
+    const generateId = snowflake({ twEpoch: 1577808000000 })
 
     assert([...new Set([...new Array(200000).keys()].map(() => generateId()))].length === 200000)
   })

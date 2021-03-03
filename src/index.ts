@@ -48,7 +48,7 @@ export const snowflake: SnowflakeFunction = ({ twEpoch, dataCenterId = 0, worker
 
   const validate = flow(validateId, handleError)
 
-  validateItems.forEach((validateItem) => validate(validateItem))
+  validateItems.forEach(validate)
 
   return () => {
     const timestamp = getNewTimestamp()

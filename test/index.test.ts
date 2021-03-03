@@ -13,7 +13,7 @@ import {
 ;('use strict')
 
 describe('test/snowflake.test.ts', () => {
-  it('Should be the result of validateId', async () => {
+  it('Should be the result of validateId.', async () => {
     const result = validateId({
       id: BigInt(3),
       maxId: BigInt(2),
@@ -23,13 +23,13 @@ describe('test/snowflake.test.ts', () => {
     assert(result === 'Data center id can not be greater than 2 or less than 0.')
   })
 
-  it('Should be the result of handleClockBack', async () => {
+  it('Should be the result of handleClockBack.', async () => {
     const result = handleClockBack(BigInt(1))(BigInt(2))
 
     assert(result === 'Clock moves backwards to reject the id generated for 1.')
   })
 
-  it('Should be the result of handleTimestampEqual', async () => {
+  it('Should be the result of handleTimestampEqual.', async () => {
     const result = handleTimestampEqual({
       timestamp: BigInt(1),
       lastTimestamp: BigInt(1),
@@ -42,7 +42,7 @@ describe('test/snowflake.test.ts', () => {
     assert(typeof result.timestamp === 'bigint')
   })
 
-  it('Should be the result of isNextMillisecond', async () => {
+  it('Should be the result of isNextMillisecond.', async () => {
     const result = isNextMillisecond({
       timestamp: BigInt(1),
       lastTimestamp: BigInt(1),
@@ -55,20 +55,20 @@ describe('test/snowflake.test.ts', () => {
     assert(typeof result.timestamp === 'bigint')
   })
 
-  it('Should be the result of getNextMillisecond', async () => {
+  it('Should be the result of getNextMillisecond.', async () => {
     const now = BigInt(Date.now())
     const result = getNextMillisecond(now, now)
 
     assert(typeof result === 'bigint')
   })
 
-  it('Should be the result of getNewTimestamp', async () => {
+  it('Should be the result of getNewTimestamp.', async () => {
     const result = getNewTimestamp()
 
     assert(typeof result === 'bigint')
   })
 
-  it('Should be the result of generateId', async () => {
+  it('Should be the result of generateId.', async () => {
     const result = generateId({
       twEpoch: BigInt(1583734327332),
       timestampLeftShift: BigInt(22),
@@ -84,7 +84,7 @@ describe('test/snowflake.test.ts', () => {
     assert(typeof result.sequence === 'bigint')
   })
 
-  it('Should be the result of handleError', async () => {
+  it('Should be the result of handleError.', async () => {
     try {
       handleError('error')
     } catch (error) {
@@ -92,7 +92,7 @@ describe('test/snowflake.test.ts', () => {
     }
   })
 
-  it('Should be the result of snowflake', async () => {
+  it('Should be the result of snowflake.', async () => {
     const generateId = snowflake({ twEpoch: 1577808000000 })
 
     assert([...new Set([...new Array(200000).keys()].map(() => generateId()))].length === 200000)

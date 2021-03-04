@@ -1,5 +1,9 @@
 import * as assert from 'assert'
-import {
+import * as sinon from 'sinon'
+import * as client from '../src'
+;('use strict')
+
+const {
   generateId,
   getNewTimestamp,
   getNextMillisecond,
@@ -9,8 +13,7 @@ import {
   isNextMillisecond,
   snowflake,
   validateId
-} from '../src'
-;('use strict')
+} = client
 
 describe('test/snowflake.test.ts', () => {
   it('Should be the result of validateId.', async () => {
@@ -24,15 +27,20 @@ describe('test/snowflake.test.ts', () => {
   })
 
   it('Should be the result of handleClockBack.', async () => {
-    const result = handleClockBack(BigInt(1))(BigInt(2))
+    const now = Date.now()
+    const result = handleClockBack(BigInt(now - 1))(BigInt(now))
 
     assert(result === 'Clock moves backwards to reject the id generated for 1.')
   })
 
-  it('Should be the result of handleTimestampEqual.', async () => {
-    const result = handleTimestampEqual({
-      timestamp: BigInt(1),
-      lastTimestamp: BigInt(1),
+  it('Should be the result of isNextMillisecond.', async () => {
+    const now = BigInt(Date.now())
+
+    sinon.stub(client, 'getNextMillisecond').returns(now)
+
+    const result = isNextMillisecond({
+      timestamp: now,
+      lastTimestamp: now,
       sequence: BigInt(0),
       maxSequence: BigInt(0)
     })
@@ -40,12 +48,21 @@ describe('test/snowflake.test.ts', () => {
     assert(typeof result === 'object')
     assert(typeof result.sequence === 'bigint')
     assert(typeof result.timestamp === 'bigint')
+
+    sinon.restore()
   })
 
-  it('Should be the result of isNextMillisecond.', async () => {
-    const result = isNextMillisecond({
-      timestamp: BigInt(1),
-      lastTimestamp: BigInt(1),
+  it('Should be the result of handleTimestampEqual.', async () => {
+    const now = BigInt(Date.now())
+
+    sinon.stub(client, 'isNextMillisecond').returns({
+      timestamp: now,
+      sequence: BigInt(0)
+    })
+
+    const result = handleTimestampEqual({
+      timestamp: now,
+      lastTimestamp: now,
       sequence: BigInt(0),
       maxSequence: BigInt(0)
     })
@@ -53,13 +70,20 @@ describe('test/snowflake.test.ts', () => {
     assert(typeof result === 'object')
     assert(typeof result.sequence === 'bigint')
     assert(typeof result.timestamp === 'bigint')
+
+    sinon.restore()
   })
 
   it('Should be the result of getNextMillisecond.', async () => {
     const now = BigInt(Date.now())
+
+    sinon.stub(client, 'getNewTimestamp').returns(BigInt(Date.now() + 1))
+
     const result = getNextMillisecond(now, now)
 
     assert(typeof result === 'bigint')
+
+    sinon.restore()
   })
 
   it('Should be the result of getNewTimestamp.', async () => {
@@ -69,14 +93,15 @@ describe('test/snowflake.test.ts', () => {
   })
 
   it('Should be the result of generateId.', async () => {
+    const now = BigInt(Date.now())
     const result = generateId({
-      twEpoch: BigInt(1583734327332),
+      twEpoch: now,
       timestampLeftShift: BigInt(22),
       dataCenterId: BigInt(0),
       dataCenterLeftShift: BigInt(17),
       workerId: BigInt(0),
       workerLeftShift: BigInt(12)
-    })({ timestamp: BigInt(1609430400000), sequence: BigInt(0) })
+    })({ timestamp: now, sequence: BigInt(0) })
 
     assert(typeof result === 'object')
     assert(typeof result.id === 'bigint')
@@ -93,7 +118,7 @@ describe('test/snowflake.test.ts', () => {
   })
 
   it('Should be the result of snowflake.', async () => {
-    const generateId = snowflake({ twEpoch: 1577808000000 })
+    const generateId = snowflake({ twEpoch: Date.now() })
 
     assert([...new Set([...new Array(200000).keys()].map(() => generateId()))].length === 200000)
   })

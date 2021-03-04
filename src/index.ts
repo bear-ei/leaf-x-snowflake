@@ -8,12 +8,11 @@ import {
   HandleTimestampEqualFunction,
   IsNextMillisecondFunction,
   SnowflakeFunction,
-  SnowflakeOptions,
   ValidateIdFunction
 } from './interface'
 ;('use strict')
 
-export const snowflake: SnowflakeFunction = ({ twEpoch, dataCenterId = 0, workerId = 0 }: SnowflakeOptions) => {
+export const snowflake: SnowflakeFunction = ({ twEpoch, dataCenterId = 0, workerId = 0 }) => {
   const epoch = BigInt(twEpoch)
   const dataCenterNode = BigInt(dataCenterId)
   const workerNode = BigInt(workerId)

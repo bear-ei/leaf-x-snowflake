@@ -11,7 +11,7 @@ export interface SnowflakeOptions {
   dataCenterId?: number
 
   /**
-   * Work machine id
+   * Work machine id.
    * Value range 0 - 31.
    */
   workerId?: number
@@ -170,7 +170,7 @@ export interface GenerateIdOptions {
   dataCenterLeftShift: bigint
 
   /**
-   * Work machine id
+   * Work machine id.
    * Value range 0 - 31.
    */
   workerId: bigint

@@ -20,10 +20,13 @@ describe('test/snowflake.test.ts', () => {
     const result = validateId({
       id: BigInt(3),
       maxId: BigInt(2),
-      errorMessage: 'Data center id can not be greater than ${maxId} or less than 0.'
+      errorMessage:
+        'Data center id can not be greater than ${maxId} or less than 0.'
     })
 
-    assert(result === 'Data center id can not be greater than 2 or less than 0.')
+    assert(
+      result === 'Data center id can not be greater than 2 or less than 0.'
+    )
   })
 
   it('Should be the result of handleClockBack.', async () => {
@@ -77,7 +80,7 @@ describe('test/snowflake.test.ts', () => {
   it('Should be the result of getNextMillisecond.', async () => {
     const now = BigInt(Date.now())
 
-    sinon.stub(client, 'getNewTimestamp').returns(BigInt(Date.now() + 1))
+    sinon.stub(client, 'getNewTimestamp').returns(now + BigInt(1))
 
     const result = getNextMillisecond(now, now)
 
@@ -120,6 +123,9 @@ describe('test/snowflake.test.ts', () => {
   it('Should be the result of snowflake.', async () => {
     const generateId = snowflake({ twEpoch: Date.now() })
 
-    assert([...new Set([...new Array(200000).keys()].map(() => generateId()))].length === 200000)
+    assert(
+      [...new Set([...new Array(200000).keys()].map(() => generateId()))]
+        .length === 200000
+    )
   })
 })

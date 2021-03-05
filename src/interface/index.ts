@@ -205,5 +205,7 @@ export interface GenerateIdResult {
  * Generate new id.
  */
 export interface GenerateIdFunction {
-  (options: GenerateIdOptions): (HandleTimeResult: HandleTimestampResult) => GenerateIdResult
+  (options: GenerateIdOptions): (
+    HandleTimeResult: HandleTimestampResult
+  ) => GenerateIdResult
 }

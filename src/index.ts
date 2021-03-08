@@ -1,3 +1,5 @@
+'use strict'
+
 import { flow } from 'lodash/fp'
 import {
   GenerateIdFunction,
@@ -10,7 +12,6 @@ import {
   SnowflakeFunction,
   ValidateIdFunction
 } from './interface'
-;('use strict')
 
 export const snowflake: SnowflakeFunction = ({
   twEpoch,

@@ -1,7 +1,8 @@
+'use strict'
+
 import * as assert from 'assert'
 import * as sinon from 'sinon'
 import * as client from '../src'
-;('use strict')
 
 const {
   generateId,
@@ -15,7 +16,7 @@ const {
   validateId
 } = client
 
-describe('test/snowflake.test.ts', () => {
+describe('test/index.test.ts', () => {
   it('Should be the result of validateId.', async () => {
     const result = validateId({
       id: BigInt(3),

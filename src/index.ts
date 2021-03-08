@@ -6,7 +6,7 @@ import {
   HandleClockBackFunction,
   HandleErrorFunction,
   HandleTimestampEqualFunction,
-  IsNextMillisecondFunction,
+  NextMillisecondFunction,
   SnowflakeFunction,
   ValidateIdFunction
 } from './interface'
@@ -100,10 +100,10 @@ export const handleTimestampEqual: HandleTimestampEqualFunction = ({
   ...args
 }) =>
   timestamp === lastTimestamp
-    ? isNextMillisecond({ timestamp, lastTimestamp, ...args })
+    ? nextMillisecond({ timestamp, lastTimestamp, ...args })
     : { timestamp, sequence: 0n }
 
-export const isNextMillisecond: IsNextMillisecondFunction = ({
+export const nextMillisecond: NextMillisecondFunction = ({
   timestamp,
   lastTimestamp,
   sequence,

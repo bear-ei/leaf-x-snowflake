@@ -10,7 +10,7 @@ const {
   handleClockBack,
   handleError,
   handleTimestampEqual,
-  isNextMillisecond,
+  nextMillisecond,
   snowflake,
   validateId
 } = client
@@ -36,12 +36,12 @@ describe('test/snowflake.test.ts', () => {
     assert(result === 'Clock moves backwards to reject the id generated for 1.')
   })
 
-  it('Should be the result of isNextMillisecond.', async () => {
+  it('Should be the result of nextMillisecond.', async () => {
     const now = BigInt(Date.now())
 
     sinon.stub(client, 'getNextMillisecond').returns(now)
 
-    const result = isNextMillisecond({
+    const result = nextMillisecond({
       timestamp: now,
       lastTimestamp: now,
       sequence: BigInt(0),
@@ -58,7 +58,7 @@ describe('test/snowflake.test.ts', () => {
   it('Should be the result of handleTimestampEqual.', async () => {
     const now = BigInt(Date.now())
 
-    sinon.stub(client, 'isNextMillisecond').returns({
+    sinon.stub(client, 'nextMillisecond').returns({
       timestamp: now,
       sequence: BigInt(0)
     })

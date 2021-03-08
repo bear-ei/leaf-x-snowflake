@@ -85,7 +85,7 @@ export interface HandleClockBackFunction {
  */
 export interface HandleTimestampOptions {
   /**
-   * Current Timestamp.
+   * Current timestamp.
    */
   timestamp: bigint
 
@@ -123,7 +123,7 @@ export interface HandleTimestampResult {
 /**
  * Whether to enter a millisecond.
  */
-export interface IsNextMillisecondFunction {
+export interface NextMillisecondFunction {
   (options: HandleTimestampOptions): HandleTimestampResult
 }
 

@@ -3,8 +3,8 @@
 import { flow } from 'lodash/fp'
 import {
   GenerateIdFunction,
+  GetNewTimestampFunction,
   GetNextMillisecondFunction,
-  GetTimestampFunction,
   HandleClockBackFunction,
   HandleErrorFunction,
   HandleTimestampEqualFunction,
@@ -56,9 +56,9 @@ export const snowflake: SnowflakeFunction = ({
   validateItems.forEach(validate)
 
   return () => {
-    const timestamp = getTimestamp()
+    const timestamp = getNewTimestamp()
     const checkTimestamp = handleClockBack(timestamp)
-    const nextId = generateId({
+    const newId = generateId({
       twEpoch: epoch,
       timestampLeftShift,
       dataCenterId: dataCenterNode,
@@ -71,7 +71,7 @@ export const snowflake: SnowflakeFunction = ({
 
     const { id, lastTimestamp: newLastTimestamp, sequence: newSequence } = flow(
       handleTimestampEqual,
-      nextId
+      newId
     )({ timestamp, lastTimestamp, sequence, maxSequence })
 
     lastTimestamp = newLastTimestamp
@@ -81,23 +81,19 @@ export const snowflake: SnowflakeFunction = ({
   }
 }
 
-export const validateId: ValidateIdFunction = ({ id, maxId, errorMessage }) => {
-  const errorId = id > maxId || id < 0
-
-  if (errorId) {
-    return errorMessage.replace('${maxId}', maxId.toString())
-  }
-}
+export const validateId: ValidateIdFunction = ({ id, maxId, errorMessage }) =>
+  id > maxId || id < 0
+    ? errorMessage.replace('${maxId}', maxId.toString())
+    : undefined
 
 export const handleClockBack: HandleClockBackFunction = (timestamp) => (
   lastTimestamp
-) => {
-  if (timestamp < lastTimestamp) {
-    return `Clock moves backwards to reject the id generated for ${
-      lastTimestamp - timestamp
-    }.`
-  }
-}
+) =>
+  timestamp < lastTimestamp
+    ? `Clock moves backwards to reject the id generated for ${
+        lastTimestamp - timestamp
+      }.`
+    : undefined
 
 export const handleTimestampEqual: HandleTimestampEqualFunction = ({
   timestamp,
@@ -114,14 +110,14 @@ export const nextMillisecond: NextMillisecondFunction = ({
   sequence,
   maxSequence
 }) => {
-  const nextSequence = (sequence + 1n) & maxSequence
+  const newSequence = (sequence + 1n) & maxSequence
 
-  return nextSequence === 0n
+  return newSequence === 0n
     ? {
         timestamp: getNextMillisecond(timestamp, lastTimestamp),
-        sequence: nextSequence
+        sequence: newSequence
       }
-    : { timestamp, sequence: nextSequence }
+    : { timestamp, sequence: newSequence }
 }
 
 export const getNextMillisecond: GetNextMillisecondFunction = (
@@ -129,7 +125,7 @@ export const getNextMillisecond: GetNextMillisecondFunction = (
   lastTimestamp
 ) =>
   timestamp <= lastTimestamp
-    ? getNextMillisecond(getTimestamp(), lastTimestamp)
+    ? getNextMillisecond(getNewTimestamp(), lastTimestamp)
     : timestamp
 
 export const generateId: GenerateIdFunction = ({
@@ -149,7 +145,7 @@ export const generateId: GenerateIdFunction = ({
   sequence
 })
 
-export const getTimestamp: GetTimestampFunction = () => BigInt(Date.now())
+export const getNewTimestamp: GetNewTimestampFunction = () => BigInt(Date.now())
 export const handleError: HandleErrorFunction = (message) => {
   if (message) {
     throw new Error(message)

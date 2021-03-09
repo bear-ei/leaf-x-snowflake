@@ -6,7 +6,7 @@ import * as client from '../src'
 
 const {
   generateId,
-  getNewTimestamp,
+  getTimestamp,
   getNextMillisecond,
   handleClockBack,
   handleError,
@@ -81,7 +81,7 @@ describe('test/index.test.ts', () => {
   it('Should be the result of getNextMillisecond.', async () => {
     const now = BigInt(Date.now())
 
-    sinon.stub(client, 'getNewTimestamp').returns(now + BigInt(1))
+    sinon.stub(client, 'getTimestamp').returns(now + BigInt(1))
 
     const result = getNextMillisecond(now, now)
 
@@ -90,8 +90,8 @@ describe('test/index.test.ts', () => {
     sinon.restore()
   })
 
-  it('Should be the result of getNewTimestamp.', async () => {
-    const result = getNewTimestamp()
+  it('Should be the result of getTimestamp.', async () => {
+    const result = getTimestamp()
 
     assert(typeof result === 'bigint')
   })

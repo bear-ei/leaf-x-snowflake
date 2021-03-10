@@ -1,5 +1,3 @@
-'use strict'
-
 import { ValidateIdFunction } from './interface/validate'
 
 export const validateId: ValidateIdFunction = ({ id, maxId, errorMessage }) => {

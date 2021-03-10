@@ -5,72 +5,72 @@
  */
 export interface SnowflakeOptions {
   /**
-   * Data centre id, in the range 0 - 31.
+   * Data center id, default value 0, allowed values range 0-31.
    */
   dataCenterId?: number
 
   /**
-   * Work machine id, in the range 0 - 31.
+   * Machine id, default value 0, allowed values range 0-31.
    */
-  workerId?: number
+  machineId?: number
 
   /**
-   * Time of the era when the snowflake algorithm began.
+   * Time for the snowflake algorithm to begin.
    */
   twEpoch: number
 }
 
 /**
- * Snowflake algorithm function.
+ * Snowflake algorithm.
  */
 export interface SnowflakeFunction {
   (options: SnowflakeOptions): () => string
 }
 
 /**
- * Validate the id options.
+ * Validate id options.
  */
 export interface ValidateIdOptions {
   /**
-   * The id of the data centre or the id of the working machine.
+   * Data centre id or machine id.
    */
   id: bigint
 
   /**
-   * The maximum value of ids allowed.
+   * The maximum data centre id or machine id allowed.
    */
   maxId: bigint
 
   /**
-   * This custom error message is returned if the id in the data or the id of
-   * the working machine exceeds the maximum id value allowed.
+   * Failure to validate the data centre id or machine id will return this
+   * custom error message.
    */
   errorMessage: string
 }
 
 /**
- * Validate the id function.
+ * Validate that the data centre id or machine id matches the requirements.
  */
 export interface ValidateIdFunction {
   (options: ValidateIdOptions): string | void
 }
 
 /**
- * Handles error function.
+ * Handle error messages.
  */
 export interface HandleErrorFunction {
   (message?: string): never | void
 }
 
 /**
- * Get timestamp function.
+ * Get the timestamp.
  */
 export interface GetTimestampFunction {
   (): bigint
 }
 
 /**
- * Handles clock back function.
+ * Handle clock setbacks.
  *
  * @param timestamp         Current timestamp.
  * @param lastTimestamp     Last run time stamp.
@@ -80,7 +80,7 @@ export interface HandleClockBackFunction {
 }
 
 /**
- * Handles timestamp options.
+ * Handle timestamp options.
  */
 export interface HandleTimestampOptions {
   /**
@@ -89,45 +89,45 @@ export interface HandleTimestampOptions {
   timestamp: bigint
 
   /**
-   * Last run time stamp.
+   * Last run time stamp.
    */
   lastTimestamp: bigint
 
   /**
-   * Intra-millisecond sequences.
+   * Memory sequence in milliseconds.
    */
   sequence: bigint
 
   /**
-   * Maximum sequence in milliseconds.
+   * Maximum memory sequence in milliseconds.
    */
   maxSequence: bigint
 }
 
 /**
- * Handles timestamped results.
+ * Handle timestamped results.
  */
 export interface HandleTimestampResult {
   /**
-   * Timestamp.
+   * New timestamp.
    */
   timestamp: bigint
 
   /**
-   * Intra-millisecond sequences.
+   * Memory sequence in milliseconds.
    */
   sequence: bigint
 }
 
 /**
- * Whether to get the next millisecond function.
+ * Whether to get the next millisecond timestamp.
  */
 export interface NextMillisecondFunction {
   (options: HandleTimestampOptions): HandleTimestampResult
 }
 
 /**
- * Get the next millisecond function.
+ * Gets the next millisecond timestamp.
  *
  * @param timestamp         Current timestamp.
  * @param lastTimestamp     Last run time stamp.
@@ -137,7 +137,7 @@ export interface GetNextMillisecondFunction {
 }
 
 /**
- * Handles timestamp equivalence function.
+ * Handle timestamps are equal.
  */
 export interface HandleTimestampEqualFunction {
   (options: HandleTimestampOptions): HandleTimestampResult
@@ -148,7 +148,7 @@ export interface HandleTimestampEqualFunction {
  */
 export interface GenerateIdOptions {
   /**
-   * Time of the era when the snowflake algorithm began.
+   * Time for the snowflake algorithm to begin.
    */
   twEpoch: bigint
 
@@ -158,7 +158,7 @@ export interface GenerateIdOptions {
   timestampLeftShift: bigint
 
   /**
-   * Data centre id, in the range 0 - 31.
+   * Data centre id, binary values in the range 0-31 are allowed.
    */
   dataCenterId: bigint
 
@@ -168,14 +168,14 @@ export interface GenerateIdOptions {
   dataCenterLeftShift: bigint
 
   /**
-   * Work machine id, in the range 0 - 31.
+   * Machine id, binary values in the range 0-31 are allowed.
    */
-  workerId: bigint
+  machineId: bigint
 
   /**
-   * Work machine left offset.
+   * Machine left offset.
    */
-  workerLeftShift: bigint
+  machineLeftShift: bigint
 }
 
 /**
@@ -193,13 +193,13 @@ export interface GenerateIdResult {
   lastTimestamp: bigint
 
   /**
-   * Intra-millisecond sequences.
+   * Memory sequence in milliseconds.
    */
   sequence: bigint
 }
 
 /**
- * Generate id function.
+ * Generate the id.
  */
 export interface GenerateIdFunction {
   (options: GenerateIdOptions): (

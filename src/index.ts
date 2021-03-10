@@ -16,21 +16,21 @@ import {
 export const snowflake: SnowflakeFunction = ({
   twEpoch,
   dataCenterId = 0,
-  workerId = 0
+  machineId = 0
 }) => {
   const epoch = BigInt(twEpoch)
   const dataCenterNode = BigInt(dataCenterId)
-  const workerNode = BigInt(workerId)
+  const machineNode = BigInt(machineId)
 
   const sequenceBit = 12n
   const workerBit = 5n
   const dataCenterBit = 5n
 
   const maxDataCenterId = -1n ^ (-1n << dataCenterBit)
-  const maxWorkerId = -1n ^ (-1n << workerBit)
+  const maxMachineId = -1n ^ (-1n << workerBit)
   const maxSequence = -1n ^ (-1n << sequenceBit)
 
-  const workerLeftShift = sequenceBit
+  const machineLeftShift = sequenceBit
   const dataCenterLeftShift = sequenceBit + workerBit
   const timestampLeftShift = dataCenterLeftShift + dataCenterBit
 
@@ -42,12 +42,13 @@ export const snowflake: SnowflakeFunction = ({
       id: dataCenterNode,
       maxId: maxDataCenterId,
       errorMessage:
-        'Data center id can not be greater than ${maxId} or less than 0.'
+        'The data center id cannot be greater than ${maxId} or less than 0.'
     },
     {
-      id: workerNode,
-      maxId: maxWorkerId,
-      errorMessage: 'Worker id can not be greater than ${maxId} or less than 0.'
+      id: machineNode,
+      maxId: maxMachineId,
+      errorMessage:
+        'The machine id cannot be greater than ${maxId} or less than 0.'
     }
   ]
 
@@ -63,8 +64,8 @@ export const snowflake: SnowflakeFunction = ({
       timestampLeftShift,
       dataCenterId: dataCenterNode,
       dataCenterLeftShift,
-      workerId: workerNode,
-      workerLeftShift
+      machineId: machineNode,
+      machineLeftShift
     })
 
     flow(checkTimestamp, handleError)(lastTimestamp)
@@ -93,9 +94,10 @@ export const handleClockBack: HandleClockBackFunction = (timestamp) => (
   lastTimestamp
 ) => {
   if (timestamp < lastTimestamp) {
-    return `Clock moves backwards to reject the id generated for ${
-      lastTimestamp - timestamp
-    }.`
+    return (
+      `The clock moves backwards and rejects the id generated for ` +
+      `${lastTimestamp - timestamp}.`
+    )
   }
 }
 
@@ -137,13 +139,13 @@ export const generateId: GenerateIdFunction = ({
   timestampLeftShift,
   dataCenterId,
   dataCenterLeftShift,
-  workerId,
-  workerLeftShift
+  machineId,
+  machineLeftShift
 }) => ({ timestamp, sequence }) => ({
   id:
     ((timestamp - twEpoch) << timestampLeftShift) |
     (dataCenterId << dataCenterLeftShift) |
-    (workerId << workerLeftShift) |
+    (machineId << machineLeftShift) |
     sequence,
   lastTimestamp: timestamp,
   sequence

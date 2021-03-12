@@ -11,9 +11,9 @@ describe('test/snowflake..test.ts', () => {
 
     const result = snowflake({ twEpoch: Date.now() })
 
-    assert(typeof result === 'function')
-
     sinon.restore()
+
+    assert(typeof result === 'function')
   })
 
   it('Should be the result of snowflakes not repeating.', async () => {

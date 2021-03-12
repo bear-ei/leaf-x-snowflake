@@ -28,11 +28,11 @@ describe('test/timestamp.test.ts', () => {
       maxSequence: BigInt(0)
     })
 
+    sinon.restore()
+
     assert(typeof result === 'object')
     assert(typeof result.sequence === 'bigint')
     assert(typeof result.timestamp === 'bigint')
-
-    sinon.restore()
   })
 
   it('Should be the result of getNextMillisecond.', async () => {
@@ -42,9 +42,9 @@ describe('test/timestamp.test.ts', () => {
 
     const result = getNextMillisecond(now, now)
 
-    assert(typeof result === 'bigint')
-
     sinon.restore()
+
+    assert(typeof result === 'bigint')
   })
 
   it('Should be the result of handleTimestampEqual.', async () => {
@@ -62,10 +62,10 @@ describe('test/timestamp.test.ts', () => {
       maxSequence: BigInt(0)
     })
 
+    sinon.restore()
+
     assert(typeof result === 'object')
     assert(typeof result.sequence === 'bigint')
     assert(typeof result.timestamp === 'bigint')
-
-    sinon.restore()
   })
 })

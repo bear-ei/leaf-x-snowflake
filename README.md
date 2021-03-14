@@ -12,7 +12,7 @@ Twitter snowflake algorithm, using TypeScript implementation.
 | :----------- | :------------- | :-------------  |
 | dataCenterId | 0              | Data center id  |
 | machineId    | 0              | Work machine id |
-| twEpoch      | Required field | Start timestamp |
+| twEpoch      | Required       | Start timestamp |
 
 ## Usage
 

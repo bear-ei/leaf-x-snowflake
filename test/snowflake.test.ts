@@ -7,7 +7,7 @@ import * as validate from '../src/validate'
 describe('test/snowflake..test.ts', () => {
   it('Should be the result of snowflake.', async () => {
     sinon.stub(validate, 'validateId').returns()
-    sinon.stub(error, 'handleError').returns()
+    sinon.stub(error, 'handleErrorMessage').returns()
 
     const result = snowflake({ twEpoch: Date.now() })
 

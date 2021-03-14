@@ -13,7 +13,7 @@ export interface SnowflakeOptions {
   machineId?: number
 
   /**
-   * Time for the snowflake algorithm to begin.
+   * The start time of generating the id.
    */
   twEpoch: number
 }

@@ -1,11 +1,11 @@
-import { HandleTimestampResult } from './timestamp'
+import { HandleTimestampResults } from './timestamp'
 
 /**
  * Generate id options.
  */
 export interface GenerateIdOptions {
   /**
-   * Time for the snowflake algorithm to begin.
+   * The start time of generating the id.
    */
   twEpoch: bigint
 
@@ -38,7 +38,7 @@ export interface GenerateIdOptions {
 /**
  * Generate id results.
  */
-export interface GenerateIdResult {
+export interface GenerateIdResults {
   /**
    * New id.
    */
@@ -60,6 +60,6 @@ export interface GenerateIdResult {
  */
 export interface GenerateIdFunction {
   (options: GenerateIdOptions): (
-    HandleTimeResult: HandleTimestampResult
-  ) => GenerateIdResult
+    handleTimestampResults: HandleTimestampResults
+  ) => GenerateIdResults
 }

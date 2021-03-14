@@ -1,6 +1,6 @@
-import { HandleErrorFunction } from './interface/error'
+import { HandleErrorMessageFunction } from './interface/error'
 
-export const handleError: HandleErrorFunction = (message) => {
+export const handleErrorMessage: HandleErrorMessageFunction = (message) => {
   if (message) {
     throw new Error(message)
   }

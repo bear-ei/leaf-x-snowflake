@@ -1,10 +1,10 @@
 import * as assert from 'assert'
-import { handleError } from '../src/error'
+import { handleErrorMessage } from '../src/error'
 
 describe('test/error.test.ts', () => {
-  it('Should be the result of handleError.', async () => {
+  it('Should be the result of handleErrorMessage.', async () => {
     try {
-      handleError('Internal service error.')
+      handleErrorMessage('Internal service error.')
     } catch (error) {
       assert(error.message === 'Internal service error.')
     }

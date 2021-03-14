@@ -1,5 +1,5 @@
 /**
- * Handle clock setbacks.
+ * Handles situations where a clock backward shift occurs.
  *
  * @param timestamp         Current timestamp.
  * @param lastTimestamp     Last run time stamp.

@@ -1,5 +1,5 @@
 /**
- * Handle timestamp options.
+ * Handles timestamp options.
  */
 export interface HandleTimestampOptions {
   /**
@@ -24,9 +24,9 @@ export interface HandleTimestampOptions {
 }
 
 /**
- * Handle timestamped results.
+ * Handles timestamp results.
  */
-export interface HandleTimestampResult {
+export interface HandleTimestampResults {
   /**
    * New timestamp.
    */
@@ -39,24 +39,24 @@ export interface HandleTimestampResult {
 }
 
 /**
- * Get the timestamp.
+ * Get timestamp.
  */
 export interface GetTimestampFunction {
   (): bigint
 }
 
 /**
- * Handle timestamps are equal.
+ * Handles timestamps are equal.
  */
 export interface HandleTimestampEqualFunction {
-  (options: HandleTimestampOptions): HandleTimestampResult
+  (options: HandleTimestampOptions): HandleTimestampResults
 }
 
 /**
- * Whether to get the next millisecond timestamp.
+ * Determines if the next millisecond timestamp should be fetched.
  */
 export interface NextMillisecondFunction {
-  (options: HandleTimestampOptions): HandleTimestampResult
+  (options: HandleTimestampOptions): HandleTimestampResults
 }
 
 /**

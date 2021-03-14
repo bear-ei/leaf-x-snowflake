@@ -1,6 +1,6 @@
 /**
- * Handle error messages.
+ * Handles error messages.
  */
-export interface HandleErrorFunction {
+export interface HandleErrorMessageFunction {
   (message?: string): never | void
 }

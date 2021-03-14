@@ -72,10 +72,14 @@ describe('test/timestamp.test.ts', () => {
 
   it('Should be the result of handleClockBack.', async () => {
     const now = Date.now()
-    const result = handleClockBack(BigInt(now - 1))(BigInt(now))
 
-    assert(
-      result === 'The clock moves backwards and rejects the id generated for 1.'
-    )
+    try {
+      handleClockBack(BigInt(now - 1))(BigInt(now))
+    } catch (error) {
+      assert(
+        error.message ===
+          'The clock moves backwards and rejects the id generated for 1.'
+      )
+    }
   })
 })

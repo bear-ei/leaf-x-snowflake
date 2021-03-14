@@ -1,5 +1,4 @@
 import { flow } from 'lodash/fp'
-import { handleErrorMessage } from './error'
 import { generateId } from './id'
 import { SnowflakeFunction } from './interface/snowflake'
 import {
@@ -48,11 +47,11 @@ export const snowflake: SnowflakeFunction = ({
     }
   ]
 
-  const validate = flow(validateId, handleErrorMessage)
-
-  validateItems.forEach(validate)
+  validateItems.forEach(validateId)
 
   return () => {
+    const timestamp = getTimestamp()
+    const checkClockBack = handleClockBack(timestamp)
     const nextId = generateId({
       twEpoch: epoch,
       timestampLeftShift,
@@ -62,15 +61,15 @@ export const snowflake: SnowflakeFunction = ({
       machineLeftShift
     })
 
-    const timestamp = getTimestamp()
-    const checkClockBack = handleClockBack(timestamp)
+    const getId = flow(handleTimestampEqual, nextId)
 
-    flow(checkClockBack, handleErrorMessage)(lastTimestamp)
+    checkClockBack(lastTimestamp)
 
-    const { id, lastTimestamp: newLastTimestamp, sequence: newSequence } = flow(
-      handleTimestampEqual,
-      nextId
-    )({ timestamp, lastTimestamp, sequence, maxSequence })
+    const {
+      id,
+      lastTimestamp: newLastTimestamp,
+      sequence: newSequence
+    } = getId({ timestamp, lastTimestamp, sequence, maxSequence })
 
     lastTimestamp = newLastTimestamp
     sequence = newSequence

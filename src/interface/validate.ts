@@ -23,5 +23,5 @@ export interface ValidateIdOptions {
  * Validate that the data centre id or machine id matches the requirements.
  */
 export interface ValidateIdFunction {
-  (options: ValidateIdOptions): string | void
+  (options: ValidateIdOptions): void | never
 }

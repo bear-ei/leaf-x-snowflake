@@ -1,13 +1,11 @@
 import * as assert from 'assert'
 import * as sinon from 'sinon'
-import * as error from '../src/error'
 import { snowflake } from '../src/snowflake'
 import * as validate from '../src/validate'
 
 describe('test/snowflake..test.ts', () => {
   it('Should be the result of snowflake.', async () => {
     sinon.stub(validate, 'validateId').returns()
-    sinon.stub(error, 'handleErrorMessage').returns()
 
     const result = snowflake({ twEpoch: Date.now() })
 

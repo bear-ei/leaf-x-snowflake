@@ -1,5 +1,5 @@
 /**
- * Handles timestamp options.
+ * Handle timestamp options.
  */
 export interface HandleTimestampOptions {
   /**
@@ -24,7 +24,7 @@ export interface HandleTimestampOptions {
 }
 
 /**
- * Handles timestamp result.
+ * Handle timestamp result.
  */
 export interface HandleTimestampResult {
   /**
@@ -46,7 +46,7 @@ export interface GetTimestampFunction {
 }
 
 /**
- * Handles timestamps are equal.
+ * Handle timestamps are equal.
  */
 export interface HandleTimestampEqualFunction {
   (options: HandleTimestampOptions): HandleTimestampResult
@@ -70,11 +70,11 @@ export interface GetNextMillisecondFunction {
 }
 
 /**
- * Handles situations where a clock backward shift occurs.
+ * Handle situations where a clock backward shift occurs.
  *
  * @param timestamp         Current timestamp.
  * @param lastTimestamp     Last run time stamp.
  */
 export interface HandleClockBackFunction {
-  (timestamp: bigint): (lastTimestamp: bigint) => string | void
+  (timestamp: bigint): (lastTimestamp: bigint) => void | never
 }

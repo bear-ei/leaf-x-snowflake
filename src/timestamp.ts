@@ -44,9 +44,9 @@ export const handleClockBack: HandleClockBackFunction = (timestamp) => (
   lastTimestamp
 ) => {
   if (timestamp < lastTimestamp) {
-    return (
+    throw new Error(
       `The clock moves backwards and rejects the id generated for ` +
-      `${lastTimestamp - timestamp}.`
+        `${lastTimestamp - timestamp}.`
     )
   }
 }

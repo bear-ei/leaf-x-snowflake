@@ -1,9 +1,12 @@
 import { flow } from 'lodash/fp'
-import { handleClockBack } from './clockBack'
 import { handleErrorMessage } from './error'
-import { generateId } from './generateId'
+import { generateId } from './id'
 import { SnowflakeFunction } from './interface/snowflake'
-import { getTimestamp, handleTimestampEqual } from './timestamp'
+import {
+  getTimestamp,
+  handleClockBack,
+  handleTimestampEqual
+} from './timestamp'
 import { validateId } from './validate'
 
 export const snowflake: SnowflakeFunction = ({

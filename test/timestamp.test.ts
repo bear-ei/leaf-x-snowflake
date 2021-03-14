@@ -6,7 +6,8 @@ const {
   getTimestamp,
   nextMillisecond,
   getNextMillisecond,
-  handleTimestampEqual
+  handleTimestampEqual,
+  handleClockBack
 } = timestamp
 
 describe('test/timestamp.test.ts', () => {
@@ -67,5 +68,14 @@ describe('test/timestamp.test.ts', () => {
     assert(typeof result === 'object')
     assert(typeof result.sequence === 'bigint')
     assert(typeof result.timestamp === 'bigint')
+  })
+
+  it('Should be the result of handleClockBack.', async () => {
+    const now = Date.now()
+    const result = handleClockBack(BigInt(now - 1))(BigInt(now))
+
+    assert(
+      result === 'The clock moves backwards and rejects the id generated for 1.'
+    )
   })
 })

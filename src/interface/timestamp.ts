@@ -24,9 +24,9 @@ export interface HandleTimestampOptions {
 }
 
 /**
- * Handles timestamp results.
+ * Handles timestamp result.
  */
-export interface HandleTimestampResults {
+export interface HandleTimestampResult {
   /**
    * New timestamp.
    */
@@ -49,14 +49,14 @@ export interface GetTimestampFunction {
  * Handles timestamps are equal.
  */
 export interface HandleTimestampEqualFunction {
-  (options: HandleTimestampOptions): HandleTimestampResults
+  (options: HandleTimestampOptions): HandleTimestampResult
 }
 
 /**
  * Determines if the next millisecond timestamp should be fetched.
  */
 export interface NextMillisecondFunction {
-  (options: HandleTimestampOptions): HandleTimestampResults
+  (options: HandleTimestampOptions): HandleTimestampResult
 }
 
 /**
@@ -67,4 +67,14 @@ export interface NextMillisecondFunction {
  */
 export interface GetNextMillisecondFunction {
   (timestamp: bigint, lastTimestamp: bigint): bigint
+}
+
+/**
+ * Handles situations where a clock backward shift occurs.
+ *
+ * @param timestamp         Current timestamp.
+ * @param lastTimestamp     Last run time stamp.
+ */
+export interface HandleClockBackFunction {
+  (timestamp: bigint): (lastTimestamp: bigint) => string | void
 }

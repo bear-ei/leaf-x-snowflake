@@ -1,6 +1,7 @@
 import {
   GetNextMillisecondFunction,
   GetTimestampFunction,
+  HandleClockBackFunction,
   HandleTimestampEqualFunction,
   NextMillisecondFunction
 } from './interface/timestamp'
@@ -38,3 +39,14 @@ export const handleTimestampEqual: HandleTimestampEqualFunction = ({
   timestamp === lastTimestamp
     ? nextMillisecond({ timestamp, lastTimestamp, ...args })
     : { timestamp, sequence: 0n }
+
+export const handleClockBack: HandleClockBackFunction = (timestamp) => (
+  lastTimestamp
+) => {
+  if (timestamp < lastTimestamp) {
+    return (
+      `The clock moves backwards and rejects the id generated for ` +
+      `${lastTimestamp - timestamp}.`
+    )
+  }
+}

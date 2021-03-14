@@ -1,5 +1,5 @@
 import * as assert from 'assert'
-import { generateId } from '../src/generateId'
+import { generateId } from '../src/id'
 
 describe('test/generateId.test.ts', () => {
   it('Should be the result of generateId.', async () => {

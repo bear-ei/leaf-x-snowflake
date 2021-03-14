@@ -1,4 +1,4 @@
-import { HandleTimestampResults } from './timestamp'
+import { HandleTimestampResult } from './timestamp'
 
 /**
  * Generate id options.
@@ -36,9 +36,9 @@ export interface GenerateIdOptions {
 }
 
 /**
- * Generate id results.
+ * Generate id result.
  */
-export interface GenerateIdResults {
+export interface GenerateIdResult {
   /**
    * New id.
    */
@@ -60,6 +60,6 @@ export interface GenerateIdResults {
  */
 export interface GenerateIdFunction {
   (options: GenerateIdOptions): (
-    handleTimestampResults: HandleTimestampResults
-  ) => GenerateIdResults
+    handleTimestampResult: HandleTimestampResult
+  ) => GenerateIdResult
 }

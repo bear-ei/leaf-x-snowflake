@@ -52,7 +52,7 @@ export const snowflake: SnowflakeFunction = ({
   return () => {
     const timestamp = getTimestamp()
     const checkClockBack = handleClockBack(timestamp)
-    const nextId = generateId({
+    const getNextId = generateId({
       twEpoch: epoch,
       timestampLeftShift,
       dataCenterId: dataCenterNode,
@@ -61,7 +61,7 @@ export const snowflake: SnowflakeFunction = ({
       machineLeftShift
     })
 
-    const getId = flow(handleTimestampEqual, nextId)
+    const getId = flow(handleTimestampEqual, getNextId)
 
     checkClockBack(lastTimestamp)
 

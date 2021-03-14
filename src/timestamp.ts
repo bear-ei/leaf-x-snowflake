@@ -1,13 +1,13 @@
 import {
+  CheckGetNextMillisecondFunction,
   GetNextMillisecondFunction,
   GetTimestampFunction,
   HandleClockBackFunction,
-  HandleTimestampEqualFunction,
-  NextMillisecondFunction
+  HandleTimestampEqualFunction
 } from './interface/timestamp'
 
 export const getTimestamp: GetTimestampFunction = () => BigInt(Date.now())
-export const nextMillisecond: NextMillisecondFunction = ({
+export const checkGetNextMillisecond: CheckGetNextMillisecondFunction = ({
   timestamp,
   lastTimestamp,
   sequence,
@@ -37,7 +37,7 @@ export const handleTimestampEqual: HandleTimestampEqualFunction = ({
   ...args
 }) =>
   timestamp === lastTimestamp
-    ? nextMillisecond({ timestamp, lastTimestamp, ...args })
+    ? checkGetNextMillisecond({ timestamp, lastTimestamp, ...args })
     : { timestamp, sequence: 0n }
 
 export const handleClockBack: HandleClockBackFunction = (timestamp) => (

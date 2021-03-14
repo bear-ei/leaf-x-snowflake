@@ -4,7 +4,7 @@ import * as timestamp from '../src/timestamp'
 
 const {
   getTimestamp,
-  nextMillisecond,
+  checkGetNextMillisecond,
   getNextMillisecond,
   handleTimestampEqual,
   handleClockBack
@@ -17,12 +17,12 @@ describe('test/timestamp.test.ts', () => {
     assert(typeof result === 'bigint')
   })
 
-  it('Should be the result of nextMillisecond.', async () => {
+  it('Should be the result of checkGetNextMillisecond.', async () => {
     const now = BigInt(Date.now())
 
     sinon.stub(timestamp, 'getNextMillisecond').returns(now)
 
-    const result = nextMillisecond({
+    const result = checkGetNextMillisecond({
       timestamp: now,
       lastTimestamp: now,
       sequence: BigInt(0),
@@ -51,7 +51,7 @@ describe('test/timestamp.test.ts', () => {
   it('Should be the result of handleTimestampEqual.', async () => {
     const now = BigInt(Date.now())
 
-    sinon.stub(timestamp, 'nextMillisecond').returns({
+    sinon.stub(timestamp, 'checkGetNextMillisecond').returns({
       timestamp: now,
       sequence: BigInt(0)
     })

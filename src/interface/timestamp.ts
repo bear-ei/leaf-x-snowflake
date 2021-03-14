@@ -53,9 +53,9 @@ export interface HandleTimestampEqualFunction {
 }
 
 /**
- * Determines if the next millisecond timestamp should be fetched.
+ * Check if the next millisecond is fetched.
  */
-export interface NextMillisecondFunction {
+export interface CheckGetNextMillisecondFunction {
   (options: HandleTimestampOptions): HandleTimestampResult
 }
 

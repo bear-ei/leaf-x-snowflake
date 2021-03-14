@@ -8,10 +8,10 @@ Twitter snowflake algorithm, using TypeScript implementation.
 
 ## Parameters
 
-| Name         |  Default Value |   Description   |
-| :----------- | -------------: | :-------------: |
-| dataCenterId |              0 | Data center id  |
-| machineId    |              0 | Work machine id |
+| Name         | Default Value  | Description     |
+| :----------- | :------------- | :-------------  |
+| dataCenterId | 0              | Data center id  |
+| machineId    | 0              | Work machine id |
 | twEpoch      | Required field | Start timestamp |
 
 ## Usage

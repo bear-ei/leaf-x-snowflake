@@ -8,12 +8,12 @@ export interface HandleTimestampOptions {
   timestamp: bigint
 
   /**
-   * Last run time stamp.
+   * Last run timestamp.
    */
   lastTimestamp: bigint
 
   /**
-   * Memory sequence in milliseconds.
+   * The memory sequence in milliseconds.
    */
   sequence: bigint
 
@@ -24,7 +24,7 @@ export interface HandleTimestampOptions {
 }
 
 /**
- * Handle timestamp result.
+ * Handle the timestamp result.
  */
 export interface HandleTimestampResult {
   /**
@@ -33,7 +33,7 @@ export interface HandleTimestampResult {
   timestamp: bigint
 
   /**
-   * Memory sequence in milliseconds.
+   * The memory sequence in milliseconds.
    */
   sequence: bigint
 }
@@ -53,14 +53,14 @@ export interface HandleTimestampEqualFunction {
 }
 
 /**
- * Check if the next millisecond is fetched.
+ * Check to get the next millisecond.
  */
 export interface CheckGetNextMillisecondFunction {
   (options: HandleTimestampOptions): HandleTimestampResult
 }
 
 /**
- * Get the next millisecond timestamp.
+ * Get next millisecond.
  *
  * @param timestamp         Current timestamp.
  * @param lastTimestamp     Last run time stamp.

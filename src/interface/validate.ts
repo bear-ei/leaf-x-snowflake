@@ -3,24 +3,24 @@
  */
 export interface ValidateIdOptions {
   /**
-   * Data centre id or machine id.
+   * Data center id or machine id.
    */
   id: bigint
 
   /**
-   * The maximum data centre id or machine id allowed.
+   * The maximum allowed data center id or machine id.
    */
   maxId: bigint
 
   /**
-   * Failure to validate the data centre id or machine id will return this
-   * custom error message.
+   * This error message will be returned if the data center id or machine id
+   * cannot be verified.
    */
   errorMessage: string
 }
 
 /**
- * Validate that the data centre id or machine id matches the requirements.
+ * Validate that the data center id or machine id matches the requirements.
  */
 export interface ValidateIdFunction {
   (options: ValidateIdOptions): void | never

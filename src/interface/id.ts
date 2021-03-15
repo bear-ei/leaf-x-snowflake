@@ -5,32 +5,32 @@ import { HandleTimestampResult } from './timestamp'
  */
 export interface GenerateIdOptions {
   /**
-   * The start time of generating the id.
+   * The start timestamp for generating the id.
    */
   twEpoch: bigint
 
   /**
-   * Timestamp left offset.
+   * The left offset of the timestamp.
    */
   timestampLeftShift: bigint
 
   /**
-   * Data centre id, binary values in the range 0-31 are allowed.
+   * Data center id, value range 0 -31.
    */
   dataCenterId: bigint
 
   /**
-   * Data centre left offset.
+   * The amount of data center left offset.
    */
   dataCenterLeftShift: bigint
 
   /**
-   * Machine id, binary values in the range 0-31 are allowed.
+   * Machine id, value range 0 - 31.
    */
   machineId: bigint
 
   /**
-   * Machine left offset.
+   * The amount of machine left offset.
    */
   machineLeftShift: bigint
 }
@@ -45,18 +45,18 @@ export interface GenerateIdResult {
   id: bigint
 
   /**
-   * Last run time stamp.
+   * Last run timestamp.
    */
   lastTimestamp: bigint
 
   /**
-   * Memory sequence in milliseconds.
+   * The memory sequence in milliseconds.
    */
   sequence: bigint
 }
 
 /**
- * Generate the id.
+ * Generate id.
  */
 export interface GenerateIdFunction {
   (options: GenerateIdOptions): (

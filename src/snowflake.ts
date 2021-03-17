@@ -11,11 +11,11 @@ import { validateId } from './validate'
 export const snowflake: SnowflakeFunction = ({
   twEpoch,
   dataCenterId = 0,
-  machineId = 0
+  workerId = 0
 }) => {
   const epoch = BigInt(twEpoch)
   const dataCenterNode = BigInt(dataCenterId)
-  const machineNode = BigInt(machineId)
+  const machineNode = BigInt(workerId)
 
   const sequenceBit = 12n
   const workerBit = 5n
@@ -57,7 +57,7 @@ export const snowflake: SnowflakeFunction = ({
       timestampLeftShift,
       dataCenterId: dataCenterNode,
       dataCenterLeftShift,
-      machineId: machineNode,
+      workerId: machineNode,
       machineLeftShift
     })
 

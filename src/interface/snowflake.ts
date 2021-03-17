@@ -8,9 +8,9 @@ export interface SnowflakeOptions {
   dataCenterId?: number
 
   /**
-   * Machine id, value range 0 - 31.
+   * Work machine id, value range 0 - 31.
    */
-  machineId?: number
+  workerId?: number
 
   /**
    * The start timestamp for generating the id.

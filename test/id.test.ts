@@ -9,7 +9,7 @@ describe('test/id.test.ts', () => {
       timestampLeftShift: BigInt(22),
       dataCenterId: BigInt(0),
       dataCenterLeftShift: BigInt(17),
-      machineId: BigInt(0),
+      workerId: BigInt(0),
       machineLeftShift: BigInt(12)
     })({ timestamp: now, sequence: BigInt(0) })
 

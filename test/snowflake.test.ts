@@ -3,7 +3,7 @@ import * as sinon from 'sinon'
 import { snowflake } from '../src/snowflake'
 import * as validate from '../src/validate'
 
-describe('test/snowflake..test.ts', () => {
+describe('test/snowflake.test.ts', () => {
   it('Should be the result of snowflake.', async () => {
     sinon.stub(validate, 'validateId').returns()
 

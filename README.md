@@ -11,7 +11,7 @@ Twitter snowflake algorithm, using TypeScript implementation.
 | Name         | Type   | Default Value | Description      |
 | :----------- | :----- | :------------ | :--------------- |
 | dataCenterId | Number | 0             | Data center id.  |
-| machineId    | Number | 0             | Work machine id. |
+| workerId    | Number | 0             | Work machine id. |
 | twEpoch      | Number | Required      | Start timestamp. |
 
 ## Usage
@@ -21,7 +21,7 @@ import * as snowflake from '@leaf-x/snowflake'
 
 const generateId = snowflake({
   dataCenterId: 0,
-  machineId: 0,
+  workerId: 0,
   twEpoch: 1583734327332
 })
 

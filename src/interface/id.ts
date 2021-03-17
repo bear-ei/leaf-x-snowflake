@@ -25,9 +25,9 @@ export interface GenerateIdOptions {
   dataCenterLeftShift: bigint
 
   /**
-   * Machine id, value range 0 - 31.
+   * Work machine id, value range 0 - 31.
    */
-  machineId: bigint
+  workerId: bigint
 
   /**
    * The amount of machine left offset.

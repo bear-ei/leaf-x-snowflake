@@ -43,7 +43,7 @@ export const snowflake: SnowflakeFunction = ({
       id: machineNode,
       maxId: maxMachineId,
       errorMessage:
-        'The working machine ID cannot be greater than $ {maxId} or less than 0.'
+        'The work machine ID cannot be greater than ${maxId} or less than 0.'
     }
   ]
 

@@ -5,32 +5,32 @@ import { HandleTimestampResult } from './timestamp'
  */
 export interface GenerateIdOptions {
   /**
-   * Generate the start timestamp of the snowflake ID.
+   * The start time for generating snowflake IDs.
    */
   twEpoch: bigint
 
   /**
-   * Timestamp left offset.
+   * The timestamp left offset.
    */
   timestampLeftShift: bigint
 
   /**
-   * Data center ID, value range 0 -31.
+   * Data center id.
    */
   dataCenterId: bigint
 
   /**
-   * Data center left offset.
+   * The data center left offset.
    */
   dataCenterLeftShift: bigint
 
   /**
-   * Working machine ID, value range 0 - 31.
+   * Work machine ID.
    */
   workId: bigint
 
   /**
-   * Working machine left offset.
+   * The work machine left offset.
    */
   workLeftShift: bigint
 }
@@ -45,18 +45,18 @@ export interface GenerateIdResult {
   id: bigint
 
   /**
-   * The last run timestamp.
+   * Last run timestamp.
    */
   lastTimestamp: bigint
 
   /**
-   * Memory sequence in milliseconds.
+   * The memory sequence in milliseconds.
    */
   sequence: bigint
 }
 
 /**
- * Generate a new ID.
+ * Generate the ID.
  */
 export interface GenerateIdFunction {
   (options: GenerateIdOptions): (

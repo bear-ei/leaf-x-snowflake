@@ -1,25 +1,25 @@
 /**
- * Snowflake algorithm options.
+ * Snowflake options.
  */
 export interface SnowflakeOptions {
   /**
-   * Data center ID, value range 0 -31.
+   * Data center id, in the range 0 - 31.
    */
   dataCenterId?: number
 
   /**
-   * Working machine ID, value range 0 - 31.
+   * Work machine ID, value range 0 - 31.
    */
   workId?: number
 
   /**
-   * Generate the start timestamp of the snowflake ID.
+   * The start time for generating snowflake IDs.
    */
   twEpoch: number
 }
 
 /**
- * Snowflake algorithm.
+ * Snowflakes.
  */
 export interface SnowflakeFunction {
   (options: SnowflakeOptions): () => string

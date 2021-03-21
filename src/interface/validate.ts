@@ -1,5 +1,5 @@
 /**
- * Validate ID options.
+ * Validate the ID options.
  */
 export interface ValidateIdOptions {
   /**
@@ -13,13 +13,13 @@ export interface ValidateIdOptions {
   maxId: bigint
 
   /**
-   * If the verification fails, this custom error message will be returned.
+   * If the ID does not pass validation, this custom error message will be returned.
    */
   errorMessage: string
 }
 
 /**
- * Validate ID.
+ * Validate the ID.
  */
 export interface ValidateIdFunction {
   (options: ValidateIdOptions): void | never

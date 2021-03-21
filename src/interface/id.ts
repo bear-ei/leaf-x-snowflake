@@ -15,7 +15,7 @@ export interface GenerateIdOptions {
   timestampLeftShift: bigint
 
   /**
-   * Data center id.
+   * Data center ID.
    */
   dataCenterId: bigint
 

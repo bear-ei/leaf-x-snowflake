@@ -1,5 +1,5 @@
 /**
- * Handle timestamp options.
+ * Handling timestamp options.
  */
 export interface HandleTimestampOptions {
   /**
@@ -8,12 +8,12 @@ export interface HandleTimestampOptions {
   timestamp: bigint
 
   /**
-   * Last run timestamp.
+   * The last run timestamp.
    */
   lastTimestamp: bigint
 
   /**
-   * The memory sequence in milliseconds.
+   * Memory sequence in milliseconds.
    */
   sequence: bigint
 
@@ -24,7 +24,7 @@ export interface HandleTimestampOptions {
 }
 
 /**
- * Handle the timestamp result.
+ * Handling timestamp results.
  */
 export interface HandleTimestampResult {
   /**
@@ -33,7 +33,7 @@ export interface HandleTimestampResult {
   timestamp: bigint
 
   /**
-   * The memory sequence in milliseconds.
+   * Memory sequence in milliseconds.
    */
   sequence: bigint
 }
@@ -46,35 +46,35 @@ export interface GetTimestampFunction {
 }
 
 /**
- * Handle timestamps are equal.
+ * Treatment timestamp is equal.
  */
 export interface HandleTimestampEqualFunction {
   (options: HandleTimestampOptions): HandleTimestampResult
 }
 
 /**
- * Check to get the next millisecond.
+ * Check if you get the next milliseconds.
  */
 export interface CheckGetNextMillisecondFunction {
   (options: HandleTimestampOptions): HandleTimestampResult
 }
 
 /**
- * Get next millisecond.
+ * Get the next milliseconds.
  *
  * @param timestamp         Current timestamp.
- * @param lastTimestamp     Last run time stamp.
+ * @param lastTimestamp     The last run timestamp.
  */
 export interface GetNextMillisecondFunction {
   (timestamp: bigint, lastTimestamp: bigint): bigint
 }
 
 /**
- * Handle situations where a clock backward shift occurs.
+ * Handling clock back.
  *
- * @param timestamp         Current timestamp.
- * @param lastTimestamp     Last run time stamp.
+ * @param timestamp        Current timestamp.
+ * @param lastTimestamp    The last run timestamp.
  */
 export interface HandleClockBackFunction {
-  (timestamp: bigint): (lastTimestamp: bigint) => void | never
+  (timestamp: bigint, lastTimestamp: bigint): void | never
 }

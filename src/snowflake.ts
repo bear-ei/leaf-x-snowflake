@@ -1,4 +1,4 @@
-import { flow } from 'lodash/fp'
+import { compose } from 'lodash/fp'
 import { generateId } from './id'
 import { SnowflakeFunction } from './interface/snowflake'
 import {
@@ -11,22 +11,22 @@ import { validateId } from './validate'
 export const snowflake: SnowflakeFunction = ({
   twEpoch,
   dataCenterId = 0,
-  workerId = 0
+  workId = 0
 }) => {
   const epoch = BigInt(twEpoch)
   const dataCenterNode = BigInt(dataCenterId)
-  const machineNode = BigInt(workerId)
+  const machineNode = BigInt(workId)
 
   const sequenceBit = 12n
-  const workerBit = 5n
+  const workBit = 5n
   const dataCenterBit = 5n
 
   const maxDataCenterId = -1n ^ (-1n << dataCenterBit)
-  const maxMachineId = -1n ^ (-1n << workerBit)
+  const maxMachineId = -1n ^ (-1n << workBit)
   const maxSequence = -1n ^ (-1n << sequenceBit)
 
-  const machineLeftShift = sequenceBit
-  const dataCenterLeftShift = sequenceBit + workerBit
+  const workLeftShift = sequenceBit
+  const dataCenterLeftShift = sequenceBit + workBit
   const timestampLeftShift = dataCenterLeftShift + dataCenterBit
 
   let sequence = 0n
@@ -37,13 +37,13 @@ export const snowflake: SnowflakeFunction = ({
       id: dataCenterNode,
       maxId: maxDataCenterId,
       errorMessage:
-        'The data center id cannot be greater than ${maxId} or less than 0.'
+        'The data center ID cannot be greater than ${maxId} or less than 0.'
     },
     {
       id: machineNode,
       maxId: maxMachineId,
       errorMessage:
-        'The machine id cannot be greater than ${maxId} or less than 0.'
+        'The working machine ID cannot be greater than $ {maxId} or less than 0.'
     }
   ]
 
@@ -51,19 +51,18 @@ export const snowflake: SnowflakeFunction = ({
 
   return () => {
     const timestamp = getTimestamp()
-    const checkClockBack = handleClockBack(timestamp)
     const getNextId = generateId({
       twEpoch: epoch,
       timestampLeftShift,
       dataCenterId: dataCenterNode,
       dataCenterLeftShift,
-      workerId: machineNode,
-      machineLeftShift
+      workId: machineNode,
+      workLeftShift
     })
 
-    const getId = flow(handleTimestampEqual, getNextId)
+    const getId = compose(getNextId, handleTimestampEqual)
 
-    checkClockBack(lastTimestamp)
+    handleClockBack(timestamp, lastTimestamp)
 
     const {
       id,

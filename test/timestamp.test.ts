@@ -74,11 +74,11 @@ describe('test/timestamp.test.ts', () => {
     const now = Date.now()
 
     try {
-      handleClockBack(BigInt(now - 1))(BigInt(now))
+      handleClockBack(BigInt(now - 1), BigInt(now))
     } catch (error) {
       assert(
         error.message ===
-          'The clock moves backwards and rejects the id generated for 1.'
+          'The clock moves back and rejects IDs generated for 1.'
       )
     }
   })

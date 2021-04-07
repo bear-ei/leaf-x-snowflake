@@ -1,17 +1,17 @@
 {
   "name": "@leaf-x/snowflake",
   "description": "Leaf-x project distributed id generation.",
-  "version": "0.2.0",
+  "version": "0.3.1",
   "main": "./dist/index.js",
   "author": "sound shell <sound_shell@outlook.com>",
   "license": "MIT",
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SoundShell/leaf-x-id"
+    "url": "https://github.com/SoundShell/leaf-x-snowflake"
   },
   "bugs": {
-    "url": "https://github.com/SoundShell/leaf-x-id/issues"
+    "url": "https://github.com/SoundShell/leaf-x-snowflake/issues"
   },
   "dependencies": {
     "lodash": "^4.17.21"

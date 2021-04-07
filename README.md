@@ -8,11 +8,11 @@ Twitter snowflake algorithm, using TypeScript implementation.
 
 ## Parameters
 
-| Name         | Type   | Default Value | Description      |
-| :----------- | :----- | :------------ | :--------------- |
-| dataCenterId | Number | 0             | Data center id.  |
-| workerId    | Number | 0             | Work machine id. |
-| twEpoch      | Number | Required      | Start timestamp. |
+| Name         | Type   | Default Value | Description                                       |
+| :----------- | :----- | :------------ | :------------------------------------------------ |
+| dataCenterId | Number | 0             | Data center ID, value range 0 -31.                |
+| workId       | Number | 0             | Working machine ID, value range 0 - 31.           |
+| twEpoch      | Number | Required      | Generate the start timestamp of the snowflake ID. |
 
 ## Usage
 
@@ -21,7 +21,7 @@ import * as snowflake from '@leaf-x/snowflake'
 
 const generateId = snowflake({
   dataCenterId: 0,
-  workerId: 0,
+  workId: 0,
   twEpoch: 1583734327332
 })
 

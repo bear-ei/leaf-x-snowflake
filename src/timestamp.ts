@@ -40,12 +40,13 @@ export const handleTimestampEqual: HandleTimestampEqualFunction = ({
     ? checkGetNextMillisecond({ timestamp, lastTimestamp, ...args })
     : { timestamp, sequence: 0n }
 
-export const handleClockBack: HandleClockBackFunction = (timestamp) => (
+export const handleClockBack: HandleClockBackFunction = (
+  timestamp,
   lastTimestamp
 ) => {
   if (timestamp < lastTimestamp) {
     throw new Error(
-      `The clock moves backwards and rejects the id generated for ` +
+      `The clock moves backwards and rejects the ID generated for ` +
         `${lastTimestamp - timestamp}.`
     )
   }

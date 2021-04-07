@@ -1,7 +1,7 @@
 import { HandleTimestampResult } from './timestamp'
 
 /**
- * Generate id options.
+ * The options to generate the id.
  */
 export interface GenerateIdOptions {
   /**
@@ -15,7 +15,7 @@ export interface GenerateIdOptions {
   timestampLeftShift: bigint
 
   /**
-   * Data center id, value range 0 -31.
+   * Generate the id of the data center id.
    */
   dataCenterId: bigint
 
@@ -25,27 +25,27 @@ export interface GenerateIdOptions {
   dataCenterLeftShift: bigint
 
   /**
-   * Work machine id, value range 0 - 31.
+   * Generate the id of the working machine id.
    */
-  workerId: bigint
+  workId: bigint
 
   /**
-   * The amount of machine left offset.
+   * The work machine left offset amount.
    */
-  machineLeftShift: bigint
+  workLeftShift: bigint
 }
 
 /**
- * Generate id result.
+ * Generate the result of id.
  */
 export interface GenerateIdResult {
   /**
-   * New id.
+   * The new id generated.
    */
   id: bigint
 
   /**
-   * Last run timestamp.
+   * Last execution timestamp.
    */
   lastTimestamp: bigint
 
@@ -56,7 +56,7 @@ export interface GenerateIdResult {
 }
 
 /**
- * Generate id.
+ * The function that generates the id.
  */
 export interface GenerateIdFunction {
   (options: GenerateIdOptions): (

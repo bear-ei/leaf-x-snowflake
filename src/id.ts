@@ -5,13 +5,13 @@ export const generateId: GenerateIdFunction = ({
   timestampLeftShift,
   dataCenterId,
   dataCenterLeftShift,
-  workerId,
-  machineLeftShift
+  workId,
+  workLeftShift
 }) => ({ timestamp, sequence }) => ({
   id:
     ((timestamp - twEpoch) << timestampLeftShift) |
     (dataCenterId << dataCenterLeftShift) |
-    (workerId << machineLeftShift) |
+    (workId << workLeftShift) |
     sequence,
   lastTimestamp: timestamp,
   sequence

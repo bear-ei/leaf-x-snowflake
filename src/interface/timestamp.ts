@@ -1,5 +1,5 @@
 /**
- * Handles the timestamp options.
+ * Options to handle timestamps.
  */
 export interface HandleTimestampOptions {
   /**
@@ -24,7 +24,7 @@ export interface HandleTimestampOptions {
 }
 
 /**
- * Handles the timestamp results.
+ * The result of processing the timestamp.
  */
 export interface HandleTimestampResult {
   /**
@@ -39,41 +39,35 @@ export interface HandleTimestampResult {
 }
 
 /**
- * Get the timestamp.
+ * The function to get the timestamp.
  */
 export interface GetTimestampFunction {
   (): bigint
 }
 
 /**
- * Handles timestamps are equal.
+ * Handles functions with equal timestamps.
  */
 export interface HandleTimestampEqualFunction {
   (options: HandleTimestampOptions): HandleTimestampResult
 }
 
 /**
- * Check to get the next millisecond.
+ * Function to check if the next millisecond timestamp is obtained.
  */
 export interface CheckGetNextMillisecondFunction {
   (options: HandleTimestampOptions): HandleTimestampResult
 }
 
 /**
- * Get the next millisecond.
- *
- * @param timestamp         Current timestamp.
- * @param lastTimestamp     Last run timestamp.
+ * The function to get the next millisecond timestamp.
  */
 export interface GetNextMillisecondFunction {
   (timestamp: bigint, lastTimestamp: bigint): bigint
 }
 
 /**
- * Handles clock callback.
- *
- * @param timestamp        Current timestamp.
- * @param lastTimestamp    Last run timestamp.
+ * The function that handles the clock callback.
  */
 export interface HandleClockBackFunction {
   (timestamp: bigint, lastTimestamp: bigint): void | never

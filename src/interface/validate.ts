@@ -1,25 +1,26 @@
 /**
- * Validate the ID options.
+ * The options to validate the id.
  */
 export interface ValidateIdOptions {
   /**
-   * The ID that needs to be verified.
+   * The data center id or work machine id that needs to be validated.
    */
   id: bigint
 
   /**
-   * The maximum ID allowed.
+   * The maximum id range allowed.
    */
   maxId: bigint
 
   /**
-   * If the ID does not pass validation, this custom error message will be returned.
+   * A custom error message thrown when data center id or machine id
+   * verification fails.
    */
   errorMessage: string
 }
 
 /**
- * Validate the ID.
+ * Function to validate the id.
  */
 export interface ValidateIdFunction {
   (options: ValidateIdOptions): void | never

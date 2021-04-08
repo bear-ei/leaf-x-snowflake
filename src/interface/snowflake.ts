@@ -1,5 +1,5 @@
 /**
- * Options for the snowflake algorithm.
+ * Snowflake algorithm options.
  */
 export interface SnowflakeOptions {
   /**
@@ -13,13 +13,13 @@ export interface SnowflakeOptions {
   workId?: number
 
   /**
-   * Timestamp of the start of the snowflake algorithm.
+   * The start timestamp of the snowflake algorithm.
    */
   twEpoch: number
 }
 
 /**
- * The function of the snowflake algorithm.
+ * Snowflake algorithm.
  */
 export interface SnowflakeFunction {
   (options: SnowflakeOptions): () => string

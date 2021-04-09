@@ -78,7 +78,7 @@ describe('test/timestamp.test.ts', () => {
     } catch (error) {
       assert(
         error.message ===
-          'Clock moves backwards and rejects the ID generated for 1.'
+          'Clock moves backwards and rejects the id generated for 1.'
       )
     }
   })

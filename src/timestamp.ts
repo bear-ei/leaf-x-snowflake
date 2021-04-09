@@ -4,7 +4,7 @@ import {
   GetTimestampFunction,
   HandleClockBackFunction,
   HandleTimestampEqualFunction
-} from './interface/timestamp'
+} from './interface/timestamp.interface'
 
 export const getTimestamp: GetTimestampFunction = () => BigInt(Date.now())
 export const checkGetNextMillisecond: CheckGetNextMillisecondFunction = ({

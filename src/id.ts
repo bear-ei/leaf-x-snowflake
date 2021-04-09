@@ -1,4 +1,4 @@
-import { GenerateIdFunction } from './interface/id'
+import { GenerateIdFunction } from './interface/id.interface'
 
 export const generateId: GenerateIdFunction = ({
   twEpoch,

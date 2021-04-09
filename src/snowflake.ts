@@ -1,6 +1,6 @@
 import { compose } from 'lodash/fp'
 import { generateId } from './id'
-import { SnowflakeFunction } from './interface/snowflake'
+import { SnowflakeFunction } from './interface/snowflake.interface'
 import {
   getTimestamp,
   handleClockBack,

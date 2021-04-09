@@ -1,5 +1,5 @@
 /**
- * Handle timestamp options.
+ * Options to handle timestamps.
  */
 export interface HandleTimestampOptions {
   /**
@@ -8,12 +8,12 @@ export interface HandleTimestampOptions {
   timestamp: bigint
 
   /**
-   * Last run timestamp.
+   * Generate the timestamp of the last run of the new id.
    */
   lastTimestamp: bigint
 
   /**
-   * The memory sequence in milliseconds.
+   * Memory sequence in milliseconds.
    */
   sequence: bigint
 
@@ -24,7 +24,7 @@ export interface HandleTimestampOptions {
 }
 
 /**
- * Handle timestamp results.
+ * Result of handle the timestamp.
  */
 export interface HandleTimestampResult {
   /**
@@ -33,41 +33,41 @@ export interface HandleTimestampResult {
   timestamp: bigint
 
   /**
-   * The memory sequence in milliseconds.
+   * Memory sequence in milliseconds.
    */
   sequence: bigint
 }
 
 /**
- * Get the current timestamp.
+ * Function to get the new timestamp.
  */
 export interface GetTimestampFunction {
   (): bigint
 }
 
 /**
- * Handle timestamps are equal.
+ * Function to handle equal timestamps.
  */
 export interface HandleTimestampEqualFunction {
   (options: HandleTimestampOptions): HandleTimestampResult
 }
 
 /**
- * Check to get the next millisecond timestamp or not.
+ * Function to check if the next millisecond timestamp is obtained.
  */
 export interface CheckGetNextMillisecondFunction {
   (options: HandleTimestampOptions): HandleTimestampResult
 }
 
 /**
- * Get the next millisecond timestamp.
+ * Get the next millisecond timestamp function.
  */
 export interface GetNextMillisecondFunction {
   (timestamp: bigint, lastTimestamp: bigint): bigint
 }
 
 /**
- * Handle clock callback.
+ * Function that handles the clock callback.
  */
 export interface HandleClockBackFunction {
   (timestamp: bigint, lastTimestamp: bigint): void | never

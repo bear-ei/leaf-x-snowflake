@@ -1,7 +1,7 @@
 {
   "name": "@leaf-x/snowflake",
   "description": "Leaf-x project distributed id generation.",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "main": "./dist/index.js",
   "author": "sound shell <sound_shell@outlook.com>",
   "license": "MIT",

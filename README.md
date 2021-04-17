@@ -1,6 +1,6 @@
 # Snowflake
 
-Twitter snowflake algorithm, using TypeScript implementation.
+Twitter snowflake algorithm, TypeScript implementation.
 
 ## Installation
 
@@ -8,24 +8,24 @@ Twitter snowflake algorithm, using TypeScript implementation.
 
 ## Parameters
 
-| Name         | Type   | Default Value | Description                                       |
-| :----------- | :----- | :------------ | :------------------------------------------------ |
-| dataCenterId | Number | 0             | Data center ID, value range 0 -31.                |
-| workId       | Number | 0             | Working machine ID, value range 0 - 31.           |
-| twEpoch      | Number | Required      | Generate the start timestamp of the snowflake ID. |
+| Name         | Type   | Default Value | Description                                        |
+| :----------- | :----- | :------------ | :------------------------------------------------- |
+| dataCenterId | Number | 0             | Data center ID, value range 0 -31.                 |
+| workId       | Number | 0             | Working machine ID, value range 0 - 31.            |
+| twEpoch      | Number | Required      | Timestamp of the start of the snowflake algorithm. |
 
 ## Usage
 
 ```typescript
-import * as snowflake from '@leaf-x/snowflake'
+import snowflake from '@leaf-x/snowflake'
 
-const generateId = snowflake({
+const newId = snowflake({
   dataCenterId: 0,
   workId: 0,
   twEpoch: 1583734327332
 })
 
-const id = generateId()
+const id = newId()
 
 console.info(id)
 ```

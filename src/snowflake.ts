@@ -1,14 +1,9 @@
-import { compose } from 'lodash/fp'
-import { generateId } from './id'
-import { SnowflakeFunction } from './interface/snowflake.interface'
-import {
-  getTimestamp,
-  handleClockBack,
-  handleTimestampEqual
-} from './timestamp'
+import { newId } from './id'
+import { Snowflake } from './interface/snowflake.interface'
+import { clockBack, newTimestamp, timestampEqual } from './timestamp'
 import { validateId } from './validate'
 
-export const snowflake: SnowflakeFunction = ({
+export const snowflake: Snowflake = ({
   twEpoch,
   dataCenterId = 0,
   workId = 0
@@ -36,22 +31,20 @@ export const snowflake: SnowflakeFunction = ({
     {
       id: dataCenterNode,
       maxId: maxDataCenterId,
-      errorMessage:
-        'Data center id cannot be greater than ${maxId} or less than 0.'
+      message: 'Data center ID cannot be greater than ${maxId} or less than 0.'
     },
     {
       id: machineNode,
       maxId: maxMachineId,
-      errorMessage:
-        'Work machine id cannot be greater than ${maxId} or less than 0.'
+      message: 'Work machine ID cannot be greater than ${maxId} or less than 0.'
     }
   ]
 
   validateItems.forEach(validateId)
 
   return () => {
-    const timestamp = getTimestamp()
-    const getNextId = generateId({
+    const timestamp = newTimestamp()
+    const nextId = newId({
       twEpoch: epoch,
       timestampLeftShift,
       dataCenterId: dataCenterNode,
@@ -60,15 +53,20 @@ export const snowflake: SnowflakeFunction = ({
       workLeftShift
     })
 
-    const getId = compose(getNextId, handleTimestampEqual)
+    const timestampResult = timestampEqual({
+      timestamp,
+      lastTimestamp,
+      sequence,
+      maxSequence
+    })
 
-    handleClockBack(timestamp, lastTimestamp)
+    clockBack(timestamp, lastTimestamp)
 
     const {
       id,
       lastTimestamp: newLastTimestamp,
       sequence: newSequence
-    } = getId({ timestamp, lastTimestamp, sequence, maxSequence })
+    } = nextId(timestampResult)
 
     lastTimestamp = newLastTimestamp
     sequence = newSequence

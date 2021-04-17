@@ -1,19 +1,19 @@
 /**
- * Options to handle timestamps.
+ * Timestamp options.
  */
-export interface HandleTimestampOptions {
+export interface TimestampOptions {
   /**
    * Current timestamp.
    */
   timestamp: bigint
 
   /**
-   * Generate the timestamp of the last run of the new id.
+   * Last run timestamp.
    */
   lastTimestamp: bigint
 
   /**
-   * Memory sequence in milliseconds.
+   * The memory sequence in milliseconds.
    */
   sequence: bigint
 
@@ -24,51 +24,57 @@ export interface HandleTimestampOptions {
 }
 
 /**
- * Result of handle the timestamp.
+ * Timestamp results.
  */
-export interface HandleTimestampResult {
+export interface TimestampResult {
   /**
    * New timestamp.
    */
   timestamp: bigint
 
   /**
-   * Memory sequence in milliseconds.
+   * Memory sequence in new milliseconds.
    */
   sequence: bigint
 }
 
 /**
- * Function to get the new timestamp.
+ * New timestamp.
  */
-export interface GetTimestampFunction {
+export interface NewTimestamp {
   (): bigint
 }
 
 /**
- * Function to handle equal timestamps.
+ * Timestamps are equal.
  */
-export interface HandleTimestampEqualFunction {
-  (options: HandleTimestampOptions): HandleTimestampResult
+export interface TimestampEqual {
+  (options: TimestampOptions): TimestampResult
 }
 
 /**
- * Function to check if the next millisecond timestamp is obtained.
+ * Check the next millisecond timestamp.
  */
-export interface CheckGetNextMillisecondFunction {
-  (options: HandleTimestampOptions): HandleTimestampResult
+export interface CheckNextMillisecond {
+  (options: TimestampOptions): TimestampResult
 }
 
 /**
- * Get the next millisecond timestamp function.
+ * The next millisecond timestamp.
+ *
+ * @param timestamp     Current timestamp.
+ * @param lastTimestamp Last run timestamp.
  */
-export interface GetNextMillisecondFunction {
+export interface NextMillisecond {
   (timestamp: bigint, lastTimestamp: bigint): bigint
 }
 
 /**
- * Function that handles the clock callback.
+ * Clock back.
+ *
+ * @param timestamp     Current timestamp.
+ * @param lastTimestamp Last run timestamp.
  */
-export interface HandleClockBackFunction {
+export interface ClockBack {
   (timestamp: bigint, lastTimestamp: bigint): void | never
 }

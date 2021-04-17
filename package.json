@@ -1,7 +1,7 @@
 {
   "name": "@leaf-x/snowflake",
-  "description": "Leaf-x project distributed id generation.",
-  "version": "0.4.3",
+  "version": "0.6.0",
+  "description": "Twitter snowflake algorithm, TypeScript implementation.",
   "main": "./dist/index.js",
   "author": "sound shell <sound_shell@outlook.com>",
   "license": "MIT",
@@ -13,17 +13,12 @@
   "bugs": {
     "url": "https://github.com/SoundShell/leaf-x-snowflake/issues"
   },
-  "dependencies": {
-    "lodash": "^4.17.21"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@types/lodash": "^4.14.168",
     "@types/mocha": "^8.0.4",
     "@types/node": "^14.14.10",
     "@types/power-assert": "^1.5.3",
-    "@types/ramda": "^0.27.36",
     "@types/sinon": "^9.0.9",
-    "@types/underscore": "^1.11.0",
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "@typescript-eslint/parser": "^4.8.2",
     "eslint": "^7.14.0",

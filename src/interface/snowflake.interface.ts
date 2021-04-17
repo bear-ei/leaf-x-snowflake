@@ -1,26 +1,26 @@
 /**
- * Options for the snowflake algorithm.
+ * Snowflake algorithm options.
  */
 export interface SnowflakeOptions {
   /**
-   * Data center id.
+   * Data center ID.
    */
   dataCenterId?: number
 
   /**
-   * Work machine id.
+   * Work machine ID.
    */
   workId?: number
 
   /**
-   * Start timestamp of the snowflake algorithm.
+   * Timestamp of the start of the snowflake algorithm.
    */
   twEpoch: number
 }
 
 /**
- *  Function of the snowflake algorithm.
+ * Snowflake algorithm.
  */
-export interface SnowflakeFunction {
+export interface Snowflake {
   (options: SnowflakeOptions): () => string
 }

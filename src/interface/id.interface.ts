@@ -1,65 +1,63 @@
-import { HandleTimestampResult } from './timestamp.interface'
+import { TimestampResult } from './timestamp.interface'
 
 /**
- * Options to generate a new id.
+ * New ID options.
  */
-export interface GenerateIdOptions {
+export interface NewIdOptions {
   /**
-   * Generate the start timestamp of the new id.
+   * The start timestamp for generating the ID.
    */
   twEpoch: bigint
 
   /**
-   * Left offset of the timestamp.
+   * Timestamp left offset.
    */
   timestampLeftShift: bigint
 
   /**
-   * Data center id.
+   * Data center ID.
    */
   dataCenterId: bigint
 
   /**
-   * Left offset of data center id.
+   * Data center left offset.
    */
   dataCenterLeftShift: bigint
 
   /**
-   * Work machine id.
+   * Work machine ID.
    */
   workId: bigint
 
   /**
-   * Left offset of the work machine id.
+   * Work machine left offset.
    */
   workLeftShift: bigint
 }
 
 /**
- * Generate the result of the new id.
+ * New ID results.
  */
-export interface GenerateIdResult {
+export interface NewIdResult {
   /**
-   * New id generated.
+   * New ID.
    */
   id: bigint
 
   /**
-   * Generate the timestamp of the last run of the new id.
+   * Last run timestamp.
    */
   lastTimestamp: bigint
 
   /**
-   * Memory sequence in milliseconds.
+   * The memory sequence in milliseconds.
    */
   sequence: bigint
 }
 
 /**
- * Function that generates the new id.
+ * New ID.
  */
-export interface GenerateIdFunction {
-  (options: GenerateIdOptions): (
-    handleTimestampResult: HandleTimestampResult
-  ) => GenerateIdResult
+export interface NewId {
+  (options: NewIdOptions): (timestampResult: TimestampResult) => NewIdResult
 }

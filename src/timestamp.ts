@@ -1,13 +1,36 @@
 import {
-  CheckGetNextMillisecondFunction,
-  GetNextMillisecondFunction,
-  GetTimestampFunction,
-  HandleClockBackFunction,
-  HandleTimestampEqualFunction
+  CheckNextMillisecond,
+  ClockBack,
+  NewTimestamp,
+  NextMillisecond,
+  TimestampEqual
 } from './interface/timestamp.interface'
 
-export const getTimestamp: GetTimestampFunction = () => BigInt(Date.now())
-export const checkGetNextMillisecond: CheckGetNextMillisecondFunction = ({
+export const newTimestamp: NewTimestamp = () => BigInt(Date.now())
+export const nextMillisecond: NextMillisecond = (timestamp, lastTimestamp) =>
+  timestamp <= lastTimestamp
+    ? nextMillisecond(newTimestamp(), lastTimestamp)
+    : timestamp
+
+export const timestampEqual: TimestampEqual = ({
+  timestamp,
+  lastTimestamp,
+  ...args
+}) =>
+  timestamp === lastTimestamp
+    ? checkNextMillisecond({ timestamp, lastTimestamp, ...args })
+    : { timestamp, sequence: 0n }
+
+export const clockBack: ClockBack = (timestamp, lastTimestamp) => {
+  if (timestamp < lastTimestamp) {
+    throw new Error(
+      `Clock moves backwards and rejects the ID generated for ` +
+        `${lastTimestamp - timestamp}.`
+    )
+  }
+}
+
+const checkNextMillisecond: CheckNextMillisecond = ({
   timestamp,
   lastTimestamp,
   sequence,
@@ -17,37 +40,8 @@ export const checkGetNextMillisecond: CheckGetNextMillisecondFunction = ({
 
   return nextSequence === 0n
     ? {
-        timestamp: getNextMillisecond(timestamp, lastTimestamp),
+        timestamp: nextMillisecond(timestamp, lastTimestamp),
         sequence: nextSequence
       }
     : { timestamp, sequence: nextSequence }
-}
-
-export const getNextMillisecond: GetNextMillisecondFunction = (
-  timestamp,
-  lastTimestamp
-) =>
-  timestamp <= lastTimestamp
-    ? getNextMillisecond(getTimestamp(), lastTimestamp)
-    : timestamp
-
-export const handleTimestampEqual: HandleTimestampEqualFunction = ({
-  timestamp,
-  lastTimestamp,
-  ...args
-}) =>
-  timestamp === lastTimestamp
-    ? checkGetNextMillisecond({ timestamp, lastTimestamp, ...args })
-    : { timestamp, sequence: 0n }
-
-export const handleClockBack: HandleClockBackFunction = (
-  timestamp,
-  lastTimestamp
-) => {
-  if (timestamp < lastTimestamp) {
-    throw new Error(
-      `Clock moves backwards and rejects the id generated for ` +
-        `${lastTimestamp - timestamp}.`
-    )
-  }
 }

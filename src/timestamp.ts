@@ -1,17 +1,17 @@
 import {
-  CheckNextMillisecond,
-  ClockBack,
-  NewTimestamp,
-  NextMillisecond,
-  TimestampEqual
+  CheckGetNextMillisecond,
+  GetNewTimestamp,
+  GetNextMillisecond,
+  HandleClockCallback,
+  HandleTimestampEqual
 } from './interface/timestamp.interface'
 
-const nextMillisecond: NextMillisecond = (timestamp, lastTimestamp) =>
+const getNextMillisecond: GetNextMillisecond = (timestamp, lastTimestamp) =>
   timestamp <= lastTimestamp
-    ? nextMillisecond(newTimestamp(), lastTimestamp)
+    ? getNextMillisecond(getNewTimestamp(), lastTimestamp)
     : timestamp
 
-const checkNextMillisecond: CheckNextMillisecond = ({
+const checkGetNextMillisecond: CheckGetNextMillisecond = ({
   timestamp,
   lastTimestamp,
   sequence,
@@ -21,23 +21,26 @@ const checkNextMillisecond: CheckNextMillisecond = ({
 
   return nextSequence === 0n
     ? {
-        timestamp: nextMillisecond(timestamp, lastTimestamp),
+        timestamp: getNextMillisecond(timestamp, lastTimestamp),
         sequence: nextSequence
       }
     : { timestamp, sequence: nextSequence }
 }
 
-export const newTimestamp: NewTimestamp = () => BigInt(Date.now())
-export const timestampEqual: TimestampEqual = ({
+export const getNewTimestamp: GetNewTimestamp = () => BigInt(Date.now())
+export const handleTimestampEqual: HandleTimestampEqual = ({
   timestamp,
   lastTimestamp,
   ...args
 }) =>
   timestamp === lastTimestamp
-    ? checkNextMillisecond({ timestamp, lastTimestamp, ...args })
+    ? checkGetNextMillisecond({ timestamp, lastTimestamp, ...args })
     : { timestamp, sequence: 0n }
 
-export const clockBack: ClockBack = (timestamp, lastTimestamp) => {
+export const handleClockCallback: HandleClockCallback = (
+  timestamp,
+  lastTimestamp
+) => {
   if (timestamp < lastTimestamp) {
     throw new Error(
       `Clock moves backwards and rejects the ID generated for ` +

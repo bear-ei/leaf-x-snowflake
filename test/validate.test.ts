@@ -2,7 +2,7 @@ import * as assert from 'assert'
 import { validateId } from '../src/validate'
 
 describe('test/validate.test.ts', () => {
-  it('Should be the result of validateId.', async () => {
+  it('Should be the result of validate the ID.', async () => {
     try {
       validateId({
         id: BigInt(32),

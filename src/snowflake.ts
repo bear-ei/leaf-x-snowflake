@@ -1,6 +1,10 @@
-import { newId } from './id'
+import { generateNewId } from './id'
 import { Snowflake } from './interface/snowflake.interface'
-import { clockBack, newTimestamp, timestampEqual } from './timestamp'
+import {
+  getNewTimestamp,
+  handleClockCallback,
+  handleTimestampEqual
+} from './timestamp'
 import { validateId } from './validate'
 
 export const snowflake: Snowflake = ({
@@ -43,8 +47,8 @@ export const snowflake: Snowflake = ({
   validateItems.forEach(validateId)
 
   return () => {
-    const timestamp = newTimestamp()
-    const nextId = newId({
+    const timestamp = getNewTimestamp()
+    const getNextId = generateNewId({
       twEpoch: epoch,
       timestampLeftShift,
       dataCenterId: dataCenterNode,
@@ -53,20 +57,20 @@ export const snowflake: Snowflake = ({
       workLeftShift
     })
 
-    const timestampResult = timestampEqual({
+    const timestampResult = handleTimestampEqual({
       timestamp,
       lastTimestamp,
       sequence,
       maxSequence
     })
 
-    clockBack(timestamp, lastTimestamp)
+    handleClockCallback(timestamp, lastTimestamp)
 
     const {
       id,
       lastTimestamp: newLastTimestamp,
       sequence: newSequence
-    } = nextId(timestampResult)
+    } = getNextId(timestampResult)
 
     lastTimestamp = newLastTimestamp
     sequence = newSequence

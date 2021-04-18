@@ -1,10 +1,10 @@
 import * as assert from 'assert'
-import { newId } from '../src/id'
+import { generateNewId } from '../src/id'
 
 describe('test/id.test.ts', () => {
-  it('Should be the result of newId.', async () => {
+  it('Should be the result of generating a new ID.', async () => {
     const now = BigInt(Date.now())
-    const result = newId({
+    const result = generateNewId({
       twEpoch: now,
       timestampLeftShift: BigInt(22),
       dataCenterId: BigInt(0),

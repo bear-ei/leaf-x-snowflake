@@ -1,9 +1,9 @@
 import { TimestampResult } from './timestamp.interface'
 
 /**
- * New ID options.
+ * Generate new ID options.
  */
-export interface NewIdOptions {
+export interface GenerateNewIdOptions {
   /**
    * The start timestamp for generating the ID.
    */
@@ -36,9 +36,9 @@ export interface NewIdOptions {
 }
 
 /**
- * New ID results.
+ * Generate new ID results.
  */
-export interface NewIdResult {
+export interface GenerateNewIdResult {
   /**
    * New ID.
    */
@@ -56,8 +56,10 @@ export interface NewIdResult {
 }
 
 /**
- * New ID.
+ * Generate new ID.
  */
-export interface NewId {
-  (options: NewIdOptions): (timestampResult: TimestampResult) => NewIdResult
+export interface GenerateNewId {
+  (options: GenerateNewIdOptions): (
+    timestampResult: TimestampResult
+  ) => GenerateNewIdResult
 }

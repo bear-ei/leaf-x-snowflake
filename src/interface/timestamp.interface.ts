@@ -39,42 +39,42 @@ export interface TimestampResult {
 }
 
 /**
- * New timestamp.
+ * Get the new timestamp.
  */
-export interface NewTimestamp {
+export interface GetNewTimestamp {
   (): bigint
 }
 
 /**
- * Timestamps are equal.
+ * Handle timestamps are equal.
  */
-export interface TimestampEqual {
+export interface HandleTimestampEqual {
   (options: TimestampOptions): TimestampResult
 }
 
 /**
- * Check the next millisecond timestamp.
+ * Check to get the next millisecond timestamp or not.
  */
-export interface CheckNextMillisecond {
+export interface CheckGetNextMillisecond {
   (options: TimestampOptions): TimestampResult
 }
 
 /**
- * The next millisecond timestamp.
+ * Get the next millisecond timestamp.
  *
  * @param timestamp     Current timestamp.
  * @param lastTimestamp Last run timestamp.
  */
-export interface NextMillisecond {
+export interface GetNextMillisecond {
   (timestamp: bigint, lastTimestamp: bigint): bigint
 }
 
 /**
- * Clock back.
+ * Handle clock callback.
  *
  * @param timestamp     Current timestamp.
  * @param lastTimestamp Last run timestamp.
  */
-export interface ClockBack {
+export interface HandleClockCallback {
   (timestamp: bigint, lastTimestamp: bigint): void | never
 }

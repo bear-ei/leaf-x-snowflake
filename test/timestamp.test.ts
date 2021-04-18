@@ -1,16 +1,20 @@
 import * as assert from 'assert'
-import { clockBack, newTimestamp, timestampEqual } from '../src/timestamp'
+import {
+  getNewTimestamp,
+  handleClockCallback,
+  handleTimestampEqual
+} from '../src/timestamp'
 
 describe('test/timestamp.test.ts', () => {
-  it('Should be the result of newTimestamp.', async () => {
-    const result = newTimestamp()
+  it('Should be the result of generating a new timestamp.', async () => {
+    const result = getNewTimestamp()
 
     assert(typeof result === 'bigint')
   })
 
-  it('Should be the result of timestampEqual.', async () => {
+  it('Should be the result of handle timestamp equality.', async () => {
     const now = BigInt(Date.now())
-    const result = timestampEqual({
+    const result = handleTimestampEqual({
       timestamp: now,
       lastTimestamp: now,
       sequence: BigInt(0),
@@ -22,11 +26,11 @@ describe('test/timestamp.test.ts', () => {
     assert(typeof result.timestamp === 'bigint')
   })
 
-  it('Should be the result of clockBack.', async () => {
+  it('Should be the result of handle clock callbacks.', async () => {
     const now = Date.now()
 
     try {
-      clockBack(BigInt(now - 1), BigInt(now))
+      handleClockCallback(BigInt(now - 1), BigInt(now))
     } catch (error) {
       assert(
         error.message ===

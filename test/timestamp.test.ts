@@ -1,21 +1,9 @@
 import * as assert from 'assert'
-import {
-  clockBack,
-  newTimestamp,
-  nextMillisecond,
-  timestampEqual
-} from '../src/timestamp'
+import { clockBack, newTimestamp, timestampEqual } from '../src/timestamp'
 
 describe('test/timestamp.test.ts', () => {
   it('Should be the result of newTimestamp.', async () => {
     const result = newTimestamp()
-
-    assert(typeof result === 'bigint')
-  })
-
-  it('Should be the result of nextMillisecond.', async () => {
-    const now = BigInt(Date.now())
-    const result = nextMillisecond(now, now)
 
     assert(typeof result === 'bigint')
   })

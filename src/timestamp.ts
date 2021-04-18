@@ -6,12 +6,28 @@ import {
   TimestampEqual
 } from './interface/timestamp.interface'
 
-export const newTimestamp: NewTimestamp = () => BigInt(Date.now())
-export const nextMillisecond: NextMillisecond = (timestamp, lastTimestamp) =>
+const nextMillisecond: NextMillisecond = (timestamp, lastTimestamp) =>
   timestamp <= lastTimestamp
     ? nextMillisecond(newTimestamp(), lastTimestamp)
     : timestamp
 
+const checkNextMillisecond: CheckNextMillisecond = ({
+  timestamp,
+  lastTimestamp,
+  sequence,
+  maxSequence
+}) => {
+  const nextSequence = (sequence + 1n) & maxSequence
+
+  return nextSequence === 0n
+    ? {
+        timestamp: nextMillisecond(timestamp, lastTimestamp),
+        sequence: nextSequence
+      }
+    : { timestamp, sequence: nextSequence }
+}
+
+export const newTimestamp: NewTimestamp = () => BigInt(Date.now())
 export const timestampEqual: TimestampEqual = ({
   timestamp,
   lastTimestamp,
@@ -28,20 +44,4 @@ export const clockBack: ClockBack = (timestamp, lastTimestamp) => {
         `${lastTimestamp - timestamp}.`
     )
   }
-}
-
-const checkNextMillisecond: CheckNextMillisecond = ({
-  timestamp,
-  lastTimestamp,
-  sequence,
-  maxSequence
-}) => {
-  const nextSequence = (sequence + 1n) & maxSequence
-
-  return nextSequence === 0n
-    ? {
-        timestamp: nextMillisecond(timestamp, lastTimestamp),
-        sequence: nextSequence
-      }
-    : { timestamp, sequence: nextSequence }
 }

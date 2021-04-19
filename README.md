@@ -17,7 +17,7 @@ Twitter snowflake algorithm, TypeScript implementation.
 ## Usage
 
 ```typescript
-import snowflake from '@leaf-x/snowflake'
+import * as snowflake from '@leaf-x/snowflake'
 
 const newId = snowflake({
   dataCenterId: 0,

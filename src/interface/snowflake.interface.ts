@@ -21,7 +21,8 @@ export interface SnowflakeOptions {
 /**
  * Snowflake algorithm.
  *
- * @param options Snowflake algorithm options.
+ * @param options SnowflakeOptions
+ * @return string
  */
 export interface Snowflake {
   (options: SnowflakeOptions): () => string

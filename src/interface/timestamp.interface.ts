@@ -40,6 +40,8 @@ export interface TimestampResult {
 
 /**
  * Get the new timestamp.
+ *
+ * @return bigint
  */
 export interface GetNewTimestamp {
   (): bigint
@@ -48,7 +50,8 @@ export interface GetNewTimestamp {
 /**
  * Handle timestamps are equal.
  *
- * @param options Timestamp options.
+ * @param options TimestampOptions
+ * @return TimestampResult
  */
 export interface HandleTimestampEqual {
   (options: TimestampOptions): TimestampResult
@@ -57,7 +60,8 @@ export interface HandleTimestampEqual {
 /**
  * Check to get the next millisecond timestamp or not.
  *
- * @param options Timestamp options.
+ * @param options TimestampOptions
+ * @return TimestampResult
  */
 export interface CheckGetNextMillisecond {
   (options: TimestampOptions): TimestampResult
@@ -68,6 +72,7 @@ export interface CheckGetNextMillisecond {
  *
  * @param timestamp     Current timestamp.
  * @param lastTimestamp Last run timestamp.
+ * @return bigint
  */
 export interface GetNextMillisecond {
   (timestamp: bigint, lastTimestamp: bigint): bigint
@@ -78,6 +83,7 @@ export interface GetNextMillisecond {
  *
  * @param timestamp     Current timestamp.
  * @param lastTimestamp Last run timestamp.
+ * @return void | never
  */
 export interface HandleClockCallback {
   (timestamp: bigint, lastTimestamp: bigint): void | never

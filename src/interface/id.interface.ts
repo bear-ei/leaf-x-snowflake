@@ -58,7 +58,8 @@ export interface GenerateNewIdResult {
 /**
  * Initialize to generate a new ID.
  *
- * @param options Generate a new ID options.
+ * @param options GenerateNewIdOptions
+ * @return GenerateNewId
  */
 export interface InitGenerateNewId {
   (options: GenerateNewIdOptions): GenerateNewId
@@ -67,7 +68,8 @@ export interface InitGenerateNewId {
 /**
  * Generate a new ID.
  *
- * @param timestampResult Timestamp results.
+ * @param timestampResult TimestampResult
+ * @return GenerateNewIdResult
  */
 export interface GenerateNewId {
   (timestampResult: TimestampResult): GenerateNewIdResult

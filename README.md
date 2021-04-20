@@ -8,16 +8,16 @@ Twitter snowflake algorithm, TypeScript implementation.
 
 ## Parameters
 
-| Name         | Type   | Default Value | Description                                        |
-| :----------- | :----- | :------------ | :------------------------------------------------- |
-| dataCenterId | Number | 0             | Data center ID, value range 0 -31.                 |
-| workId       | Number | 0             | Working machine ID, value range 0 - 31.            |
-| twEpoch      | Number | Required      | Timestamp of the start of the snowflake algorithm. |
+| Name         | Type   | Default Value | Description                                     |
+| :----------- | :----- | :------------ | :---------------------------------------------- |
+| dataCenterId | Number | 0             | Data center ID, value range 0-31.               |
+| workId       | Number | 0             | Work machine ID, the value range 0-31.          |
+| twEpoch      | Number | Required      | The start timestamp of the snowflake algorithm. |
 
 ## Usage
 
 ```typescript
-import * as snowflake from '@leaf-x/snowflake'
+import { snowflake } from '@leaf-x/snowflake'
 
 const newId = snowflake({
   dataCenterId: 0,

@@ -1,11 +1,11 @@
 import { TimestampResult } from './timestamp.interface'
 
 /**
- * Generate new ID options.
+ * Generate a new ID options.
  */
 export interface GenerateNewIdOptions {
   /**
-   * The start timestamp for generating the ID.
+   * Generate the start timestamp of the new ID.
    */
   twEpoch: bigint
 
@@ -36,7 +36,7 @@ export interface GenerateNewIdOptions {
 }
 
 /**
- * Generate new ID results.
+ * Generate the result of the new ID.
  */
 export interface GenerateNewIdResult {
   /**
@@ -56,10 +56,19 @@ export interface GenerateNewIdResult {
 }
 
 /**
- * Generate new ID.
+ * Initialize to generate a new ID.
+ *
+ * @param options Generate a new ID options.
+ */
+export interface InitGenerateNewId {
+  (options: GenerateNewIdOptions): GenerateNewId
+}
+
+/**
+ * Generate a new ID.
+ *
+ * @param timestampResult Timestamp results.
  */
 export interface GenerateNewId {
-  (options: GenerateNewIdOptions): (
-    timestampResult: TimestampResult
-  ) => GenerateNewIdResult
+  (timestampResult: TimestampResult): GenerateNewIdResult
 }

@@ -1,4 +1,4 @@
-import { generateNewId } from './id'
+import { initGenerateNewId } from './id'
 import { Snowflake } from './interface/snowflake.interface'
 import {
   getNewTimestamp,
@@ -48,7 +48,7 @@ export const snowflake: Snowflake = ({
 
   return () => {
     const timestamp = getNewTimestamp()
-    const getNextId = generateNewId({
+    const generateNewId = initGenerateNewId({
       twEpoch: epoch,
       timestampLeftShift,
       dataCenterId: dataCenterNode,
@@ -70,7 +70,7 @@ export const snowflake: Snowflake = ({
       id,
       lastTimestamp: newLastTimestamp,
       sequence: newSequence
-    } = getNextId(timestampResult)
+    } = generateNewId(timestampResult)
 
     lastTimestamp = newLastTimestamp
     sequence = newSequence

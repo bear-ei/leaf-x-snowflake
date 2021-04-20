@@ -12,7 +12,7 @@ describe('test/timestamp.test.ts', () => {
     assert(typeof result === 'bigint')
   })
 
-  it('Should be the result of handle timestamp equality.', async () => {
+  it('Should be the result of handling timestamp equality.', async () => {
     const now = BigInt(Date.now())
     const result = handleTimestampEqual({
       timestamp: now,
@@ -26,7 +26,7 @@ describe('test/timestamp.test.ts', () => {
     assert(typeof result.timestamp === 'bigint')
   })
 
-  it('Should be the result of handle clock callbacks.', async () => {
+  it('Should be the result of handling clock callbacks.', async () => {
     const now = Date.now()
 
     try {

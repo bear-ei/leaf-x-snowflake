@@ -47,6 +47,8 @@ export interface GetNewTimestamp {
 
 /**
  * Handle timestamps are equal.
+ *
+ * @param options Timestamp options.
  */
 export interface HandleTimestampEqual {
   (options: TimestampOptions): TimestampResult
@@ -54,6 +56,8 @@ export interface HandleTimestampEqual {
 
 /**
  * Check to get the next millisecond timestamp or not.
+ *
+ * @param options Timestamp options.
  */
 export interface CheckGetNextMillisecond {
   (options: TimestampOptions): TimestampResult
@@ -70,7 +74,7 @@ export interface GetNextMillisecond {
 }
 
 /**
- * Handle clock callback.
+ * Handle clock callbacks.
  *
  * @param timestamp     Current timestamp.
  * @param lastTimestamp Last run timestamp.

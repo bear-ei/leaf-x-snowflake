@@ -44,7 +44,9 @@ export const snowflake: Snowflake = ({
     }
   ]
 
-  validateItems.forEach(validateId)
+  for (const validateItem of validateItems) {
+    validateId(validateItem)
+  }
 
   return () => {
     const timestamp = getNewTimestamp()

@@ -2,8 +2,8 @@ import { initGenerateNewId } from './id'
 import { Snowflake } from './interface/snowflake.interface'
 import {
   getNewTimestamp,
-  handleClockCallback,
-  handleTimestampEqual
+  processClockCallback,
+  processTimestampEqual
 } from './timestamp'
 import { validateId } from './validate'
 
@@ -35,12 +35,14 @@ export const snowflake: Snowflake = ({
     {
       id: dataCenterNode,
       maxId: maxDataCenterId,
-      message: 'Data center ID cannot be greater than ${maxId} or less than 0.'
+      message:
+        'The data center ID cannot be greater than ${maxId} or less than 0.'
     },
     {
       id: machineNode,
       maxId: maxMachineId,
-      message: 'Work machine ID cannot be greater than ${maxId} or less than 0.'
+      message:
+        'The working machine ID cannot be greater than ${maxId} or less than 0.'
     }
   ]
 
@@ -59,14 +61,14 @@ export const snowflake: Snowflake = ({
       workLeftShift
     })
 
-    const timestampResult = handleTimestampEqual({
+    const timestampResult = processTimestampEqual({
       timestamp,
       lastTimestamp,
       sequence,
       maxSequence
     })
 
-    handleClockCallback(timestamp, lastTimestamp)
+    processClockCallback(timestamp, lastTimestamp)
 
     const {
       id,

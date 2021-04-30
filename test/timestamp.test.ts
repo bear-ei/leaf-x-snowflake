@@ -1,20 +1,20 @@
 import * as assert from 'assert'
 import {
   getNewTimestamp,
-  handleClockCallback,
-  handleTimestampEqual
+  processClockCallback,
+  processTimestampEqual
 } from '../src/timestamp'
 
 describe('test/timestamp.test.ts', () => {
-  it('Should be the result of generating a new timestamp.', async () => {
+  it('should be the result of obtaining a new timestamp', async () => {
     const result = getNewTimestamp()
 
     assert(typeof result === 'bigint')
   })
 
-  it('Should be the result of handling timestamp equality.', async () => {
+  it('should be the result of processing equal timestamps', async () => {
     const now = BigInt(Date.now())
-    const result = handleTimestampEqual({
+    const result = processTimestampEqual({
       timestamp: now,
       lastTimestamp: now,
       sequence: BigInt(0),
@@ -26,15 +26,15 @@ describe('test/timestamp.test.ts', () => {
     assert(typeof result.timestamp === 'bigint')
   })
 
-  it('Should be the result of handling clock callbacks.', async () => {
+  it('should be the result of processing clock callback', async () => {
     const now = Date.now()
 
     try {
-      handleClockCallback(BigInt(now - 1), BigInt(now))
+      processClockCallback(BigInt(now - 1), BigInt(now))
     } catch (error) {
       assert(
         error.message ===
-          'Clock moves backwards and rejects the ID generated for 1.'
+          'The clock moves backwards, refuses to generate IDs for 1.'
       )
     }
   })

@@ -2,8 +2,8 @@ import {
   CheckGetNextMillisecond,
   GetNewTimestamp,
   GetNextMillisecond,
-  HandleClockCallback,
-  HandleTimestampEqual
+  ProcessClockCallback,
+  ProcessTimestampEqual
 } from './interface/timestamp.interface'
 
 const getNextMillisecond: GetNextMillisecond = (timestamp, lastTimestamp) =>
@@ -28,7 +28,7 @@ const checkGetNextMillisecond: CheckGetNextMillisecond = ({
 }
 
 export const getNewTimestamp: GetNewTimestamp = () => BigInt(Date.now())
-export const handleTimestampEqual: HandleTimestampEqual = ({
+export const processTimestampEqual: ProcessTimestampEqual = ({
   timestamp,
   lastTimestamp,
   ...args
@@ -37,14 +37,15 @@ export const handleTimestampEqual: HandleTimestampEqual = ({
     ? checkGetNextMillisecond({ timestamp, lastTimestamp, ...args })
     : { timestamp, sequence: 0n }
 
-export const handleClockCallback: HandleClockCallback = (
+export const processClockCallback: ProcessClockCallback = (
   timestamp,
   lastTimestamp
 ) => {
   if (timestamp < lastTimestamp) {
     throw new Error(
-      `Clock moves backwards and rejects the ID generated for ` +
-        `${lastTimestamp - timestamp}.`
+      `The clock moves backwards, refuses to generate IDs for ${
+        lastTimestamp - timestamp
+      }.`
     )
   }
 }

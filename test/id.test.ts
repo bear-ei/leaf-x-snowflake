@@ -2,7 +2,7 @@ import * as assert from 'assert'
 import { initGenerateNewId } from '../src/id'
 
 describe('test/id.test.ts', () => {
-  it('Should be the result of generating a new ID.', async () => {
+  it('should be the result of generating a new ID', async () => {
     const now = BigInt(Date.now())
     const result = initGenerateNewId({
       twEpoch: now,

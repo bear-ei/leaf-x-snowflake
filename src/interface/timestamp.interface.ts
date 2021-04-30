@@ -8,12 +8,12 @@ export interface TimestampOptions {
   timestamp: bigint
 
   /**
-   * Last run timestamp.
+   * The last run timestamp.
    */
   lastTimestamp: bigint
 
   /**
-   * The memory sequence in milliseconds.
+   * Memory sequence in milliseconds.
    */
   sequence: bigint
 
@@ -33,13 +33,13 @@ export interface TimestampResult {
   timestamp: bigint
 
   /**
-   * Memory sequence in new milliseconds.
+   * Memory sequence in milliseconds.
    */
   sequence: bigint
 }
 
 /**
- * Get the new timestamp.
+ * Get a new timestamp.
  *
  * @return bigint
  */
@@ -48,17 +48,17 @@ export interface GetNewTimestamp {
 }
 
 /**
- * Handle timestamps are equal.
+ * Processing timestamps are equal.
  *
  * @param options TimestampOptions
  * @return TimestampResult
  */
-export interface HandleTimestampEqual {
+export interface ProcessTimestampEqual {
   (options: TimestampOptions): TimestampResult
 }
 
 /**
- * Check to get the next millisecond timestamp or not.
+ * Check if you get the next millisecond timestamp.
  *
  * @param options TimestampOptions
  * @return TimestampResult
@@ -71,7 +71,7 @@ export interface CheckGetNextMillisecond {
  * Get the next millisecond timestamp.
  *
  * @param timestamp     Current timestamp.
- * @param lastTimestamp Last run timestamp.
+ * @param lastTimestamp The last run timestamp.
  * @return bigint
  */
 export interface GetNextMillisecond {
@@ -79,12 +79,12 @@ export interface GetNextMillisecond {
 }
 
 /**
- * Handle clock callbacks.
+ * Processing clock backhand.
  *
  * @param timestamp     Current timestamp.
- * @param lastTimestamp Last run timestamp.
- * @return void | never
+ * @param lastTimestamp The last run timestamp.
+ * @return void
  */
-export interface HandleClockCallback {
-  (timestamp: bigint, lastTimestamp: bigint): void | never
+export interface ProcessClockCallback {
+  (timestamp: bigint, lastTimestamp: bigint): void
 }

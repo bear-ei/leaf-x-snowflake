@@ -5,7 +5,7 @@ import { TimestampResult } from './timestamp.interface'
  */
 export interface GenerateNewIdOptions {
   /**
-   * Generate the start timestamp of the new ID.
+   * Generate the start timestamp of the ID.
    */
   twEpoch: bigint
 
@@ -15,28 +15,28 @@ export interface GenerateNewIdOptions {
   timestampLeftShift: bigint
 
   /**
-   * Data center ID.
+   * Data Center ID.
    */
   dataCenterId: bigint
 
   /**
-   * Data center left offset.
+   * The data center left offset.
    */
   dataCenterLeftShift: bigint
 
   /**
-   * Work machine ID.
+   * Working machine ID.
    */
   workId: bigint
 
   /**
-   * Work machine left offset.
+   * Working machine left offset.
    */
   workLeftShift: bigint
 }
 
 /**
- * Generate the result of the new ID.
+ * Generate a new ID result.
  */
 export interface GenerateNewIdResult {
   /**
@@ -45,18 +45,18 @@ export interface GenerateNewIdResult {
   id: bigint
 
   /**
-   * Last run timestamp.
+   * The last run timestamp.
    */
   lastTimestamp: bigint
 
   /**
-   * The memory sequence in milliseconds.
+   * Memory sequence in milliseconds.
    */
   sequence: bigint
 }
 
 /**
- * Initialize to generate a new ID.
+ * Initialization Generates a new ID.
  *
  * @param options GenerateNewIdOptions
  * @return GenerateNewId

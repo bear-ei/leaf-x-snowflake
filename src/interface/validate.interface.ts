@@ -13,7 +13,7 @@ export interface ValidateIdOptions {
   maxId: bigint
 
   /**
-   * Validate custom messages returned by failure.
+   * Validate the custom error message returned by the failed.
    */
   message: string
 }

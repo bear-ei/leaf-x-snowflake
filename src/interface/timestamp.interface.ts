@@ -33,13 +33,13 @@ export interface TimestampResult {
   timestamp: bigint
 
   /**
-   * Memory sequence in milliseconds.
+   * The next millisecond memory sequence.
    */
   sequence: bigint
 }
 
 /**
- * Get a new timestamp.
+ * Get timestamp.
  *
  * @return bigint
  */
@@ -48,17 +48,17 @@ export interface GetNewTimestamp {
 }
 
 /**
- * Processing timestamps are equal.
+ * Handle timestamps are equal.
  *
  * @param options TimestampOptions
  * @return TimestampResult
  */
-export interface ProcessTimestampEqual {
+export interface HandleTimestampEqual {
   (options: TimestampOptions): TimestampResult
 }
 
 /**
- * Check if you get the next millisecond timestamp.
+ * Check whether to get the next millisecond.
  *
  * @param options TimestampOptions
  * @return TimestampResult
@@ -79,12 +79,12 @@ export interface GetNextMillisecond {
 }
 
 /**
- * Processing clock backhand.
+ * Handle clock callbacks.
  *
  * @param timestamp     Current timestamp.
  * @param lastTimestamp The last run timestamp.
  * @return void
  */
-export interface ProcessClockCallback {
+export interface HandleClockCallback {
   (timestamp: bigint, lastTimestamp: bigint): void
 }

@@ -8,7 +8,7 @@ describe('test/snowflake.test.ts', () => {
     assert(typeof result === 'function')
   })
 
-  it('should be the result of the snowflake algorithm to generate non-repetition ID', async () => {
+  it('should be the result of the snowflake algorithm to generate non-repetitive ID', async () => {
     const generateId = snowflake({ twEpoch: Date.now() })
 
     assert(

@@ -1,8 +1,8 @@
 import * as assert from 'assert'
 import {
   getNewTimestamp,
-  processClockCallback,
-  processTimestampEqual
+  handleClockCallback,
+  handleTimestampEqual
 } from '../src/timestamp'
 
 describe('test/timestamp.test.ts', () => {
@@ -12,9 +12,9 @@ describe('test/timestamp.test.ts', () => {
     assert(typeof result === 'bigint')
   })
 
-  it('should be the result of processing equal timestamps', async () => {
+  it('should be the result of handle equal timestamps', async () => {
     const now = BigInt(Date.now())
-    const result = processTimestampEqual({
+    const result = handleTimestampEqual({
       timestamp: now,
       lastTimestamp: now,
       sequence: BigInt(0),
@@ -26,11 +26,11 @@ describe('test/timestamp.test.ts', () => {
     assert(typeof result.timestamp === 'bigint')
   })
 
-  it('should be the result of processing clock callback', async () => {
+  it('should be the result of handle clock callback', async () => {
     const now = Date.now()
 
     try {
-      processClockCallback(BigInt(now - 1), BigInt(now))
+      handleClockCallback(BigInt(now - 1), BigInt(now))
     } catch (error) {
       assert(
         error.message ===

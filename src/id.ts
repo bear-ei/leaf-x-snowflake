@@ -5,14 +5,14 @@ export const initGenerateNewId: InitGenerateNewId = ({
   timestampLeftShift,
   dataCenterId,
   dataCenterLeftShift,
-  workId,
-  workLeftShift
+  workMachineId,
+  workMachineLeftShift
 }) => ({ timestamp, sequence }) => ({
+  lastTimestamp: timestamp,
+  sequence,
   id:
     ((timestamp - twEpoch) << timestampLeftShift) |
     (dataCenterId << dataCenterLeftShift) |
-    (workId << workLeftShift) |
-    sequence,
-  lastTimestamp: timestamp,
-  sequence
+    (workMachineId << workMachineLeftShift) |
+    sequence
 })

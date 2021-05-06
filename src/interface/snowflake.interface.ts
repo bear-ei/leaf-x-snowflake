@@ -1,19 +1,19 @@
 /**
- * Snow flower algoric options.
+ * Snowflake algorithm options.
  */
 export interface SnowflakeOptions {
   /**
-   * Data Center ID.
+   * Data center ID.
    */
   dataCenterId?: number
 
   /**
    * Working machine ID.
    */
-  workId?: number
+  workMachineId?: number
 
   /**
-   * The timestamp of the snowflake algorithm.
+   * Timestamp of the start of the snowflake algorithm.
    */
   twEpoch: number
 }

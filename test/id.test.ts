@@ -9,8 +9,8 @@ describe('test/id.test.ts', () => {
       timestampLeftShift: BigInt(22),
       dataCenterId: BigInt(0),
       dataCenterLeftShift: BigInt(17),
-      workId: BigInt(0),
-      workLeftShift: BigInt(12)
+      workMachineId: BigInt(0),
+      workMachineLeftShift: BigInt(12)
     })({ timestamp: now, sequence: BigInt(0) })
 
     assert(typeof result === 'object')

@@ -1,6 +1,6 @@
 {
   "name": "@leaf-x/snowflake",
-  "version": "0.10.2",
+  "version": "0.10.3",
   "main": "./dist/index.js",
   "author": "sound shell <sound_shell@outlook.com>",
   "description": "Twitter snowflake algorithm, TypeScript implementation.",

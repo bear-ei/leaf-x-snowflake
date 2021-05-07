@@ -6,7 +6,7 @@ import {
 } from '../src/timestamp'
 
 describe('test/timestamp.test.ts', () => {
-  it('should be the result of getting a new timestamp', async () => {
+  it('should be the result of getting new timestamp', async () => {
     const result = getNewTimestamp()
 
     assert(typeof result === 'bigint')

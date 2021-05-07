@@ -50,13 +50,13 @@ export interface GenerateNewIdResult {
   lastTimestamp: bigint
 
   /**
-   * Generate a memory sequence of new IDs in milliseconds.
+   * Generate memory sequence of new IDs in milliseconds.
    */
   sequence: bigint
 }
 
 /**
- * Initialize to generate a new ID.
+ * Initialize to generate new ID.
  *
  * @param options GenerateNewIdOptions
  * @return GenerateNewId
@@ -66,7 +66,7 @@ export interface InitGenerateNewId {
 }
 
 /**
- * Generate a new ID.
+ * Generate new ID.
  *
  * @param timestampResult TimestampResult
  * @return GenerateNewIdResult

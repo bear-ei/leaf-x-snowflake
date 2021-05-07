@@ -13,7 +13,7 @@ export interface TimestampOptions {
   lastTimestamp: bigint
 
   /**
-   * Generate a memory sequence of new IDs in milliseconds.
+   * Generate memory sequence of new IDs in milliseconds.
    */
   sequence: bigint
 

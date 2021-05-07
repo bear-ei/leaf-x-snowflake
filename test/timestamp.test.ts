@@ -6,7 +6,7 @@ import {
 } from '../src/timestamp'
 
 describe('test/timestamp.test.ts', () => {
-  it('should be the result of obtaining a new timestamp', async () => {
+  it('should be the result of getting a new timestamp', async () => {
     const result = getNewTimestamp()
 
     assert(typeof result === 'bigint')
@@ -26,7 +26,7 @@ describe('test/timestamp.test.ts', () => {
     assert(typeof result.timestamp === 'bigint')
   })
 
-  it('should be the result of handle clock callback', async () => {
+  it('should be the result of handle the clock callback', async () => {
     const now = Date.now()
 
     try {
@@ -34,7 +34,7 @@ describe('test/timestamp.test.ts', () => {
     } catch (error) {
       assert(
         error.message ===
-          'The clock moves backwards, refuses to generate IDs for 1.'
+          'The clock moves backwards and refuses to generate an ID for 1.'
       )
     }
   })

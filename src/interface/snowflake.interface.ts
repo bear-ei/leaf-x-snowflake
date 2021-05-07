@@ -8,7 +8,7 @@ export interface SnowflakeOptions {
   dataCenterId?: number
 
   /**
-   * Working machine ID.
+   * Work machine ID.
    */
   workMachineId?: number
 
@@ -19,7 +19,7 @@ export interface SnowflakeOptions {
 }
 
 /**
- * Snow flower algorithm.
+ * Snowflake algorithm.
  *
  * @param options SnowflakeOptions
  * @return string

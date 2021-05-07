@@ -8,23 +8,23 @@ export interface TimestampOptions {
   timestamp: bigint
 
   /**
-   * The last run timestamp.
+   * Generate the last run time stamp of the new ID.
    */
   lastTimestamp: bigint
 
   /**
-   * Memory sequence in milliseconds.
+   * Generate a memory sequence of new IDs in milliseconds.
    */
   sequence: bigint
 
   /**
-   * Maximum memory sequence in milliseconds.
+   * Generate the maximum memory sequence of new IDs in milliseconds.
    */
   maxSequence: bigint
 }
 
 /**
- * Timestamp results.
+ * Timestamp result.
  */
 export interface TimestampResult {
   /**
@@ -48,7 +48,7 @@ export interface GetNewTimestamp {
 }
 
 /**
- * Handle timestamps are equal.
+ * Handle timestamps equally.
  *
  * @param options TimestampOptions
  * @return TimestampResult
@@ -58,7 +58,7 @@ export interface HandleTimestampEqual {
 }
 
 /**
- * Check whether to get the next millisecond.
+ * Check if the next millisecond timestamp is obtained.
  *
  * @param options TimestampOptions
  * @return TimestampResult
@@ -71,7 +71,7 @@ export interface CheckGetNextMillisecond {
  * Get the next millisecond timestamp.
  *
  * @param timestamp     Current timestamp.
- * @param lastTimestamp The last run timestamp.
+ * @param lastTimestamp Generate the last run time stamp of the new ID.
  * @return bigint
  */
 export interface GetNextMillisecond {
@@ -82,7 +82,7 @@ export interface GetNextMillisecond {
  * Handle clock callbacks.
  *
  * @param timestamp     Current timestamp.
- * @param lastTimestamp The last run timestamp.
+ * @param lastTimestamp Generate the last run time stamp of the new ID.
  * @return void
  */
 export interface HandleClockCallback {

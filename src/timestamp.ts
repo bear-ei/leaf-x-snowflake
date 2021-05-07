@@ -43,7 +43,7 @@ export const handleClockCallback: HandleClockCallback = (
 ) => {
   if (timestamp < lastTimestamp) {
     throw new Error(
-      `The clock moves backwards, refuses to generate IDs for ${
+      `The clock moves backwards and refuses to generate an ID for ${
         lastTimestamp - timestamp
       }.`
     )

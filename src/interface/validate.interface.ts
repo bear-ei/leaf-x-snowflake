@@ -1,25 +1,25 @@
 /**
- * Validate the ID options.
+ * Validate ID options.
  */
 export interface ValidateIdOptions {
   /**
-   * Data Center ID or Working Machine ID.
+   * Data center ID or work machine ID.
    */
   id: bigint
 
   /**
-   * The maximum ID allowed.
+   * The maximum allowed data center ID or work machine ID.
    */
   maxId: bigint
 
   /**
-   * Validate the custom error message returned by the failed.
+   * This custom failure message will be thrown when the validation fails.
    */
   message: string
 }
 
 /**
- * Validate the ID.
+ * Validate ID.
  *
  * @param options ValidateIdOptions
  * @return void

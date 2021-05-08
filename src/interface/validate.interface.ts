@@ -5,17 +5,17 @@ export interface ValidateIdOptions {
   /**
    * Data center ID or work machine ID.
    */
-  id: bigint
+  id: bigint;
 
   /**
    * The maximum allowed data center ID or work machine ID.
    */
-  maxId: bigint
+  maxId: bigint;
 
   /**
    * This custom failure message will be thrown when the validation fails.
    */
-  message: string
+  message: string;
 }
 
 /**
@@ -25,5 +25,5 @@ export interface ValidateIdOptions {
  * @return void
  */
 export interface ValidateId {
-  (options: ValidateIdOptions): void
+  (options: ValidateIdOptions): void;
 }

@@ -1,80 +1,80 @@
-import { initGenerateNewId } from './id'
-import { Snowflake } from './interface/snowflake.interface'
+import {initGenerateNewId} from './id';
+import {Snowflake} from './interface/snowflake.interface';
 import {
   getNewTimestamp,
   handleClockCallback,
-  handleTimestampEqual
-} from './timestamp'
-import { validateId } from './validate'
+  handleTimestampEqual,
+} from './timestamp';
+import {validateId} from './validate';
 
 export const snowflake: Snowflake = ({
   twEpoch,
   dataCenterId = 0,
-  workMachineId = 0
+  workMachineId = 0,
 }) => {
-  const epoch = BigInt(twEpoch)
-  const dataCenterNode = BigInt(dataCenterId)
-  const workMachineNode = BigInt(workMachineId)
-  const sequenceBit = 12n
-  const workMachineBit = 5n
-  const dataCenterBit = 5n
-  const maxDataCenterId = -1n ^ (-1n << dataCenterBit)
-  const maxWorkMachineId = -1n ^ (-1n << workMachineBit)
-  const maxSequence = -1n ^ (-1n << sequenceBit)
-  const workMachineLeftShift = sequenceBit
-  const dataCenterLeftShift = sequenceBit + workMachineBit
-  const timestampLeftShift = dataCenterLeftShift + dataCenterBit
+  const epoch = BigInt(twEpoch);
+  const dataCenterNode = BigInt(dataCenterId);
+  const workMachineNode = BigInt(workMachineId);
+  const sequenceBit = BigInt(12);
+  const workMachineBit = BigInt(5);
+  const dataCenterBit = BigInt(5);
+  const maxDataCenterId = BigInt(-1) ^ (BigInt(-1) << dataCenterBit);
+  const maxWorkMachineId = BigInt(-1) ^ (BigInt(-1) << workMachineBit);
+  const maxSequence = BigInt(-1) ^ (BigInt(-1) << sequenceBit);
+  const workMachineLeftShift = sequenceBit;
+  const dataCenterLeftShift = sequenceBit + workMachineBit;
+  const timestampLeftShift = dataCenterLeftShift + dataCenterBit;
   const validateItems = [
     {
       id: dataCenterNode,
       maxId: maxDataCenterId,
       message:
-        'The data center ID cannot be greater than ${maxId} or less than 0.'
+        'The data center ID cannot be greater than ${maxId} or less than 0.',
     },
     {
       id: workMachineNode,
       maxId: maxWorkMachineId,
       message:
-        'The work machine ID cannot be greater than ${maxId} or less than 0.'
-    }
-  ]
+        'The work machine ID cannot be greater than ${maxId} or less than 0.',
+    },
+  ];
 
-  let sequence = 0n
-  let lastTimestamp = -1n
+  let sequence = BigInt(0);
+  let lastTimestamp = BigInt(-1);
 
   for (const validateItem of validateItems) {
-    validateId(validateItem)
+    validateId(validateItem);
   }
 
   return () => {
-    const timestamp = getNewTimestamp()
+    const timestamp = getNewTimestamp();
     const generateNewId = initGenerateNewId({
       twEpoch: epoch,
       timestampLeftShift,
       dataCenterId: dataCenterNode,
       dataCenterLeftShift,
       workMachineId: workMachineNode,
-      workMachineLeftShift
-    })
+      workMachineLeftShift,
+    });
 
     const timestampResult = handleTimestampEqual({
       timestamp,
       lastTimestamp,
       sequence,
-      maxSequence
-    })
+      maxSequence,
+    });
 
-    handleClockCallback(timestamp, lastTimestamp)
+    handleClockCallback(timestamp, lastTimestamp);
 
     const {
       id,
       lastTimestamp: newLastTimestamp,
-      sequence: newSequence
-    } = generateNewId(timestampResult)
+      sequence: newSequence,
+    } = generateNewId(timestampResult);
 
-    lastTimestamp = newLastTimestamp
-    sequence = newSequence
+    lastTimestamp = newLastTimestamp;
+    sequence = newSequence;
 
-    return id.toString()
-  }
-}
+    return id.toString();
+  };
+};

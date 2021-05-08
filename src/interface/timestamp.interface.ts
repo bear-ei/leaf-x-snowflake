@@ -5,22 +5,22 @@ export interface TimestampOptions {
   /**
    * Current timestamp.
    */
-  timestamp: bigint
+  timestamp: bigint;
 
   /**
    * Generate the last run time stamp of the new ID.
    */
-  lastTimestamp: bigint
+  lastTimestamp: bigint;
 
   /**
    * Generate memory sequence of new IDs in milliseconds.
    */
-  sequence: bigint
+  sequence: bigint;
 
   /**
    * Generate the maximum memory sequence of new IDs in milliseconds.
    */
-  maxSequence: bigint
+  maxSequence: bigint;
 }
 
 /**
@@ -30,12 +30,12 @@ export interface TimestampResult {
   /**
    * New timestamp.
    */
-  timestamp: bigint
+  timestamp: bigint;
 
   /**
    * The next millisecond memory sequence.
    */
-  sequence: bigint
+  sequence: bigint;
 }
 
 /**
@@ -44,7 +44,7 @@ export interface TimestampResult {
  * @return bigint
  */
 export interface GetNewTimestamp {
-  (): bigint
+  (): bigint;
 }
 
 /**
@@ -54,7 +54,7 @@ export interface GetNewTimestamp {
  * @return TimestampResult
  */
 export interface HandleTimestampEqual {
-  (options: TimestampOptions): TimestampResult
+  (options: TimestampOptions): TimestampResult;
 }
 
 /**
@@ -64,7 +64,7 @@ export interface HandleTimestampEqual {
  * @return TimestampResult
  */
 export interface CheckGetNextMillisecond {
-  (options: TimestampOptions): TimestampResult
+  (options: TimestampOptions): TimestampResult;
 }
 
 /**
@@ -75,7 +75,7 @@ export interface CheckGetNextMillisecond {
  * @return bigint
  */
 export interface GetNextMillisecond {
-  (timestamp: bigint, lastTimestamp: bigint): bigint
+  (timestamp: bigint, lastTimestamp: bigint): bigint;
 }
 
 /**
@@ -86,5 +86,5 @@ export interface GetNextMillisecond {
  * @return void
  */
 export interface HandleClockCallback {
-  (timestamp: bigint, lastTimestamp: bigint): void
+  (timestamp: bigint, lastTimestamp: bigint): void;
 }

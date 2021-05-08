@@ -5,17 +5,17 @@ export interface SnowflakeOptions {
   /**
    * Data center ID.
    */
-  dataCenterId?: number
+  dataCenterId?: number;
 
   /**
    * Work machine ID.
    */
-  workMachineId?: number
+  workMachineId?: number;
 
   /**
    * Timestamp of the start of the snowflake algorithm.
    */
-  twEpoch: number
+  twEpoch: number;
 }
 
 /**
@@ -25,5 +25,5 @@ export interface SnowflakeOptions {
  * @return string
  */
 export interface Snowflake {
-  (options: SnowflakeOptions): () => string
+  (options: SnowflakeOptions): () => string;
 }

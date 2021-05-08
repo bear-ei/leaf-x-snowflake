@@ -3,39 +3,39 @@ import {
   GetNewTimestamp,
   GetNextMillisecond,
   HandleClockCallback,
-  HandleTimestampEqual
-} from './interface/timestamp.interface'
+  HandleTimestampEqual,
+} from './interface/timestamp.interface';
 
 const getNextMillisecond: GetNextMillisecond = (timestamp, lastTimestamp) =>
   timestamp <= lastTimestamp
     ? getNextMillisecond(getNewTimestamp(), lastTimestamp)
-    : timestamp
+    : timestamp;
 
 const checkGetNextMillisecond: CheckGetNextMillisecond = ({
   timestamp,
   lastTimestamp,
   sequence,
-  maxSequence
+  maxSequence,
 }) => {
-  const nextSequence = (sequence + 1n) & maxSequence
+  const nextSequence = (sequence + BigInt(1)) & maxSequence;
 
-  return nextSequence === 0n
+  return nextSequence === BigInt(0)
     ? {
         timestamp: getNextMillisecond(timestamp, lastTimestamp),
-        sequence: nextSequence
+        sequence: nextSequence,
       }
-    : { timestamp, sequence: nextSequence }
-}
+    : {timestamp, sequence: nextSequence};
+};
 
-export const getNewTimestamp: GetNewTimestamp = () => BigInt(Date.now())
+export const getNewTimestamp: GetNewTimestamp = () => BigInt(Date.now());
 export const handleTimestampEqual: HandleTimestampEqual = ({
   timestamp,
   lastTimestamp,
   ...args
 }) =>
   timestamp === lastTimestamp
-    ? checkGetNextMillisecond({ timestamp, lastTimestamp, ...args })
-    : { timestamp, sequence: 0n }
+    ? checkGetNextMillisecond({timestamp, lastTimestamp, ...args})
+    : {timestamp, sequence: BigInt(0)};
 
 export const handleClockCallback: HandleClockCallback = (
   timestamp,
@@ -46,6 +46,6 @@ export const handleClockCallback: HandleClockCallback = (
       `The clock moves backwards and refuses to generate an ID for ${
         lastTimestamp - timestamp
       }.`
-    )
+    );
   }
-}
+};

@@ -1,4 +1,4 @@
-import { TimestampResult } from './timestamp.interface'
+import {TimestampResult} from './timestamp.interface';
 
 /**
  * Generate new ID options.
@@ -7,32 +7,32 @@ export interface GenerateNewIdOptions {
   /**
    * Generate the start timestamp of the new ID.
    */
-  twEpoch: bigint
+  twEpoch: bigint;
 
   /**
    * Timestamp left offset.
    */
-  timestampLeftShift: bigint
+  timestampLeftShift: bigint;
 
   /**
    * Data center ID.
    */
-  dataCenterId: bigint
+  dataCenterId: bigint;
 
   /**
    * Data center left offset.
    */
-  dataCenterLeftShift: bigint
+  dataCenterLeftShift: bigint;
 
   /**
    * Work machine ID.
    */
-  workMachineId: bigint
+  workMachineId: bigint;
 
   /**
    * Work machine left offset.
    */
-  workMachineLeftShift: bigint
+  workMachineLeftShift: bigint;
 }
 
 /**
@@ -42,17 +42,17 @@ export interface GenerateNewIdResult {
   /**
    * New ID.
    */
-  id: bigint
+  id: bigint;
 
   /**
    * Generate the last run time stamp of the new ID.
    */
-  lastTimestamp: bigint
+  lastTimestamp: bigint;
 
   /**
    * Generate memory sequence of new IDs in milliseconds.
    */
-  sequence: bigint
+  sequence: bigint;
 }
 
 /**
@@ -62,7 +62,7 @@ export interface GenerateNewIdResult {
  * @return GenerateNewId
  */
 export interface InitGenerateNewId {
-  (options: GenerateNewIdOptions): GenerateNewId
+  (options: GenerateNewIdOptions): GenerateNewId;
 }
 
 /**
@@ -72,5 +72,5 @@ export interface InitGenerateNewId {
  * @return GenerateNewIdResult
  */
 export interface GenerateNewId {
-  (timestampResult: TimestampResult): GenerateNewIdResult
+  (timestampResult: TimestampResult): GenerateNewIdResult;
 }

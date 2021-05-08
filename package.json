@@ -46,7 +46,6 @@
     "dist/src"
   ],
   "scripts": {
-    "build": "tsc",
     "lint": "gts lint",
     "test": "nyc mocha --require espower-typescript/guess test/*.test.ts test/**/*.test.ts",
     "clean": "gts clean",

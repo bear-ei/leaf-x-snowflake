@@ -14,18 +14,18 @@ Twitter snowflake algorithm, TypeScript implementation.
 | workMachineId | Number | 0             | Work machine ID, the value range 0-31.          |
 | twEpoch       | Number | Required      | The start timestamp of the snowflake algorithm. |
 
-## Usage
+## Use
 
 ```typescript
-import { snowflake } from '@leaf-x/snowflake'
+import {snowflake} from '@leaf-x/snowflake';
 
 const newId = snowflake({
   dataCenterId: 0,
   workMachineId: 0,
-  twEpoch: 1583734327332
-})
+  twEpoch: 1583734327332,
+});
 
-const id = newId()
+const id = newId();
 
-console.info(id)
+console.info(id);
 ```

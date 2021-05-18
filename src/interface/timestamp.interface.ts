@@ -8,17 +8,17 @@ export interface TimestampOptions {
   timestamp: bigint;
 
   /**
-   * Generate the last run time stamp of the new ID.
+   * Last run time stamp.
    */
   lastTimestamp: bigint;
 
   /**
-   * Generate memory sequence of new IDs in milliseconds.
+   * Memory sequence in milliseconds.
    */
   sequence: bigint;
 
   /**
-   * Generate the maximum memory sequence of new IDs in milliseconds.
+   * Maximum memory sequence in milliseconds.
    */
   maxSequence: bigint;
 }
@@ -28,12 +28,12 @@ export interface TimestampOptions {
  */
 export interface TimestampResult {
   /**
-   * New timestamp.
+   * Current timestamp.
    */
   timestamp: bigint;
 
   /**
-   * The next millisecond memory sequence.
+   * Memory sequence in milliseconds.
    */
   sequence: bigint;
 }
@@ -41,14 +41,14 @@ export interface TimestampResult {
 /**
  * Get timestamp.
  *
- * @return bigint
+ * @return GetTimestamp
  */
-export interface GetNewTimestamp {
+export interface GetTimestamp {
   (): bigint;
 }
 
 /**
- * Handle timestamps equally.
+ * Handle timestamps are equal.
  *
  * @param options TimestampOptions
  * @return TimestampResult
@@ -60,7 +60,7 @@ export interface HandleTimestampEqual {
 /**
  * Check if the next millisecond timestamp is obtained.
  *
- * @param options TimestampOptions
+ * @param options: TimestampOptions
  * @return TimestampResult
  */
 export interface CheckGetNextMillisecond {
@@ -70,8 +70,8 @@ export interface CheckGetNextMillisecond {
 /**
  * Get the next millisecond timestamp.
  *
- * @param timestamp     Current timestamp.
- * @param lastTimestamp Generate the last run time stamp of the new ID.
+ * @param timestamp Current timestamp.
+ * @param lastTimestamp Last run time stamp.
  * @return bigint
  */
 export interface GetNextMillisecond {
@@ -79,10 +79,10 @@ export interface GetNextMillisecond {
 }
 
 /**
- * Handle clock callbacks.
+ * Handle clock callback.
  *
- * @param timestamp     Current timestamp.
- * @param lastTimestamp Generate the last run time stamp of the new ID.
+ * @param timestamp bigint
+ * @param lastTimestamp bigint
  * @return void
  */
 export interface HandleClockCallback {

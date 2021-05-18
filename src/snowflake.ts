@@ -1,7 +1,7 @@
 import {initGenerateNewId} from './id';
 import {Snowflake} from './interface/snowflake.interface';
 import {
-  getNewTimestamp,
+  getTimestamp,
   handleClockCallback,
   handleTimestampEqual,
 } from './timestamp';
@@ -47,7 +47,7 @@ export const snowflake: Snowflake = ({
   }
 
   return () => {
-    const timestamp = getNewTimestamp();
+    const timestamp = getTimestamp();
     const generateNewId = initGenerateNewId({
       twEpoch: epoch,
       timestampLeftShift,

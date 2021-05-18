@@ -1,14 +1,14 @@
 import {
   CheckGetNextMillisecond,
-  GetNewTimestamp,
   GetNextMillisecond,
+  GetTimestamp,
   HandleClockCallback,
   HandleTimestampEqual,
 } from './interface/timestamp.interface';
 
 const getNextMillisecond: GetNextMillisecond = (timestamp, lastTimestamp) =>
   timestamp <= lastTimestamp
-    ? getNextMillisecond(getNewTimestamp(), lastTimestamp)
+    ? getNextMillisecond(getTimestamp(), lastTimestamp)
     : timestamp;
 
 const checkGetNextMillisecond: CheckGetNextMillisecond = ({
@@ -27,7 +27,7 @@ const checkGetNextMillisecond: CheckGetNextMillisecond = ({
     : {timestamp, sequence: nextSequence};
 };
 
-export const getNewTimestamp: GetNewTimestamp = () => BigInt(Date.now());
+export const getTimestamp: GetTimestamp = () => BigInt(Date.now());
 export const handleTimestampEqual: HandleTimestampEqual = ({
   timestamp,
   lastTimestamp,

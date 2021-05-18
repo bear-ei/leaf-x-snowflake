@@ -8,18 +8,18 @@ export interface ValidateIdOptions {
   id: bigint;
 
   /**
-   * The maximum allowed data center ID or work machine ID.
+   * The maximum allowed ID range.
    */
   maxId: bigint;
 
   /**
-   * This custom failure message will be thrown when the validation fails.
+   * Custom error message thrown when validate does not pass.
    */
   message: string;
 }
 
 /**
- * Validate ID.
+ * Validate ID
  *
  * @param options ValidateIdOptions
  * @return void

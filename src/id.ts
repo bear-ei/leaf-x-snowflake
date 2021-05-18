@@ -1,6 +1,6 @@
-import {InitGenerateNewId} from './interface/id.interface';
+import {InitGenerateId} from './interface/id.interface';
 
-export const initGenerateNewId: InitGenerateNewId = ({
+export const initGenerateNewId: InitGenerateId = ({
   twEpoch,
   timestampLeftShift,
   dataCenterId,

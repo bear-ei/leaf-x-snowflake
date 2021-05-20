@@ -41,7 +41,7 @@ export interface TimestampResult {
 /**
  * Get timestamp.
  *
- * @return GetTimestamp
+ * @return bigint
  */
 export interface GetTimestamp {
   (): bigint;
@@ -83,8 +83,8 @@ export interface GetNextMillisecond {
  *
  * @param timestamp bigint
  * @param lastTimestamp bigint
- * @return void
+ * @return void | never
  */
 export interface HandleClockCallback {
-  (timestamp: bigint, lastTimestamp: bigint): void;
+  (timestamp: bigint, lastTimestamp: bigint): void | never;
 }

@@ -22,8 +22,8 @@ export interface ValidateIdOptions {
  * Validate ID
  *
  * @param options ValidateIdOptions
- * @return void
+ * @return void | never
  */
 export interface ValidateId {
-  (options: ValidateIdOptions): void;
+  (options: ValidateIdOptions): void | never;
 }

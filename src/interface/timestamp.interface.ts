@@ -79,7 +79,7 @@ export interface GetNextMillisecond {
 }
 
 /**
- * Handle clock callback.
+ * Handle clock callbacks.
  *
  * @param timestamp bigint
  * @param lastTimestamp bigint

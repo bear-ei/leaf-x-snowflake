@@ -1,5 +1,5 @@
 /**
- * Validate ID options.
+ * The options to validate the ID.
  */
 export interface ValidateIdOptions {
   /**
@@ -19,7 +19,7 @@ export interface ValidateIdOptions {
 }
 
 /**
- * Validate ID
+ * Validate ID.
  *
  * @param options ValidateIdOptions
  * @return void | never

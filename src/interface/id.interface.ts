@@ -1,7 +1,7 @@
 import {TimestampResult} from './timestamp.interface';
 
 /**
- * Generate ID options.
+ * The options to generate an ID.
  */
 export interface GenerateNewIdOptions {
   /**
@@ -36,28 +36,28 @@ export interface GenerateNewIdOptions {
 }
 
 /**
- * Generate ID result.
+ * Generate the result of the ID.
  */
 export interface GenerateIdResult {
   /**
-   * New ID.
+   * The new ID generated.
    */
   id: bigint;
 
   /**
-   * Generate a timestamp of the last run of the ID.
+   * Generate the last run time stamp of the new ID.
    *
    */
   lastTimestamp: bigint;
 
   /**
-   * Generate ID memory sequences in milliseconds.
+   * Generate a memory sequence of new IDs in milliseconds.
    */
   sequence: bigint;
 }
 
 /**
- * Initialize the generated ID.
+ * Initialize the function that generates the ID.
  *
  * @param options GenerateNewIdOptions
  * @return GenerateId

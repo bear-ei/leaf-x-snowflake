@@ -19,7 +19,7 @@ export interface SnowflakeOptions {
 }
 
 /**
- * Snowflake algorithm.
+ * Snowflake algorithm API.
  *
  * @param options SnowflakeOptions
  * @return string

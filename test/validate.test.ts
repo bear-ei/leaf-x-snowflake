@@ -12,7 +12,7 @@ describe('test/validate.test.ts', () => {
       });
     } catch (error) {
       assert(
-        error.message ===
+        (error as Record<string, unknown>).message ===
           'The data center ID cannot be greater than 31 or less than 0.'
       );
     }

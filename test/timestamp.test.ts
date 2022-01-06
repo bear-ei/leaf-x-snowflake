@@ -33,7 +33,7 @@ describe('test/timestamp.test.ts', () => {
       handleClockCallback(BigInt(now - 1), BigInt(now));
     } catch (error) {
       assert(
-        error.message ===
+        (error as Record<string, unknown>).message ===
           'The clock moves backwards and refuses to generate an ID for 1.'
       );
     }

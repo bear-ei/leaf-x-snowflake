@@ -71,9 +71,7 @@ export const snowflake: Snowflake = ({
   let sequence = BigInt(0);
   let lastTimestamp = BigInt(-1);
 
-  for (const validateItem of validateItems) {
-    validateId(validateItem);
-  }
+  validateItems.forEach(validateId);
 
   return () => {
     const timestamp = getTimestamp();

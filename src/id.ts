@@ -1,4 +1,5 @@
 import {TimestampResult} from './timestamp';
+
 /**
  * The options to generate an ID.
  */

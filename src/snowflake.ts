@@ -21,26 +21,21 @@ export interface SnowflakeOptions {
   workMachineId?: number;
 
   /**
-   * Timestamp of the start of the snowflake algorithm.
+   * The snowflake algorithm starts at the epoch time.
    */
   twEpoch: number;
 }
 
 /**
- * Snowflake algorithm API.
+ * Snowflake algorithm.
  *
- * @param options SnowflakeOptions
- * @return string
+ * @param options Snowflake algorithm options.
  */
-export interface Snowflake {
-  (options: SnowflakeOptions): () => string;
-}
-
-export const snowflake: Snowflake = ({
+export const snowflake = ({
   twEpoch,
   dataCenterId = 0,
   workMachineId = 0,
-}) => {
+}: SnowflakeOptions) => {
   const epoch = BigInt(twEpoch);
   const dataCenterNode = BigInt(dataCenterId);
   const workMachineNode = BigInt(workMachineId);

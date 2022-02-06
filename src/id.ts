@@ -1,11 +1,9 @@
-import {TimestampResult} from './timestamp';
-
 /**
- * The options to generate an ID.
+ * The options to generate a new ID.
  */
 export interface GenerateNewIdOptions {
   /**
-   * Generate a timestamp for the start of the ID.
+   * The snowflake algorithm starts at the epoch time.
    */
   twEpoch: bigint;
 
@@ -20,7 +18,7 @@ export interface GenerateNewIdOptions {
   dataCenterId: bigint;
 
   /**
-   * Data center left offset.
+   * Data center ID left offset.
    */
   dataCenterLeftShift: bigint;
 
@@ -30,60 +28,30 @@ export interface GenerateNewIdOptions {
   workMachineId: bigint;
 
   /**
-   * Work machine left offset.
+   * Work machine ID left offset.
    */
   workMachineLeftShift: bigint;
 }
 
 /**
- * Generate the result of the ID.
- */
-export interface GenerateIdResult {
-  /**
-   * The new ID generated.
-   */
-  id: bigint;
-
-  /**
-   * Generate the last run time stamp of the new ID.
-   *
-   */
-  lastTimestamp: bigint;
-
-  /**
-   * Generate a memory sequence of new IDs in milliseconds.
-   */
-  sequence: bigint;
-}
-
-/**
- * Generate ID.
- *
- * @param timestampResult TimestampResult
- * @return GenerateIdResult
- */
-export interface GenerateId {
-  (timestampResult: TimestampResult): GenerateIdResult;
-}
-
-/**
- * Initialize the function that generates the ID.
+ * Initialize to generate a new ID.
  *
  * @param options GenerateNewIdOptions
- * @return GenerateId
  */
-export interface InitGenerateId {
-  (options: GenerateNewIdOptions): GenerateId;
-}
-
-export const initGenerateNewId: InitGenerateId = ({
+export const initGenerateNewId = ({
   twEpoch,
   timestampLeftShift,
   dataCenterId,
   dataCenterLeftShift,
   workMachineId,
   workMachineLeftShift,
-}) => ({timestamp, sequence}) => ({
+}: GenerateNewIdOptions) => ({
+  timestamp,
+  sequence,
+}: {
+  timestamp: bigint;
+  sequence: bigint;
+}) => ({
   lastTimestamp: timestamp,
   sequence,
   id:

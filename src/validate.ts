@@ -1,9 +1,9 @@
 /**
- * The options to validate the ID.
+ * Validate ID options.
  */
 export interface ValidateIdOptions {
   /**
-   * Data center ID or work machine ID.
+   *  Data center ID or Work machine ID.
    */
   id: bigint;
 
@@ -21,14 +21,9 @@ export interface ValidateIdOptions {
 /**
  * Validate ID.
  *
- * @param options ValidateIdOptions
- * @return void | never
+ * @param options Validate ID options.
  */
-export interface ValidateId {
-  (options: ValidateIdOptions): void | never;
-}
-
-export const validateId: ValidateId = ({id, maxId, message}) => {
+export const validateId = ({id, maxId, message}: ValidateIdOptions) => {
   const isErrorId = id > maxId || id < 0;
 
   if (isErrorId) {

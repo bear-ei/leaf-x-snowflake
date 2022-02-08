@@ -6,7 +6,7 @@ Twitter snowflake algorithm, TypeScript implementation.
 
 > npm install @leaf-x/snowflake --save
 
-## Parameters
+## Params
 
 | Name          | Type   | Default Value | Description                                        |
 | :------------ | :----- | :------------ | :------------------------------------------------- |

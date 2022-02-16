@@ -38,25 +38,21 @@ export interface GenerateNewIdOptions {
  *
  * @param options GenerateNewIdOptions
  */
-export const initGenerateNewId = ({
-  twEpoch,
-  timestampLeftShift,
-  dataCenterId,
-  dataCenterLeftShift,
-  workMachineId,
-  workMachineLeftShift,
-}: GenerateNewIdOptions) => ({
-  timestamp,
-  sequence,
-}: {
-  timestamp: bigint;
-  sequence: bigint;
-}) => ({
-  lastTimestamp: timestamp,
-  sequence,
-  id:
-    ((timestamp - twEpoch) << timestampLeftShift) |
-    (dataCenterId << dataCenterLeftShift) |
-    (workMachineId << workMachineLeftShift) |
+export const initGenerateNewId =
+  ({
+    twEpoch,
+    timestampLeftShift,
+    dataCenterId,
+    dataCenterLeftShift,
+    workMachineId,
+    workMachineLeftShift,
+  }: GenerateNewIdOptions) =>
+  ({timestamp, sequence}: {timestamp: bigint; sequence: bigint}) => ({
+    lastTimestamp: timestamp,
     sequence,
-});
+    id:
+      ((timestamp - twEpoch) << timestampLeftShift) |
+      (dataCenterId << dataCenterLeftShift) |
+      (workMachineId << workMachineLeftShift) |
+      sequence,
+  });

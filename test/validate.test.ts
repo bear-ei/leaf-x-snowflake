@@ -11,8 +11,10 @@ describe('test/validate.test.ts', () => {
           'The data center ID cannot be greater than ${maxId} or less than 0.',
       });
     } catch (error) {
+      const relError = error as Record<string, unknown>;
+
       assert(
-        (error as Record<string, unknown>).message ===
+        relError.message ===
           'The data center ID cannot be greater than 31 or less than 0.'
       );
     }
